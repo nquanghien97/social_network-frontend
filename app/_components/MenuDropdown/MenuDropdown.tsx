@@ -47,8 +47,8 @@ function MenuDropdown(props: MenuDropdownProps) {
 
   const dropdownRef: RefObject<HTMLDivElement> = useRef(null);
 
-  const handleClickOutside = (event: any) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setIsHover(false);
     }
   };
