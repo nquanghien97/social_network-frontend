@@ -13,10 +13,18 @@ export default function Home() {
       <AppHeader />
       <main className="xl:container mx-auto">
         <HomePage />
-        {/* <button onClick={() => setOpen(true)}>open sidebar</button>
-        <AppSidebar open={open} onClose={() => setOpen(false)}>
+        <div className="block max-md:hidden">
+          <button onClick={() => setOpen(true)}>open sidebar</button>
+        </div>
+        <AppSidebar
+          open={open}
+          setOpen={setOpen}
+          start= '100vw'
+          end='calc(100vw - 24rem)'
+          exit='100vw'
+        >
           <h3>sidebar</h3>
-        </AppSidebar> */}
+        </AppSidebar>
       </main>
     </>
   )
