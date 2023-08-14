@@ -20,7 +20,7 @@ function AppHeader() {
   const menuClass = clsx("flex grow items-center max-md:absolute max-md:left-0 max-md:top-14 justify-center max-md:items-start bg-[#0f0f10] w-full max-md:flex-col", isOpenClass)
 
   return (
-    <div className="fixed inset-0 h-14 bg-[#0f0f10]">
+    <header className="fixed inset-0 h-14 bg-[#0f0f10] z-[10]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
         <Link href="/">
           <Image src={logo} alt="logo" width={60} height={60} />
@@ -59,7 +59,7 @@ function AppHeader() {
           />
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 

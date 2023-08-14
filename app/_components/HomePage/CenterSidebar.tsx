@@ -2,7 +2,17 @@ import React from 'react'
 
 function CenterSidebar() {
   return (
-    <div className="w-2/4 mt-4">CenterSidebar</div>
+    <div className="mt-4 flex-1">
+      <div>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      <p className="text-2xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt aspernatur fugit iste ipsam vitae atque tenetur eaque blanditiis natus, at, voluptate itaque deleniti nisi dolor dolorem in a omnis magni.</p>
+      </div>
+    </div>
   )
 }
 

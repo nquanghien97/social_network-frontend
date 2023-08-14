@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import { MouseEventHandler, PropsWithChildren, useEffect, useRef } from 'react';
+import { Dispatch, MouseEventHandler, PropsWithChildren, SetStateAction, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AppSidebarProps extends PropsWithChildren {
   open?: boolean;
-  setOpen?: any;
+  setOpen?: Dispatch<SetStateAction<boolean>>
   start?: string;
   end?: string;
   exit?: string;
@@ -12,12 +12,12 @@ interface AppSidebarProps extends PropsWithChildren {
 
 export default function AppSidebar(props: AppSidebarProps) {
   const { children, open, setOpen, start = '-24rem', end = 0, exit = '-24rem' } = props;
-  const backdropClass = clsx('h-screen', 'w-screen', 'fixed', 'top-0', 'left-0', 'z-[1]');
-  const menuClass = clsx('bg-[#191a1f]', 'w-full', 'sm:w-96', 'h-full', 'flex', 'flex-col border-r-2 border-[#0000001a]');
+  const backdropClass = clsx('h-screen', 'w-screen', 'fixed', 'top-0', 'left-0', 'z-[100]');
+  const menuClass = clsx('bg-[#191a1f]', 'w-full', 'sm:w-96', 'max-lg:w-96', 'h-full', 'flex', 'flex-col border-r-2 border-[#0000001a]');
   const backdropRef = useRef<HTMLDivElement>(null);
   const clickHandler: MouseEventHandler<HTMLDivElement> = (event) => {
     if (event.target === backdropRef.current) {
-      setOpen(false)
+      setOpen?.(false)
     }
   };
 
