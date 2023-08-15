@@ -1,8 +1,11 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import {
+  RefObject, useEffect, useRef, useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 interface ListMenuType {
+  index: number;
   subTitle: string;
   href: string;
 }
@@ -18,31 +21,31 @@ function MenuDropdown(props: MenuDropdownProps) {
     if (window.innerWidth > 768) {
       setIsHover(true);
     }
-  }
+  };
   const offHover = () => {
     if (window.innerWidth > 768) {
       setIsHover(false);
     }
-  }
+  };
   const toggleClick = () => {
     if (window.innerWidth <= 768) {
       setIsHover(!isHover);
     }
-  }
+  };
   const subMenuAnimate = {
     enter: {
       opacity: 1,
       rotateX: 0,
       transition: {
-        duration: 0.5
+        duration: 0.5,
       },
-      display: "block"
+      display: 'block',
     },
     exit: {
       opacity: 0,
       rotateX: -15,
-      display: "none"
-    }
+      display: 'none',
+    },
   };
 
   const dropdownRef: RefObject<HTMLDivElement> = useRef(null);
@@ -68,24 +71,24 @@ function MenuDropdown(props: MenuDropdownProps) {
         onHoverEnd={offHover}
         onClick={toggleClick}
       >
-        <div className="cursor-pointer hover:text-[#0f6fec] leading-[56px] flex items-center after:content-['\25be'] px-4">
+        <div className="cursor-pointer hover:text-[#0f6fec] leading-[56px] flex items-center after:content-['\ube'] px-4">
           {title}
         </div>
         <motion.div
           className="absolute top-14 z-[100] w-full"
           initial="exit"
-          animate={isHover ? "enter" : "exit"}
+          animate={isHover ? 'enter' : 'exit'}
           variants={subMenuAnimate}
         >
           <div className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-            {listMenu.map((item, index) => (
-              <Link key={index} href={item.href} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">{item.subTitle}</Link>
+            {listMenu.map((item) => (
+              <Link key={item.index} href={item.href} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">{item.subTitle}</Link>
             ))}
           </div>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }
 
-export default MenuDropdown
+export default MenuDropdown;

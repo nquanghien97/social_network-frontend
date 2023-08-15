@@ -1,3 +1,62 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "airbnb",
+      "airbnb-typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "project": ["tsconfig.json"]
+  },
+  "plugins": [
+      "@typescript-eslint",
+      "react",
+      "import"
+  ],
+  "rules": {
+    "no-console": 0,
+    "@next/next/no-img-element": 0,
+    "import/no-named-as-default": 0,
+    "react/destructuring-assignment": 0,
+    "linebreak-style": 0,
+    "@typescript-eslint/indent": ["error", 2],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "max-len": ["error", { "code": 200 }],
+    "react/require-default-props": "off", // Since we do not use prop-types
+    "no-param-reassign": ["error", { "props": false }],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".tsx", ".ts"] }
+    ],
+    "react/jsx-props-no-spreading": [
+      2,
+      {
+        "custom": "ignore"
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ]
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function RightSidebar() {
   return (
@@ -7,7 +7,7 @@ function RightSidebar() {
         RightSidebar
       </div>
     </div>
-  )
+  );
 }
 
-export default RightSidebar
+export default RightSidebar;

@@ -1,1 +1,1 @@
-export { default } from './AppSidebarItem';
+export { default as AppSidebarItem } from './AppSidebarItem';
