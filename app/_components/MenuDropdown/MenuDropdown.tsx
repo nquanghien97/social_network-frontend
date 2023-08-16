@@ -1,8 +1,8 @@
-import {
-  RefObject, useEffect, useRef, useState,
-} from 'react';
+/* eslint-disable no-octal-escape */
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useOutsideClick } from '../../_hooks/useOutsideClick';
 
 interface ListMenuType {
   index: number;
@@ -48,20 +48,9 @@ function MenuDropdown(props: MenuDropdownProps) {
     },
   };
 
-  const dropdownRef: RefObject<HTMLDivElement> = useRef(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setIsHover(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const dropdownRef = useOutsideClick(() => {
+    setIsHover(false);
+  });
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -71,7 +60,7 @@ function MenuDropdown(props: MenuDropdownProps) {
         onHoverEnd={offHover}
         onClick={toggleClick}
       >
-        <div className="cursor-pointer hover:text-[#0f6fec] leading-[56px] flex items-center after:content-['\ube'] px-4">
+        <div className="cursor-pointer hover:text-[#0f6fec] leading-[56px] flex items-center after:content-['\25be'] px-4">
           {title}
         </div>
         <motion.div
