@@ -1,5 +1,7 @@
 /* eslint-disable no-octal-escape */
-import { useState } from 'react';
+import {
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
@@ -18,17 +20,17 @@ function MenuDropdown(props: MenuDropdownProps) {
   const { listMenu, title } = props;
   const [isHover, setIsHover] = useState(false);
   const onHover = () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1024) {
       setIsHover(true);
     }
   };
   const offHover = () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1024) {
       setIsHover(false);
     }
   };
   const toggleClick = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       setIsHover(!isHover);
     }
   };

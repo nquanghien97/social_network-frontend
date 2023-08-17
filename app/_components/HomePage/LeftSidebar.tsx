@@ -1,21 +1,13 @@
-import React, { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
-import { AppSidebar } from '../AppSidebar';
-import useWindowSize from '../../_hooks/useWindowSize';
 import DefaultAvatar from '../../_assets/DefaultAvatar.svg';
 
-interface LeftSidebarProps {
-  open: boolean,
-  setOpen: Dispatch<SetStateAction<boolean>>
-}
-
-function LeftSidebarItem() {
+export function LeftSidebarItem() {
   return (
     <div className="lg:mt-4">
       <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md">
         <div className="p-5">
           <div>
-            <div className="text-center">
+            <div className="">
               <div className="h-16 w-16 m-auto mb-4">
                 <Image src={DefaultAvatar} alt="Default Avatar" className="w-full h-full rounded-md" />
               </div>
@@ -52,14 +44,10 @@ function LeftSidebarItem() {
     </div>
   );
 }
-function LeftSidebar(props: LeftSidebarProps) {
-  const { open, setOpen } = props;
-  const windowSize = useWindowSize();
-
-  if (!windowSize.width) return <p>Loading...</p>;
+function LeftSidebar() {
   return (
-    <div className="w-1/4 sticky top-14 max-h-0 px-3 z-[100]">
-      <div className="">
+    <div className="w-1/4 sticky top-14 max-h-0 px-3 z-[100] max-lg:hidden">
+      {/* <div className="">
         {windowSize.width > 1024 ? (
           <LeftSidebarItem />
         ) : (
@@ -73,7 +61,8 @@ function LeftSidebar(props: LeftSidebarProps) {
             <LeftSidebarItem />
           </AppSidebar>
         )}
-      </div>
+      </div> */}
+      <LeftSidebarItem />
     </div>
   );
 }

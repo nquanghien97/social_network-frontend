@@ -32,4 +32,9 @@ export const listMenuPage = [
     subTitle: 'Profile',
     href: '/profile',
   },
+  {
+    index: 4,
+    subTitle: 'Today News',
+    href: '/news',
+  },
 ];

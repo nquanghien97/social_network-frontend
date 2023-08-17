@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Image from 'next/image';
@@ -9,6 +11,8 @@ import SearchIcon from '../../_assets/icons/SearchIcon';
 import DefaultAvatar from '../../_assets/DefaultAvatar.svg';
 import CloseIcon from '../../_assets/icons/CloseIcon';
 import MenuIcon from '../../_assets/icons/MenuIcon';
+import BookMarks from '../../_assets/icons/BookMarks';
+import MessageIcon from '../../_assets/icons/MessageIcon';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -16,31 +20,50 @@ function AppHeader() {
   const toggleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
-  const isOpenClass = isOpenMenu ? 'flex' : 'max-md:hidden';
-  const menuClass = clsx('flex grow items-center max-md:absolute max-md:left-0 max-md:top-14 justify-center max-md:items-start bg-[#0f0f10] w-full max-md:flex-col', isOpenClass);
+  const isOpenClass = isOpenMenu ? 'flex' : 'max-lg:hidden';
+  const menuClass = clsx(
+    'max-lg:shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)] flex grow items-center max-lg:absolute max-lg:left-0',
+    'max-lg:top-14 justify-center max-lg:items-start bg-[#0f0f10] w-full max-lg:flex-col',
+    isOpenClass,
+  );
 
   return (
-    <header className="fixed inset-0 h-14 bg-[#0f0f10] z-[10]">
+    <header className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
         <Link href="/">
           <Image src={logo} alt="logo" width={60} height={60} />
         </Link>
-        <div aria-hidden="true" className="md:hidden flex items-center justify-center ml-auto cursor-pointer rounded-md hover:bg-[#ccc] w-10 h-10 bg-[#202227] relative" onClick={toggleClickMenu}>
-          {isOpenMenu ? <CloseIcon /> : <MenuIcon />}
+        <div aria-hidden="true" className="lg:hidden relative flex gap-x-2 ml-auto">
+          <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
+            {isOpenMenu ? <CloseIcon fill="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
+          </div>
+          <Link
+            className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]"
+            href="/bookmarks"
+          >
+            <BookMarks fill="#0f6fec" />
+          </Link>
+          <div className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]">
+            <MessageIcon
+              fill="#0f6fec"
+              width={28}
+              height={28}
+            />
+          </div>
         </div>
         <div className={menuClass}>
           <div className="w-full">
-            <div className="relative max-md:px-4">
-              <button type="button" className="cursor-pointer px-2 max-md:px-6 absolute top-1/2 left-0 -translate-y-1/2">
+            <div className="relative max-lg:px-4">
+              <button type="button" className="cursor-pointer px-2 max-lg:px-6 absolute top-1/2 left-0 -translate-y-1/2">
                 <SearchIcon color="#8a909b" />
               </button>
               <input
-                className="pl-12 px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-md w-full"
+                className="pl-12 px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-lg w-full"
                 placeholder="Search..."
               />
             </div>
           </div>
-          <div className="flex md:ml-auto max-md:flex-col max-md:w-full">
+          <div className="flex lg:ml-auto max-lg:flex-col max-lg:w-full">
             <MenuDropdown
               listMenu={listMenuPage}
               title="Page"
@@ -55,7 +78,7 @@ function AppHeader() {
           <Image
             src={DefaultAvatar}
             alt="Default Avatar"
-            className="w-full h-full rounded-md"
+            className="w-full h-full rounded-lg"
           />
         </div>
       </div>

@@ -15,7 +15,11 @@ export default function Home() {
         <HomePage />
       </main>
       <div className="block max-lg:hidden fixed right-4 bottom-4 cursor-pointer" onClick={() => setOpenMessage(true)} aria-hidden="true">
-        <MessageIcon />
+        <MessageIcon
+          fill="#0f6fec"
+          width={40}
+          height={40}
+        />
       </div>
       <AppSidebar
         open={openMessage}
