@@ -4,7 +4,7 @@ import NewsToday from './NewsToday';
 
 function RightSidebar() {
   return (
-    <div className="w-1/4 max-h-0 sticky top-14 lg:block hidden min-h-content">
+    <div className="w-1/4 max-h-0 sticky top-14 lg:block hidden min-h-content px-3">
       <div className="mt-4 bg-[#0f0f10] border border-[#0f0f10] rounded-md">
         <WhoToFollow />
       </div>

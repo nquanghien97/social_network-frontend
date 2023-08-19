@@ -46,22 +46,7 @@ export function LeftSidebarItem() {
 }
 function LeftSidebar() {
   return (
-    <div className="w-1/4 sticky top-14 max-h-0 px-3 z-[100] max-lg:hidden">
-      {/* <div className="">
-        {windowSize.width > 1024 ? (
-          <LeftSidebarItem />
-        ) : (
-          <AppSidebar
-            open={open}
-            setOpen={setOpen}
-            start="-24rem"
-            end="0"
-            exit="-24rem"
-          >
-            <LeftSidebarItem />
-          </AppSidebar>
-        )}
-      </div> */}
+    <div className="w-1/4 max-h-0 sticky top-14 lg:block hidden min-h-content px-3">
       <LeftSidebarItem />
     </div>
   );
