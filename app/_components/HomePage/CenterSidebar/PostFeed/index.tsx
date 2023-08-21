@@ -24,7 +24,7 @@ function PostFeed() {
         </div>
       </div>
       <Modal open={isOpenModal} onClose={onCloseModal}>
-        <div className="bg-[#26262b] w-[500px] rounded-md">
+        <div className="bg-[#26262b] w-[360px] sm:w-[500px] rounded-md">
           <div className="h-[60px] relative">
             <div className="h-full p-4 flex justify-center items-center border-b border-b-[#ffffff0d]">
               <h2>Create Post</h2>
