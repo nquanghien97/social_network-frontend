@@ -5,7 +5,7 @@ import PostFeed from './PostFeed';
 function CenterSidebar() {
   return (
     <div className="mt-4 flex-1 lg:w-1/2 w-full px-3">
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col gap-y-6">
         <Story />
         <PostFeed />
       </div>
