@@ -1,6 +1,7 @@
 import React from 'react';
 import Story from './Story';
 import PostFeed from './PostFeed';
+import Feed from './Feed';
 
 function CenterSidebar() {
   return (
@@ -8,6 +9,7 @@ function CenterSidebar() {
       <div className="flex justify-center items-center flex-col gap-y-2">
         <Story />
         <PostFeed />
+        <Feed />
       </div>
     </div>
   );
