@@ -1,13 +1,13 @@
 import FeedBody from './FeedBody';
 import FeedHeader from './FeedHeader';
-import Comment from './Comment';
+import Comments from './Comments';
 
 function FeedItem() {
   return (
-    <div>
+    <div className="py-5">
       <FeedHeader />
       <FeedBody />
-      <Comment />
+      <Comments />
     </div>
   );
 }
