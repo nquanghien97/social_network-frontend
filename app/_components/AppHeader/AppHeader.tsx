@@ -79,8 +79,6 @@ function AppHeader() {
           <div className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]">
             <MessageIcon
               fill="#0f6fec"
-              width={28}
-              height={28}
             />
           </div>
         </div>
