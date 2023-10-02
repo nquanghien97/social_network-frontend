@@ -50,7 +50,7 @@ function AppHeader() {
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href="/" className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <Link href="/profile" className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
       </div>
       <hr className="my-4" />

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import DefaultAvatar from '../../_assets/DefaultAvatar.svg';
 
@@ -28,9 +29,9 @@ export function LeftSidebarItem() {
             </ul>
           </div>
           <hr className="my-4" />
-          <div className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
+          <Link aria-hidden="true" href="/profile" className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
             View Profile
-          </div>
+          </Link>
         </div>
       </div>
       <ul className="mt-6 flex flex-wrap justify-center">
