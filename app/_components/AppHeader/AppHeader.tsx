@@ -13,9 +13,11 @@ import CloseIcon from '../../_assets/icons/CloseIcon';
 import MenuIcon from '../../_assets/icons/MenuIcon';
 import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
+import { useOutsideClick } from '../../_hooks/useOutsideClick';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
 
   const toggleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -25,6 +27,37 @@ function AppHeader() {
     'max-lg:shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)] flex grow items-center max-lg:absolute max-lg:left-0',
     'max-lg:top-14 justify-center max-lg:items-start bg-[#0f0f10] w-full max-lg:flex-col',
     isOpenClass,
+  );
+
+  const profileModalRef = useOutsideClick(() => {
+    setIsOpenModalProfile(false);
+  });
+
+  const modalProfile = () => (
+    <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12]">
+      <div>
+        <div className="flex">
+          <div className="w-12 h-12 mr-4">
+            <Image
+              src={DefaultAvatar}
+              alt="Default Avatar"
+              className="w-full h-full rounded-full"
+            />
+          </div>
+          <div>
+            <Link href="/profile">Name</Link>
+            <p>Description</p>
+          </div>
+        </div>
+        <div className="mt-4 flex">
+          <Link href="/" className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+        </div>
+      </div>
+      <hr className="my-4" />
+      <div>
+        Signout
+      </div>
+    </div>
   );
 
   return (
@@ -74,12 +107,13 @@ function AppHeader() {
             />
           </div>
         </div>
-        <div className="w-10 h-10 cursor-pointer ml-4">
+        <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>
           <Image
             src={DefaultAvatar}
             alt="Default Avatar"
             className="w-full h-full rounded-lg"
           />
+          { isOpenModalProfile && modalProfile()}
         </div>
       </div>
     </header>
