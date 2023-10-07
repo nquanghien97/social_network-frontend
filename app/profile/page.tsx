@@ -8,18 +8,7 @@ function Profile() {
         <div className="flex flex-1 flex-col w-full lg:w-2/3 mt-6 px-3">
           <div className="rounder-md">
             <div className="border rounded-md">
-              <Image src="" alt="background-image" />
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <ul>
-                
-              </ul>
-            </div>
-            <div>
-
+              <Image width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
             </div>
           </div>
           <div>
