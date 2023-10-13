@@ -55,7 +55,7 @@ function AppHeader() {
       </div>
       <hr className="my-4" />
       <div className="py-1.5 hover:text-[#0f6fec] cursor-pointer">
-        <Link href="/login">
+        <Link href="/sign-in">
           Signout
         </Link>
       </div>

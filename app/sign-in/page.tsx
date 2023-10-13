@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import backgroundLogin from '../_assets/background-login.svg';
-import loginImage from '../_assets/login-image.svg';
+import backgroundSignin from '../_assets/background-signin.svg';
+import signinImage from '../_assets/signin-image.svg';
 import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
@@ -29,7 +29,7 @@ const schema = yup
       .required(),
   });
 
-function Login() {
+function SignIn() {
   const [togglePassword, setTogglePassword] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -49,18 +49,18 @@ function Login() {
       <Image
         className="h-screen object-cover opacity-10"
         layout="fill"
-        src={backgroundLogin}
+        src={backgroundSignin}
         alt=""
       />
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col max-lg:h-full">
         <div className="w-full">
           <div className="w-full relative z-10 flex justify-center items-center mt-16">
-            <Image src={loginImage} alt="" className="" />
+            <Image src={signinImage} alt="" className="" />
           </div>
         </div>
-        <div className="w-full flex justify-center items-center relative">
-          <form className="lg:w-1/2 p-12 bg-[#0f0f10] rounded-md" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="mb-2 text-center">Login</h2>
+        <div className="w-full flex justify-center items-center relative max-lg:h-full">
+          <form className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
+            <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
             <p className="mb-4 text-center">
               <span>Don&apos;t have an account?</span>
               <Link href="/sign-up" className="text-[#0f6fec] px-2">Click here to sign up</Link>
@@ -92,4 +92,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
