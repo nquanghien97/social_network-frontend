@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import backgroundSignin from '../_assets/background-signin.svg';
+import backgroundSignup from '../_assets/background-signup.jpg';
 import signinImage from '../_assets/signin-image.svg';
 import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
@@ -16,6 +16,7 @@ import BaseButton from '../_components/common/BaseButton';
 interface FormValues {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 const schema = yup
@@ -27,6 +28,10 @@ const schema = yup
     password: yup
       .string()
       .required(),
+    confirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password')], 'Mật khẩu không trùng khớp'),
   });
 
 function SignIn() {
@@ -49,7 +54,7 @@ function SignIn() {
       <Image
         className="h-screen object-cover opacity-10"
         layout="fill"
-        src={backgroundSignin}
+        src={backgroundSignup}
         alt=""
       />
       <div className="flex justify-center items-center flex-col max-lg:h-full">
@@ -62,8 +67,8 @@ function SignIn() {
           <form className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
             <p className="mb-4 text-center">
-              <span>Don&apos;t have an account?</span>
-              <Link href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
+              <span>Already have an account?</span>
+              <Link href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
             </p>
             <div>
               <BaseInput
@@ -80,6 +85,12 @@ function SignIn() {
                 type={togglePassword ? 'text' : 'password'}
                 message={errors.password?.message}
                 {...register('password')}
+              />
+              <BaseInput
+                label="Confirm Password"
+                placeholder="Confirm password"
+                message={errors.confirmPassword?.message}
+                {...register('confirmPassword')}
               />
             </div>
             <div className="pt-2">

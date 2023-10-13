@@ -21,7 +21,7 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>((props, ref) => {
     placeholder,
     startIcon,
     endIcon,
-    type,
+    type = 'password',
     onShowPassword,
     message,
     name,
