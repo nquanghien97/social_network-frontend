@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import WhoToFollowItem from './WhoToFollowItem';
+import BaseButton from '../../../common/BaseButton';
 
 function WhoToFollow() {
   return (
@@ -11,9 +12,11 @@ function WhoToFollow() {
           <WhoToFollowItem />
           <WhoToFollowItem />
           <WhoToFollowItem />
-          <div className="mt-4 flex">
-            <Link href="/" className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View More</Link>
-          </div>
+          <BaseButton
+            className="mt-4 flex"
+          >
+            <Link href="/" className="">View More</Link>
+          </BaseButton>
         </div>
       </div>
     </div>

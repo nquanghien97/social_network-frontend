@@ -38,15 +38,10 @@
     "import/prefer-default-export": "off",
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", ".tsx", ".ts"] }
-    ],
-    "react/jsx-props-no-spreading": [
-      2,
-      {
-        "custom": "ignore"
-      }
     ],
     "import/extensions": [
       "error",
