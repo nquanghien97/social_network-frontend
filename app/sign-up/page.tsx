@@ -12,6 +12,7 @@ import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
+import { signUp } from '../services/auth.services';
 
 interface FormValues {
   email: string;
@@ -46,7 +47,7 @@ function SignIn() {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    signUp(data);
   };
 
   return (
@@ -90,6 +91,7 @@ function SignIn() {
                 label="Confirm Password"
                 placeholder="Confirm password"
                 message={errors.confirmPassword?.message}
+                type="password"
                 {...register('confirmPassword')}
               />
             </div>
