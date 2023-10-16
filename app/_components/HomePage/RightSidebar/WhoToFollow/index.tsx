@@ -15,7 +15,7 @@ function WhoToFollow() {
           <BaseButton
             className="mt-4 flex"
           >
-            <Link href="/" className="">View More</Link>
+            <Link scroll={false} href="/" className="">View More</Link>
           </BaseButton>
         </div>
       </div>

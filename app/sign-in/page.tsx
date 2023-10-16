@@ -49,7 +49,7 @@ function SignIn() {
     setLoading(true);
     try {
       await signIn(data);
-      router.push('/');
+      router.push('/', { scroll: false });
     } catch (err) {
       setErrorMessage(err.response.data.message);
     } finally {
@@ -76,7 +76,7 @@ function SignIn() {
             <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
             <p className="mb-4 text-center">
               <span>Don&apos;t have an account?</span>
-              <Link href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
+              <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
             </p>
             <p className="text-[red] py-2">{errorMessage}</p>
             <div>

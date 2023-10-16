@@ -45,17 +45,17 @@ function AppHeader() {
             />
           </div>
           <div>
-            <Link href="/profile">Name</Link>
+            <Link href="/profile" scroll={false}>Name</Link>
             <p>Description</p>
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href="/profile" className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <Link href="/profile" scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
       </div>
       <hr className="my-4" />
       <div className="py-1.5 hover:text-[#0f6fec] cursor-pointer">
-        <Link href="/sign-in">
+        <Link scroll={false} href="/sign-in">
           Signout
         </Link>
       </div>
@@ -65,7 +65,7 @@ function AppHeader() {
   return (
     <header className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-        <Link href="/">
+        <Link scroll={false} href="/">
           <Image src={logo} alt="logo" width={60} height={60} />
         </Link>
         <div aria-hidden="true" className="lg:hidden relative flex gap-x-2 ml-auto">

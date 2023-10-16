@@ -29,7 +29,7 @@ export function LeftSidebarItem() {
             </ul>
           </div>
           <hr className="my-4" />
-          <Link aria-hidden="true" href="/profile" className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
+          <Link scroll={false} aria-hidden="true" href="/profile" className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
             View Profile
           </Link>
         </div>

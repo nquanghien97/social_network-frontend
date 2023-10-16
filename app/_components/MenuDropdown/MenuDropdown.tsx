@@ -73,7 +73,7 @@ function MenuDropdown(props: MenuDropdownProps) {
         >
           <div className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
             {listMenu.map((item) => (
-              <Link key={item.index} href={item.href} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">{item.subTitle}</Link>
+              <Link scroll={false} key={item.index} href={item.href} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">{item.subTitle}</Link>
             ))}
           </div>
         </motion.div>

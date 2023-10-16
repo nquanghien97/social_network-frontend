@@ -1,7 +1,13 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 function Profile() {
+  const profile = useSelector((state: RootState) => state.profile);
+  console.log(profile);
   return (
     <div className="pt-14 w-full xl:container mx-auto h-ful">
       <div className="flex flex-col lg:flex-row">

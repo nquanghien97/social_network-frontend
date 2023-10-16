@@ -69,7 +69,7 @@ function SignIn() {
             <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
             <p className="mb-4 text-center">
               <span>Already have an account?</span>
-              <Link href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
+              <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
             </p>
             <div>
               <BaseInput

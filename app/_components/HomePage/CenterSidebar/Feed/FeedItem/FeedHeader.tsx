@@ -10,7 +10,7 @@ function FeedHeader() {
       </div>
       <div>
         <div className="flex">
-          <Link href="/" className="cursor-pointer">Name</Link>
+          <Link scroll={false} href="/" className="cursor-pointer">Name</Link>
           <span className="flex items-center justify-center text-xs font-normal opacity-80 before:content-['•'] before:color-[red] before:px-2">2hr</span>
         </div>
         <p className="text-xs font-normal opacity-80">Description</p>

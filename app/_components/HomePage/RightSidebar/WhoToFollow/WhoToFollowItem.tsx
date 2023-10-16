@@ -10,7 +10,7 @@ function WhoToFollowItem() {
         <Image src={DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" />
       </div>
       <div>
-        <Link href="/" className="cursor-pointer">Name</Link>
+        <Link scroll={false} href="/" className="cursor-pointer">Name</Link>
         <p>Description</p>
       </div>
       <div className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer">
