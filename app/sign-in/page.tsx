@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,6 +13,7 @@ import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
+import { signIn } from '@/services/auth.services';
 
 interface FormValues {
   email: string;
@@ -22,16 +24,19 @@ const schema = yup
   .object({
     email: yup
       .string()
-      .required()
+      .required('Email là bắt buộc')
       .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Email không hợp lệ'),
     password: yup
       .string()
-      .required(),
+      .required('Mật khẩu là bắt buộc'),
   });
 
 function SignIn() {
   const [togglePassword, setTogglePassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
@@ -40,8 +45,16 @@ function SignIn() {
     setTogglePassword(!togglePassword);
   };
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true);
+    try {
+      await signIn(data);
+      router.push('/');
+    } catch (err) {
+      setErrorMessage(err.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,6 +78,7 @@ function SignIn() {
               <span>Don&apos;t have an account?</span>
               <Link href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
             </p>
+            <p className="text-[red] py-2">{errorMessage}</p>
             <div>
               <BaseInput
                 label="Email"
@@ -83,7 +97,13 @@ function SignIn() {
               />
             </div>
             <div className="pt-2">
-              <BaseButton type="submit" className="py-4">Login</BaseButton>
+              <BaseButton
+                type="submit"
+                className="py-4"
+                loading={loading}
+              >
+                Login
+              </BaseButton>
             </div>
           </form>
         </div>

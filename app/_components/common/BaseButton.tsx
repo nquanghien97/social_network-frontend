@@ -5,7 +5,6 @@ import LoadingIcon from '../../_assets/icons/LoadingIcon';
 interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
   loading?: boolean;
-  disabled?: boolean;
 }
 const baseStyles = 'mt-4 flex justify-center items-center text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full';
 
@@ -15,15 +14,12 @@ function BaseButton(props: PropsWithChildren<BaseButtonProps>) {
     fullWidth,
     loading,
     className,
-    disabled,
     ...rest
   } = props;
 
   const fullWidthStyle = fullWidth ? 'w-full' : '';
 
-  const buttonClass = (disabled || loading)
-    ? clsx(baseStyles, fullWidthStyle)
-    : clsx(baseStyles, fullWidthStyle, className);
+  const buttonClass = clsx(baseStyles, fullWidthStyle, className);
   return (
     <button
       className={buttonClass}

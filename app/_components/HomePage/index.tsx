@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
 import LeftSidebar from './LeftSidebar';
 import RightSidebar from './RightSidebar';
 import CenterSidebar from './CenterSidebar';
 
 function HomePage() {
+  const profile = useSelector((state) => state.profile)
+  console.log(profile);
   return (
     <div className="flex flex-wrap max-lg:flex-col pt-14 px-3 relative">
       <LeftSidebar />

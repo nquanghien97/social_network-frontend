@@ -12,7 +12,7 @@ import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
-import { signUp } from '../services/auth.services';
+import { signUp } from '../../services/auth.services';
 
 interface FormValues {
   email: string;
