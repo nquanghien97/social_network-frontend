@@ -1,17 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Provider } from 'react-redux';
-import store from '../store';
 import AppSidebar from './_components/AppSidebar/AppSidebar';
 import HomePage from './_components/HomePage';
 import AppHeader from './_components/AppHeader/AppHeader';
 import MessageIcon from './_assets/icons/MessageIcon';
+import withAuthetication from '../hocs/withAuthentication';
 
-export default function Home() {
+function Home() {
   const [openMessage, setOpenMessage] = useState(false);
   return (
-    <Provider store={store}>
+    <>
       <AppHeader />
       <main className="xl:container mx-auto">
         <HomePage />
@@ -32,6 +31,8 @@ export default function Home() {
       >
         <h3>Message</h3>
       </AppSidebar>
-    </Provider>
+    </>
   );
 }
+
+export default withAuthetication(Home);

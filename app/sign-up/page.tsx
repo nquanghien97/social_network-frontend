@@ -1,18 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useRouter } from 'next/navigation';
 import backgroundSignup from '../_assets/background-signup.jpg';
 import signinImage from '../_assets/signin-image.svg';
 import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
-import { signUp } from '../../services/auth.services';
+import { signUp, isAuthenticated } from '../../services/auth.services';
 
 interface FormValues {
   email: string;
@@ -37,6 +38,13 @@ const schema = yup
 
 function SignIn() {
   const [togglePassword, setTogglePassword] = useState(false);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (isAuthenticated()) {
+      router.push('/');
+    }
+  }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -67,10 +75,10 @@ function SignIn() {
         <div className="w-full flex justify-center items-center relative max-lg:h-full">
           <form className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
-            <p className="mb-4 text-center">
+            <div className="mb-4 text-center">
               <span>Already have an account?</span>
               <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
-            </p>
+            </div>
             <div>
               <BaseInput
                 label="Email"

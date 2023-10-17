@@ -22,13 +22,13 @@ export const signUp = async (data: { email: string, password: string }) => {
 };
 
 export const isAuthenticated = () => {
-  const token = getFromLocalStorage('jwt');
+  const token = getFromLocalStorage('accessToken');
 
   if (!token) return false;
 
   const data = parseJwt(token);
 
-  return !!data.id;
+  return !!data.userId;
 };
 
 export const logOut = () => {

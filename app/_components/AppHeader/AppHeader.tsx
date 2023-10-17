@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
@@ -14,10 +15,13 @@ import MenuIcon from '../../_assets/icons/MenuIcon';
 import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
+import { logOut } from '../../../services/auth.services';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
+
+  const router = useRouter();
 
   const toggleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -32,6 +36,11 @@ function AppHeader() {
   const profileModalRef = useOutsideClick(() => {
     setIsOpenModalProfile(false);
   });
+
+  const signOut = () => {
+    logOut();
+    router.push('/sign-in');
+  };
 
   const modalProfile = () => (
     <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12]">
@@ -54,16 +63,14 @@ function AppHeader() {
         </div>
       </div>
       <hr className="my-4" />
-      <div className="py-1.5 hover:text-[#0f6fec] cursor-pointer">
-        <Link scroll={false} href="/sign-in">
-          Signout
-        </Link>
+      <div className="py-1.5 hover:text-[#0f6fec] cursor-pointer text-center" onClick={signOut} aria-hidden="true">
+        Signout
       </div>
     </div>
   );
 
   return (
-    <header className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
+    <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
         <Link scroll={false} href="/">
           <Image src={logo} alt="logo" width={60} height={60} />
@@ -116,7 +123,7 @@ function AppHeader() {
           { isOpenModalProfile && modalProfile()}
         </div>
       </div>
-    </header>
+    </div>
   );
 }
 
