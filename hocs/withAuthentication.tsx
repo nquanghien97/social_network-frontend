@@ -12,7 +12,6 @@ export default function withAuthetication(Page: ComponentType) {
     }, []);
     if (typeof window === 'undefined') return null;
     const router = useRouter();
-    console.log(isAuthenticated());
     if (!isAuthenticated()) {
       router.push('/sign-in');
       return null;

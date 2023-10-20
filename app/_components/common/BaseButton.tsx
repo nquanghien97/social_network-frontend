@@ -6,7 +6,7 @@ interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
   loading?: boolean;
 }
-const baseStyles = 'mt-4 flex justify-center items-center text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full';
+const baseStyles = 'flex justify-center items-center text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full';
 
 function BaseButton(props: PropsWithChildren<BaseButtonProps>) {
   const {

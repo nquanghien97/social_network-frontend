@@ -1,12 +1,18 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import axios from 'axios';
 import LeftSidebar from './LeftSidebar';
 import RightSidebar from './RightSidebar';
 import CenterSidebar from './CenterSidebar';
-import { RootState } from '../../../store';
 
 function HomePage() {
-  const profile = useSelector((state: RootState) => state.profile);
-  console.log(profile);
+  useEffect(() => {
+    const fetchRefreshToken = async () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/refreshToken`, { refreshToken });
+      console.log(response.data.refreshToken);
+    };
+    fetchRefreshToken();
+  }, []);
   return (
     <div className="flex flex-wrap max-lg:flex-col pt-14 px-3 relative">
       <LeftSidebar />

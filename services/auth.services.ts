@@ -21,6 +21,14 @@ export const signUp = async (data: { email: string, password: string }) => {
   setToLocalStorage('refreshToken', dataResponse.data.refreshToken);
 };
 
+export const refreshTokenServices = async (payload: string | null) => {
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/refreshToken`, { payload });
+  return {
+    accessToken: res.data.accessToken,
+    refreshToken: res.data.refreshToken,
+  };
+};
+
 export const isAuthenticated = () => {
   const token = getFromLocalStorage('accessToken');
 
@@ -28,7 +36,7 @@ export const isAuthenticated = () => {
 
   const data = parseJwt(token);
 
-  return !!data.userId;
+  return !!data?.userId;
 };
 
 export const logOut = () => {

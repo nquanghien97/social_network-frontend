@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
@@ -16,10 +17,12 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
+import { RootState } from '../../../store';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
+  const profile = useSelector((state: RootState) => state.profile);
 
   const router = useRouter();
 
@@ -43,9 +46,9 @@ function AppHeader() {
   };
 
   const modalProfile = () => (
-    <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12]">
+    <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[200px]">
       <div>
-        <div className="flex">
+        <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
             <Image
               src={DefaultAvatar}
@@ -54,8 +57,8 @@ function AppHeader() {
             />
           </div>
           <div>
-            <Link href="/profile" scroll={false}>Name</Link>
-            <p>Description</p>
+            <Link href="/profile" scroll={false}>{profile.fullName}</Link>
+            <p>{profile.description}</p>
           </div>
         </div>
         <div className="mt-4 flex">

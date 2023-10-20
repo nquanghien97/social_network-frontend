@@ -11,3 +11,9 @@ export default interface UserDTO {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface UpdateUserDTO {
+  fullName?: string;
+  location?: string;
+  description?: string;
+}

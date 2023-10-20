@@ -24,12 +24,12 @@ export const profileSlice = createSlice<User, {
       reducers: {
         setProfile(state, action: { type: string; payload: User }) {
           const user = action.payload;
-          state.id = user.id;
-          state.email = user.email;
-          state.fullName = user.fullName;
-          state.location = user.location;
-          state.avatar = user.avatar || 'defaultAvatar.svg';
-          state.description = user.description;
+          state.id = user?.id;
+          state.email = user?.email;
+          state.fullName = user?.fullName;
+          state.location = user?.location;
+          state.avatar = user?.avatar || 'defaultAvatar.svg';
+          state.description = user?.description;
         },
 
         updateProfile(state, action: { type: string; payload: Partial<User> }) {
