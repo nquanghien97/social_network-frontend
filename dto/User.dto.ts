@@ -6,6 +6,7 @@ export default interface UserDTO {
   location?: string | null;
   avatar?: string | null;
   description?: string | null;
+  job?: string | null;
   accessToken: string,
   refreshToken?: string,
   createdAt: Date;
@@ -16,4 +17,5 @@ export interface UpdateUserDTO {
   fullName?: string;
   location?: string;
   description?: string;
+  job?: string;
 }

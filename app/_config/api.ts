@@ -13,7 +13,7 @@ interface AxiosRequestConfigCustom extends InternalAxiosRequestConfig {
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as AxiosRequestConfigCustom;
+    const originalRequest = error?.config as AxiosRequestConfigCustom;
 
     if (error.response?.status === 401 && !originalRequest.retry) {
       originalRequest.retry = true;

@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import BaseButton from '../_components/common/BaseButton';
 import { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
@@ -13,6 +14,7 @@ interface FormValues {
   fullName?: string;
   location?: string;
   description?: string;
+  job?: string;
 }
 
 const schema = yup
@@ -22,6 +24,8 @@ const schema = yup
     location: yup
       .string(),
     description: yup
+      .string(),
+    job: yup
       .string(),
   });
 
@@ -37,8 +41,14 @@ function EditProfile({ onClose } : { onClose: () => void }) {
     setLoading(true);
     try {
       await updateUser(data);
+      toast.success('Cập nhật thành công', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } catch (error) {
       console.log(error.message);
+      toast.error('Cập nhật thất bại, vui lòng thử lại', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } finally {
       setLoading(false);
       onClose();
@@ -74,6 +84,13 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 defaultValue={profile.description || ''}
                 {...register('description')}
               />
+              <BaseInput
+                label="Job Title"
+                placeholder="Enter your description"
+                message={errors.job?.message}
+                defaultValue={profile.job || ''}
+                {...register('job')}
+              />
             </div>
             <div className="pt-2">
               <BaseButton
@@ -84,9 +101,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 Update
               </BaseButton>
               <BaseButton
-                type="submit"
                 className="py-4 mt-4"
-                loading={loading}
                 onClick={onClose}
               >
                 Hủy

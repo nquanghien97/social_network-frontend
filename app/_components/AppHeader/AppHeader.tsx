@@ -46,7 +46,7 @@ function AppHeader() {
   };
 
   const modalProfile = () => (
-    <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[200px]">
+    <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[280px]">
       <div>
         <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
@@ -58,7 +58,7 @@ function AppHeader() {
           </div>
           <div>
             <Link href="/profile" scroll={false}>{profile.fullName}</Link>
-            <p>{profile.description}</p>
+            <p>{profile.job}</p>
           </div>
         </div>
         <div className="mt-4 flex">

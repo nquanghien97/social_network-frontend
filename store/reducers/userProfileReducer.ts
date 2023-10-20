@@ -20,6 +20,7 @@ export const profileSlice = createSlice<User, {
         location: '',
         avatar: '',
         description: '',
+        job: '',
       },
       reducers: {
         setProfile(state, action: { type: string; payload: User }) {
@@ -30,6 +31,7 @@ export const profileSlice = createSlice<User, {
           state.location = user?.location;
           state.avatar = user?.avatar || 'defaultAvatar.svg';
           state.description = user?.description;
+          state.job = user?.job;
         },
 
         updateProfile(state, action: { type: string; payload: Partial<User> }) {

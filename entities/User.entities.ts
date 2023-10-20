@@ -7,6 +7,7 @@ export default interface UserEntity {
   location?: string | null;
   avatar?: string | null;
   description?: string | null;
+  job?: string | null;
 }
 
 export const createUserFromUserResponse = (
@@ -21,5 +22,6 @@ export const createUserFromUserResponse = (
     location: userResponse.location,
     avatar: userResponse.avatar,
     description: userResponse.description,
+    job: userResponse.job,
   };
 };
