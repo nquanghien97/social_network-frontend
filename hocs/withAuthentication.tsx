@@ -3,20 +3,23 @@ import { useRouter } from 'next/navigation';
 import { ComponentType, useState, useEffect } from 'react';
 import { isAuthenticated } from '../services/auth.services';
 import getComponentName from '../utils/getComponentName';
+import LoadingIcon from '../app/_assets/icons/LoadingIcon';
 
 export default function withAuthetication(Page: ComponentType) {
   function WithAuthentication(props: AppProps['pageProps']) {
+    if (typeof window === 'undefined') return null;
+    const router = useRouter();
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
+      if (!isAuthenticated()) {
+        router.push('/sign-in');
+      }
     }, []);
-    if (typeof window === 'undefined') return null;
-    const router = useRouter();
-    if (!isAuthenticated()) {
-      router.push('/sign-in');
-      return null;
-    }
     if (!mounted) return null;
+    if (!isAuthenticated()) {
+      return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;
+    }
     return <Page {...props} />;
   }
 

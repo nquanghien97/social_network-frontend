@@ -9,23 +9,21 @@ import { ReduxProvider } from '../store/provider';
 import { getUser } from '@/services/user.services';
 import store from '../store';
 import { setProfile } from '../store/reducers/userProfileReducer';
+import { isAuthenticated } from '@/services/auth.services';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// export const metadata: Metadata = {
-//   title: 'Social Network',
-//   description: 'A Website about social network',
-// };
-
-export default function RootLayout({
+function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await getUser();
-      store.dispatch(setProfile(res));
+      if (isAuthenticated()) {
+        const res = await getUser();
+        store.dispatch(setProfile(res));
+      }
     };
     fetchUser();
   }, []);
@@ -40,3 +38,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;

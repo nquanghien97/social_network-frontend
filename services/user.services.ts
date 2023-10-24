@@ -20,6 +20,5 @@ export const getUser = async () => {
 
 export const updateUser = async (data: UpdateUserDTO) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-user`, data);
-  console.log(res.data.user);
   store.dispatch(setProfile(res.data.user));
 };

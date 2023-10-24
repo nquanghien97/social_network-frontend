@@ -1,18 +1,12 @@
-import type { Metadata } from 'next';
-// import { Inter } from 'next/font/google';
+'use client';
+
 import { AppHeader } from '../_components/AppHeader';
+import withAuthetication from '../../hocs/withAuthentication';
 
-// const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Social Network',
-  description: 'A Website about social network',
-};
-
-export default function RootLayout({
+function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children?: React.ReactNode
 }) {
   return (
     <>
@@ -21,3 +15,5 @@ export default function RootLayout({
     </>
   );
 }
+
+export default withAuthetication(RootLayout);

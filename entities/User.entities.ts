@@ -8,6 +8,7 @@ export default interface UserEntity {
   avatar?: string | null;
   description?: string | null;
   job?: string | null;
+  createdAt: Date;
 }
 
 export const createUserFromUserResponse = (
@@ -23,5 +24,6 @@ export const createUserFromUserResponse = (
     avatar: userResponse.avatar,
     description: userResponse.description,
     job: userResponse.job,
+    createdAt: userResponse.createdAt,
   };
 };

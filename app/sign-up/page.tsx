@@ -74,10 +74,10 @@ function SignIn() {
         </div>
         <div className="w-full flex justify-center items-center relative max-lg:h-full">
           <form className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
+            <h2 className="mb-6 text-center text-4xl font-bold">Sign up</h2>
             <div className="mb-4 text-center">
               <span>Already have an account?</span>
-              <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
+              <Link scroll={false} href="/sign-in" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
             </div>
             <div>
               <BaseInput
@@ -104,7 +104,7 @@ function SignIn() {
               />
             </div>
             <div className="pt-2">
-              <BaseButton type="submit" className="py-4">Login</BaseButton>
+              <BaseButton type="submit" className="py-4">Sign up</BaseButton>
             </div>
           </form>
         </div>

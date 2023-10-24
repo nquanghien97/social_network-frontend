@@ -18,14 +18,15 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
       const refreshToken = getFromLocalStorage('refreshToken');
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/refreshToken`, { refreshToken });
-
-      setToLocalStorage('accessToken', response.data.accessToken);
-      setToLocalStorage('refreshToken', response.data.refreshToken);
-
-      if (originalRequest && originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+      if (refreshToken) {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/refreshToken`, { refreshToken });
+        setToLocalStorage('accessToken', response.data.accessToken);
+        setToLocalStorage('refreshToken', response.data.refreshToken);
+        if (originalRequest && originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        }
       }
+
       return axios(originalRequest);
     }
 

@@ -72,7 +72,7 @@ function SignIn() {
     <div className="h-screen relative z-0">
       <Image
         className="h-screen object-cover opacity-10"
-        layout="fill"
+        fill
         src={backgroundSignin}
         alt=""
       />

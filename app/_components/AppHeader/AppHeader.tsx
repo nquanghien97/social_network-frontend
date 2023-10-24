@@ -58,7 +58,7 @@ function AppHeader() {
           </div>
           <div>
             <Link href="/profile" scroll={false}>{profile.fullName}</Link>
-            <p>{profile.job}</p>
+            <p className="text-sm font-normal text-[#a1a1a8]">{profile.job}</p>
           </div>
         </div>
         <div className="mt-4 flex">
