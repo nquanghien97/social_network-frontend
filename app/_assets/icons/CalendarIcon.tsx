@@ -4,7 +4,7 @@ interface CalendarIconProps {
   height?: number;
 }
 function CalendarIcon(props: CalendarIconProps) {
-  const { fill, width = 24, height = 24 } = props;
+  const { fill, width = 20, height = 20 } = props;
   return (
     <svg fill={fill} width={width} height={height} focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="WorkOutlineIcon">
       <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9

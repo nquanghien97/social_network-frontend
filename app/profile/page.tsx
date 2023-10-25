@@ -18,7 +18,7 @@ function Profile() {
     setOpen(false);
   };
   const profile = useSelector((state: RootState) => state.profile);
-  const timeCreated = new Date(profile.createdAt);
+  const timeCreated = new Date(profile?.createdAt);
   // eslint-disable-next-line max-len
   const formatTimeCreated = `Join on ${timeCreated.getDate() > 9 ? timeCreated.getDate() : `0${timeCreated.getDate()}`} / ${timeCreated.getMonth() + 1 > 9 ? timeCreated.getMonth() + 1 : `0${timeCreated.getMonth() + 1}`} / ${timeCreated.getFullYear()}`;
   return (

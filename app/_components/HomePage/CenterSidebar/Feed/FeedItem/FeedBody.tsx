@@ -2,17 +2,21 @@ import Image from 'next/image';
 import LikeIcon from '../../../../../_assets/icons/LikeIcon';
 import MessageIcon from '../../../../../_assets/icons/MessageIcon';
 import ShareIcon from '../../../../../_assets/icons/ShareIcon';
-// import LikedIcon from '../../../../../_assets/icons/LikedIcon';
 
-function FeedBody() {
+interface FeedBodyProps {
+  title?: string;
+  text?: string;
+  imageUrl?: string;
+}
+
+function FeedBody(props: FeedBodyProps) {
+  const { title, text, imageUrl } = props;
   return (
     <div>
-      <p className="mb-4">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. At asperiores ratione totam reprehenderit vel?
-        Fuga natus odit eaque, consectetur, molestiae commodi doloremque dolor praesentium nulla molestias quasi. Explicabo, rerum nostrum?
-      </p>
+      <h2>{title}</h2>
+      <p className="mb-4">{text}</p>
       <Image
-        src="https://social.webestica.com/assets/images/post/1by1/02.jpg"
+        src={imageUrl || ''}
         width={100}
         height={100}
         className="w-full h-full rounded-md"

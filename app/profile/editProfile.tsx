@@ -9,6 +9,7 @@ import BaseButton from '../_components/common/BaseButton';
 import { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
 import { updateUser } from '@/services/user.services';
+import BaseTextarea from '../_components/common/BaseTextarea';
 
 interface FormValues {
   fullName?: string;
@@ -45,7 +46,6 @@ function EditProfile({ onClose } : { onClose: () => void }) {
         position: toast.POSITION.TOP_RIGHT,
       });
     } catch (error) {
-      console.log(error.message);
       toast.error('Cập nhật thất bại, vui lòng thử lại', {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -78,18 +78,19 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 {...register('location')}
               />
               <BaseInput
-                label="Description"
-                placeholder="Enter your description"
-                message={errors.description?.message}
-                defaultValue={profile.description || ''}
-                {...register('description')}
-              />
-              <BaseInput
                 label="Job Title"
                 placeholder="Enter your description"
                 message={errors.job?.message}
                 defaultValue={profile.job || ''}
                 {...register('job')}
+              />
+              <BaseTextarea
+                label="Description"
+                placeholder="Enter your description"
+                message={errors.description?.message}
+                defaultValue={profile.description || ''}
+                rows={5}
+                {...register('description')}
               />
             </div>
             <div className="pt-2">

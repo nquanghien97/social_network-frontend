@@ -5,7 +5,7 @@ interface WorkIconProps {
 }
 function WorkIcon(props: WorkIconProps) {
   const {
-    fill, width = 24, height = 24, ...rest
+    fill, width = 20, height = 20, ...rest
   } = props;
   return (
     <svg {...rest} fill={fill} width={width} height={height} focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="WorkOutlineIcon">
