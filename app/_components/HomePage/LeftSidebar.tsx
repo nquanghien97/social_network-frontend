@@ -1,20 +1,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 import DefaultAvatar from '../../_assets/DefaultAvatar.svg';
+import { RootState } from '../../../store';
 
 export function LeftSidebarItem() {
+  const profile = useSelector((state: RootState) => state.profile);
   return (
     <div className="lg:mt-4">
       <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md">
         <div className="p-5">
           <div>
-            <div className="">
+            <div className="text-center">
               <div className="h-16 w-16 m-auto mb-4">
                 <Image src={DefaultAvatar} alt="Default Avatar" className="w-full h-full rounded-md" />
               </div>
-              <h5 className="text-xl">Name</h5>
-              <small className="text-sm text-[#ccc]">Description</small>
-              <p className="my-4 text-[#ccc]">introduce</p>
+              <h5 className="text-xl">{profile.fullName}</h5>
+              <small className="text-sm text-[#ccc]">{profile.job}</small>
+              <p className="my-4 text-[#ccc] text-sm">{profile.description}</p>
               <div>Thông số</div>
             </div>
             <hr className="my-4" />

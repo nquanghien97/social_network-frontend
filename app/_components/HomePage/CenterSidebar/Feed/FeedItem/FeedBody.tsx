@@ -13,7 +13,7 @@ function FeedBody(props: FeedBodyProps) {
   const { title, text, imageUrl } = props;
   return (
     <div>
-      <h2>{title}</h2>
+      <h2 className="text-2xl">{title}</h2>
       <p className="mb-4">{text}</p>
       {imageUrl ? (
         <Image

@@ -5,6 +5,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
+import Head from 'next/head';
 import { ReduxProvider } from '../store/provider';
 import { getUser } from '@/services/user.services';
 import store from '../store';
@@ -29,6 +30,9 @@ function RootLayout({
   }, []);
   return (
     <html lang="en">
+      <Head>
+        <title>Social Network</title>
+      </Head>
       <body className={inter.className}>
         <ReduxProvider>
           {children}

@@ -16,7 +16,7 @@ function Feed() {
     return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;
   }
   return (
-    <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5">
+    <div className="rounded-md w-full">
       {posts?.map((item: PostEntity) => (
         <FeedItem key={item.id} post={item} />
       ))}
