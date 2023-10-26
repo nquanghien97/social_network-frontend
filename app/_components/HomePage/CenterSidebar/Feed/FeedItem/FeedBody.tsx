@@ -15,13 +15,16 @@ function FeedBody(props: FeedBodyProps) {
     <div>
       <h2>{title}</h2>
       <p className="mb-4">{text}</p>
-      <Image
-        src={imageUrl || ''}
-        width={100}
-        height={100}
-        className="w-full h-full rounded-md"
-        alt=""
-      />
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          width={100}
+          height={100}
+          priority
+          className="w-full h-auto rounded-md"
+          alt=""
+        />
+      ) : null}
       <div className="flex items-center justify-center gap-x-3 my-2">
         <div className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
           <LikeIcon />

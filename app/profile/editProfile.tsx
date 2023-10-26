@@ -61,7 +61,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
         <div className="flex items-center">
           <form className="w-full p-6 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-6 text-center text-4xl font-bold">Update Profile</h2>
-            <Image className="border-2 rounded-full m-auto" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
+            <Image className="border-2 rounded-full m-auto h-auto" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
             <div>
               <BaseInput
                 label="Full Name"

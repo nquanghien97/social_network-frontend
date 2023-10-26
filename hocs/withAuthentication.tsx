@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/navigation';
 import { ComponentType, useState, useEffect } from 'react';
-import { isAuthenticated } from '../services/auth.services';
+import { isAuthenticated } from '../utils/isAuthenticated';
 import getComponentName from '../utils/getComponentName';
 import LoadingIcon from '../app/_assets/icons/LoadingIcon';
 

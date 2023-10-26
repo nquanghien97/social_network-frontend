@@ -6,7 +6,7 @@ import PlusIcon from '../../../../_assets/icons/PlusIcon';
 function WhoToFollowItem() {
   return (
     <div className="flex gap-x-4 mb-4 items-center">
-      <div className="h-12 w-12">
+      <div className="w-12">
         <Image src={DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" />
       </div>
       <div>

@@ -1,19 +1,21 @@
+import { useSelector } from 'react-redux';
 import FeedBody from './FeedBody';
 import FeedHeader from './FeedHeader';
 import Comments from './Comments';
+import { PostEntity } from '@/entities/Post.entities';
+import { RootState } from '../../../../../../store';
 
 interface FeedBodyProps {
-  title?: string;
-  text?: string;
-  imageUrl?: string;
+  post: PostEntity
 }
 
 function FeedItem(props: FeedBodyProps) {
-  const { title, text, imageUrl } = props;
+  const { post } = props;
+  const profile = useSelector((state: RootState) => state.profile);
   return (
     <div className="pt-2 pb-4">
-      <FeedHeader />
-      <FeedBody title={title} text={text} imageUrl={imageUrl} />
+      <FeedHeader fullName={profile.fullName} job={profile.job} imageUrl={profile.imageUrl} updatedAt={profile.updatedAt} />
+      <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} />
       <Comments />
     </div>
   );

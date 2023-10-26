@@ -13,12 +13,12 @@ function Feed() {
     dispatch(getAllPostsAsync());
   }, [dispatch]);
   if (loading) {
-    return <div className="w-screen mt-4 flex items-center justify-center"><LoadingIcon /></div>;
+    return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;
   }
   return (
     <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5">
       {posts?.map((item: PostEntity) => (
-        <FeedItem key={item.id} title={item.title} text={item.text} imageUrl={item.imageUrl} />
+        <FeedItem key={item.id} post={item} />
       ))}
     </div>
   );

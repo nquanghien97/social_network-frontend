@@ -9,7 +9,7 @@ import { ReduxProvider } from '../store/provider';
 import { getUser } from '@/services/user.services';
 import store from '../store';
 import { setProfile } from '../store/reducers/userProfileReducer';
-import { isAuthenticated } from '@/services/auth.services';
+import { isAuthenticated } from '../utils/isAuthenticated';
 
 const inter = Inter({ subsets: ['latin'] });
 

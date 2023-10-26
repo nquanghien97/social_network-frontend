@@ -3,12 +3,13 @@ import UserDTO from '../dto/User.dto';
 export default interface UserEntity {
   id: number;
   email: string;
-  fullName?: string | null;
-  location?: string | null;
-  avatar?: string | null;
-  description?: string | null;
-  job?: string | null;
+  fullName?: string;
+  location?: string;
+  imageUrl: string;
+  description?: string;
+  job?: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export const createUserFromUserResponse = (
@@ -21,9 +22,10 @@ export const createUserFromUserResponse = (
     fullName: userResponse.fullName,
     email: userResponse.email,
     location: userResponse.location,
-    avatar: userResponse.avatar,
+    imageUrl: userResponse.imageUrl,
     description: userResponse.description,
     job: userResponse.job,
     createdAt: userResponse.createdAt,
+    updatedAt: userResponse.updatedAt,
   };
 };

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
@@ -17,11 +17,13 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { RootState } from '../../../store';
+import { AppDispatch, RootState } from '../../../store';
+import { getAllPostsAsync } from '../../../store/reducers/postsReducer';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootState) => state.profile);
 
   const router = useRouter();
@@ -39,6 +41,11 @@ function AppHeader() {
   const profileModalRef = useOutsideClick(() => {
     setIsOpenModalProfile(false);
   });
+
+  const fetchPosts = () => {
+    dispatch(getAllPostsAsync());
+    router.push('/', { scroll: false });
+  };
 
   const signOut = () => {
     logOut();
@@ -75,9 +82,9 @@ function AppHeader() {
   return (
     <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-        <Link scroll={false} href="/">
+        <div aria-hidden="true" onClick={fetchPosts} className="cursor-pointer">
           <Image src={logo} alt="logo" width={60} height={60} />
-        </Link>
+        </div>
         <div aria-hidden="true" className="lg:hidden relative flex gap-x-2 ml-auto">
           <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
             {isOpenMenu ? <CloseIcon fill="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}

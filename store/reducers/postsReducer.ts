@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { PostEntity } from '../../entities/Post.entities';
-import { getAllPosts } from '@/services/post.services';
+import { getAllPosts } from '../../services/post.services';
+import { isAuthenticated } from '../../utils/isAuthenticated';
 
 export interface PostType {
   posts: PostEntity[],
@@ -17,11 +18,14 @@ export const getAllPostsAsync = createAsyncThunk(
   'post/getPosts',
   async (_, thunkApi) => {
     try {
-      const response = await getAllPosts();
-      return response.data.post;
+      if (isAuthenticated()) {
+        const response = await getAllPosts();
+        return response.data.post;
+      }
     } catch (err) {
       return thunkApi.rejectWithValue(err.response?.data);
     }
+    return null;
   },
 );
 

@@ -18,10 +18,11 @@ export const profileSlice = createSlice<User, {
         email: '',
         fullName: '',
         location: '',
-        avatar: '',
+        imageUrl: '',
         description: '',
         job: '',
         createdAt: new Date(),
+        updatedAt: new Date(),
       },
       reducers: {
         setProfile(state, action: { type: string; payload: User }) {
@@ -30,17 +31,18 @@ export const profileSlice = createSlice<User, {
           state.email = user?.email;
           state.fullName = user?.fullName;
           state.location = user?.location;
-          state.avatar = user?.avatar || 'defaultAvatar.svg';
+          state.imageUrl = user.imageUrl || 'DefaultAvatar.svg';
           state.description = user?.description;
           state.job = user?.job;
           state.createdAt = user?.createdAt;
+          state.updatedAt = user?.updatedAt;
         },
 
         updateProfile(state, action: { type: string; payload: Partial<User> }) {
           const userInfo = action.payload;
           state.email = userInfo.email ?? '';
           state.fullName = userInfo.fullName ?? '';
-          state.avatar = userInfo.avatar ?? '';
+          state.imageUrl = userInfo.imageUrl ?? '';
         },
       },
     },

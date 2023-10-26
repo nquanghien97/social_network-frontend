@@ -18,7 +18,7 @@ function Profile() {
     setOpen(false);
   };
   const profile = useSelector((state: RootState) => state.profile);
-  const timeCreated = new Date(profile?.createdAt);
+  const timeCreated = new Date(profile.createdAt);
   // eslint-disable-next-line max-len
   const formatTimeCreated = `Join on ${timeCreated.getDate() > 9 ? timeCreated.getDate() : `0${timeCreated.getDate()}`} / ${timeCreated.getMonth() + 1 > 9 ? timeCreated.getMonth() + 1 : `0${timeCreated.getMonth() + 1}`} / ${timeCreated.getFullYear()}`;
   return (
@@ -29,7 +29,7 @@ function Profile() {
             <div className="rounder-md mb-4">
               <div className="flex items-center max-md:flex-col gap-2">
                 <div>
-                  <Image className="border-2 rounded-full" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
+                  <Image className="border-2 rounded-full h-auto" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
                 </div>
                 <div className="px-2">
                   <h1 className="font-bold text-xl">{profile.fullName}</h1>
