@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import backgroundSignup from '../_assets/background-signup.jpg';
 import signinImage from '../_assets/signin-image.svg';
@@ -13,9 +14,11 @@ import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
-import { signUp, isAuthenticated } from '../../services/auth.services';
+import { signUp } from '../../services/auth.services';
+import { isAuthenticated } from '../../utils/isAuthenticated';
 
 interface FormValues {
+  fullName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -23,6 +26,9 @@ interface FormValues {
 
 const schema = yup
   .object({
+    fullName: yup
+      .string()
+      .required(),
     email: yup
       .string()
       .required()
@@ -38,6 +44,7 @@ const schema = yup
 
 function SignIn() {
   const [togglePassword, setTogglePassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   useEffect(() => {
@@ -54,8 +61,21 @@ function SignIn() {
     setTogglePassword(!togglePassword);
   };
 
-  const onSubmit = (data: FormValues) => {
-    signUp(data);
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true);
+    try {
+      await signUp(data);
+      toast.success('Đăng nhập thành công!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      router.push('/', { scroll: false });
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,6 +101,12 @@ function SignIn() {
             </div>
             <div>
               <BaseInput
+                label="Your Name"
+                placeholder="Enter your name"
+                message={errors.fullName?.message}
+                {...register('fullName')}
+              />
+              <BaseInput
                 label="Email"
                 placeholder="Enter your email address"
                 message={errors.email?.message}
@@ -104,7 +130,7 @@ function SignIn() {
               />
             </div>
             <div className="pt-2">
-              <BaseButton type="submit" className="py-4">Sign up</BaseButton>
+              <BaseButton type="submit" className="py-4" loading={loading}>Sign up</BaseButton>
             </div>
           </form>
         </div>

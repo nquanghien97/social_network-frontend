@@ -13,11 +13,11 @@ export const signIn = async (data: { email: string, password: string }) => {
   store.dispatch(setProfile(user));
 };
 
-export const signUp = async (data: { email: string, password: string }) => {
+export const signUp = async (data: { fullName: string, email: string, password: string }) => {
   const dataResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, data);
-  const user = createUserFromUserResponse(dataResponse.data);
-  setToLocalStorage('accessToken', dataResponse.data.accessToken);
-  setToLocalStorage('refreshToken', dataResponse.data.refreshToken);
+  const user = createUserFromUserResponse(dataResponse.data.data.user);
+  setToLocalStorage('accessToken', dataResponse.data.data.accessToken);
+  setToLocalStorage('refreshToken', dataResponse.data.data.refreshToken);
   store.dispatch(setProfile(user));
 };
 
