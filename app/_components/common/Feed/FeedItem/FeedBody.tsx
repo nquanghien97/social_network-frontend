@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import LikeIcon from '../../../../../_assets/icons/LikeIcon';
-import MessageIcon from '../../../../../_assets/icons/MessageIcon';
-import ShareIcon from '../../../../../_assets/icons/ShareIcon';
+import LikeIcon from '../../../../_assets/icons/LikeIcon';
+import MessageIcon from '../../../../_assets/icons/MessageIcon';
+import ShareIcon from '../../../../_assets/icons/ShareIcon';
 
 interface FeedBodyProps {
   title?: string;

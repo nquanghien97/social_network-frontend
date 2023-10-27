@@ -49,3 +49,12 @@ body {
 .fill-white {
   fill: #fff !important
 }
+
+.active {
+  color: #6979F8;
+}
+
+.active::after {
+  width: 100% !important;
+}
+

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import MoreHorizIcon from '../../../../../_assets/icons/MoreHorizIcon';
-import { timeSince } from '../../../../../../utils/date';
+import MoreHorizIcon from '../../../../_assets/icons/MoreHorizIcon';
+import { timeSince } from '../../../../../utils/date';
 
 interface FeedHeaderProps {
   fullName?: string;

@@ -3,7 +3,7 @@ import FeedBody from './FeedBody';
 import FeedHeader from './FeedHeader';
 import Comments from './Comments';
 import { PostEntity } from '@/entities/Post.entities';
-import { RootState } from '../../../../../../store';
+import { RootState } from '../../../../../store';
 
 interface FeedBodyProps {
   post: PostEntity

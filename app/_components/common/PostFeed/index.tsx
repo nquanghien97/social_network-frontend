@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import Modal from '../../../common/Modal';
-import CloseIcon from '../../../../_assets/icons/CloseIcon';
-import InsertPhoto from '../../../../_assets/icons/InsertPhoto';
+import Modal from '../Modal';
+import CloseIcon from '../../../_assets/icons/CloseIcon';
+import InsertPhoto from '../../../_assets/icons/InsertPhoto';
 
 function PostFeed() {
   const [isOpenModal, setIsOpenModal] = useState(false);

@@ -6,12 +6,10 @@ import { isAuthenticated } from '../../utils/isAuthenticated';
 export interface PostType {
   posts: PostEntity[],
   loading: boolean,
-  error: string,
 }
 const initialState: PostType = {
   posts: [],
   loading: false,
-  error: '',
 };
 
 export const getAllPostsAsync = createAsyncThunk(
@@ -42,9 +40,8 @@ const postsReducer = createSlice({
       state.posts = action.payload;
       state.loading = false;
     });
-    builder.addCase(getAllPostsAsync.rejected, (state, action) => {
+    builder.addCase(getAllPostsAsync.rejected, (state) => {
       state.loading = false;
-      state.error = action.error.message || '';
     });
   },
 });
