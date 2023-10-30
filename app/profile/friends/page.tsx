@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getAllFriends } from '@/services/friend.services';
+import { toast } from 'react-toastify';
+import { getAllFriends, removeFriend } from '@/services/friend.services';
 import ListFriends from './ListFriends';
 
 function Friend() {
@@ -18,12 +19,24 @@ function Friend() {
     fetchListFriends();
   }, []);
 
+  const onRemoveFriend = async (idFriend: number) => {
+    try {
+      await removeFriend(idFriend);
+      const res = await getAllFriends();
+      setListFriends(res.listFriends);
+      toast.success('Xóa bạn thành công');
+    } catch (err) {
+      console.log(err.message);
+      toast.error('Xóa bạn thất bại');
+    }
+  };
+
   return (
     <div className="lg:container mx-auto h-full px-3 bg-[#0f0f10] rounded-md w-full">
-      <div>
-        <h5>Friends</h5>
+      <div className="px-5 pt-5">
+        <h5 className="text-2xl font-bold">Friends</h5>
       </div>
-      <ListFriends listFriends={listFriends} />
+      <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
     </div>
   );
 }
