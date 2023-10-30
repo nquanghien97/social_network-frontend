@@ -17,7 +17,7 @@ function ListFriends(props: ListFriendsProps) {
   return (
     <div>
       {listFriends.map((friend: Friend) => (
-        <div className="flex">
+        <div className="flex" key={friend.id}>
           <div>
             {friend.id}
           </div>

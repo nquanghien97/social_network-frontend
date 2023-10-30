@@ -10,7 +10,6 @@ import logo from '../../_assets/logo.png';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
 import { listMenuAccount, listMenuPage } from '../../_config/listMenuDropdown';
 import SearchIcon from '../../_assets/icons/SearchIcon';
-import DefaultAvatar from '../../_assets/DefaultAvatar.svg';
 import CloseIcon from '../../_assets/icons/CloseIcon';
 import MenuIcon from '../../_assets/icons/MenuIcon';
 import BookMarks from '../../_assets/icons/BookMarks';
@@ -58,7 +57,9 @@ function AppHeader() {
         <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
             <Image
-              src={DefaultAvatar}
+              src={profile.imageUrl}
+              width={100}
+              height={100}
               alt="Default Avatar"
               className="w-full h-full rounded-full"
             />
@@ -125,11 +126,15 @@ function AppHeader() {
           </div>
         </div>
         <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>
-          <Image
-            src={DefaultAvatar}
-            alt="Default Avatar"
-            className="w-full h-full rounded-lg"
-          />
+          {profile.imageUrl && (
+            <Image
+              src={profile.imageUrl}
+              width={100}
+              height={100}
+              alt="Avatar"
+              className="w-full h-full rounded-lg"
+            />
+          )}
           { isOpenModalProfile && modalProfile()}
         </div>
       </div>

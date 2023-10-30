@@ -62,7 +62,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
               <div className="rounder-md mb-4 p-6">
                 <div className="flex items-center max-md:flex-col">
                   <div>
-                    <Image className="border-2 rounded-full h-auto" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
+                    <Image className="border-2 rounded-full h-auto" width={100} height={100} src={profile.imageUrl} alt="avatar" />
                   </div>
                   <div className="px-2">
                     <h1 className="font-bold text-xl">{profile.fullName}</h1>

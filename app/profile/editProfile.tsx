@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
@@ -10,18 +10,21 @@ import { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
 import { updateUser } from '@/services/user.services';
 import BaseTextarea from '../_components/common/BaseTextarea';
+import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
 
 interface FormValues {
   fullName?: string;
   location?: string;
   description?: string;
   job?: string;
+  image?: File;
 }
 
 const schema = yup
   .object({
     fullName: yup
       .string(),
+    // .required('Trường này là bắt buộc'),
     location: yup
       .string(),
     description: yup
@@ -33,6 +36,12 @@ const schema = yup
 function EditProfile({ onClose } : { onClose: () => void }) {
   const [loading, setLoading] = useState(false);
   const profile = useSelector((state: RootState) => state.profile);
+  const [file, setFile] = useState<File>();
+
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setFile(e.target.files[0]);
+  };
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -41,7 +50,13 @@ function EditProfile({ onClose } : { onClose: () => void }) {
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     try {
-      await updateUser(data);
+      const formData = new FormData();
+      formData.append('image', file as File);
+      formData.append('fullName', data.fullName!);
+      formData.append('location', data.location!);
+      formData.append('description', data.description!);
+      formData.append('job', data.job!);
+      await updateUser(formData);
       toast.success('Cập nhật thành công', {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -59,10 +74,24 @@ function EditProfile({ onClose } : { onClose: () => void }) {
     <div className="flex flex-1 flex-col w-full mt-6 py-6 bg-[#0f0f10] rounded-md min-w-[400px]">
       <div className="rounder-md">
         <div className="flex items-center">
-          <form className="w-full p-6 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
+          <form className="w-full p-6 bg-[#0f0f10] rounded-md max-lg:h-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-6 text-center text-4xl font-bold">Update Profile</h2>
-            <Image className="border-2 rounded-full m-auto h-auto" width={100} height={100} src="https://social.webestica.com/assets/images/post/1by1/02.jpg" alt="background-image" />
-            <div>
+            <div className="relative">
+              <div className="absolute right-1 z-10 w-full h-full">
+                <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
+                  <div>
+                    <AddAPhotoIcon fill="white" />
+                  </div>
+                  <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                </label>
+              </div>
+              {file ? (
+                <Image className="border-2 rounded-full m-auto h-auto cursor-pointer" width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
+              ) : (
+                <Image className="border-2 rounded-full m-auto h-auto cursor-pointer" width={100} height={100} src={profile.imageUrl} alt="avatar" />
+              )}
+            </div>
+            <div className="w-full">
               <BaseInput
                 label="Full Name"
                 placeholder="Enter your Full Name"
@@ -93,7 +122,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 {...register('description')}
               />
             </div>
-            <div className="pt-2">
+            <div className="pt-2 w-full">
               <BaseButton
                 type="submit"
                 className="py-4"
