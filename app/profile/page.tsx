@@ -14,7 +14,7 @@ function Profile() {
     dispatch(getAllPostsAsync());
   }, [dispatch]);
   return (
-    <div className="lg:container mx-auto h-full">
+    <div className="lg:container mx-auto w-full">
       <PostFeed />
       <Feed posts={posts} loading={loading} />
     </div>
