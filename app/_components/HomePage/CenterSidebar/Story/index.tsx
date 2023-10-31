@@ -11,6 +11,10 @@ function Story() {
         <StoryItem />
         <StoryItem />
         <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
       </div>
     </div>
   );
