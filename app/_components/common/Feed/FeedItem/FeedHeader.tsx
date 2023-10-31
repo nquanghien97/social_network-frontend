@@ -22,7 +22,7 @@ function FeedHeader(props: FeedHeaderProps) {
     <div className="flex gap-x-4 mb-4 items-center">
       <div className="w-12">
         {imageUrl && (
-          <Image src={imageUrl} width={48} height={48} alt="" className="w-full h-full rounded-full cursor-pointer" />
+          <Image src={imageUrl} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
         )}
       </div>
       <div>

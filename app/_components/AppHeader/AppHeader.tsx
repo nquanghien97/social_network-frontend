@@ -62,6 +62,7 @@ function AppHeader() {
               height={100}
               alt="Default Avatar"
               className="w-full h-full rounded-full"
+              unoptimized
             />
           </div>
           <div>
@@ -84,7 +85,7 @@ function AppHeader() {
     <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
       <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
         <div aria-hidden="true" onClick={fetchPosts} className="cursor-pointer">
-          <Image src={logo} alt="logo" width={60} height={60} />
+          <Image src={logo} alt="logo" width={60} height={60} unoptimized />
         </div>
         <div aria-hidden="true" className="lg:hidden relative flex gap-x-2 ml-auto">
           <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
@@ -133,6 +134,7 @@ function AppHeader() {
               height={100}
               alt="Avatar"
               className="w-full h-full rounded-lg"
+              unoptimized
             />
           )}
           { isOpenModalProfile && modalProfile()}

@@ -85,11 +85,12 @@ function SignIn() {
         layout="fill"
         src={backgroundSignup}
         alt=""
+        unoptimized
       />
       <div className="flex justify-center items-center flex-col max-lg:h-full">
         <div className="w-full">
           <div className="w-full relative z-10 flex justify-center items-center mt-16">
-            <Image src={signinImage} alt="" className="" />
+            <Image src={signinImage} alt="" className="" unoptimized />
           </div>
         </div>
         <div className="w-full flex justify-center items-center relative max-lg:h-full">

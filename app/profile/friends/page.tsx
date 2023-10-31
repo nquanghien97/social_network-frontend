@@ -36,7 +36,11 @@ function Friend() {
       <div className="px-5 pt-5">
         <h5 className="text-2xl font-bold">Friends</h5>
       </div>
-      <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
+      {listFriends ? (
+        <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
+      ) : (
+        <p>Bạn chưa có người bạn nào</p>
+      )}
     </div>
   );
 }

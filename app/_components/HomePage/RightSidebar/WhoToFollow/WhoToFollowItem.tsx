@@ -7,7 +7,7 @@ function WhoToFollowItem() {
   return (
     <div className="flex gap-x-4 mb-4 items-center">
       <div className="w-12">
-        <Image src={DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" />
+        <Image src={DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" unoptimized />
       </div>
       <div>
         <Link scroll={false} href="/" className="cursor-pointer">Name</Link>

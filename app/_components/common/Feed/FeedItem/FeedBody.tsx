@@ -23,6 +23,7 @@ function FeedBody(props: FeedBodyProps) {
           priority
           className="w-full h-auto rounded-md"
           alt=""
+          unoptimized
         />
       ) : null}
       <div className="flex items-center justify-center gap-x-3 my-2">

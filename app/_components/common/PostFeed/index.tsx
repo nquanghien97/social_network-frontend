@@ -13,7 +13,7 @@ function PostFeed() {
     <>
       <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5">
         <div className="h-12 w-12 mr-2">
-          <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
+          <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
         </div>
         <div
           aria-hidden="true"
@@ -40,7 +40,7 @@ function PostFeed() {
           <div className="flex flex-col items-center p-4 border-b border-b-[#ffffff0d]">
             <div className="w-full flex mb-4">
               <div className="h-12 w-12 mr-2">
-                <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
+                <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
               </div>
               <textarea placeholder="Share your thoughts..." className="resize-none w-full bg-transparent outline-none px-4" />
             </div>

@@ -13,7 +13,7 @@ export function LeftSidebarItem() {
             <div className="text-center">
               <div className="h-16 w-16 m-auto mb-4">
                 {profile.imageUrl && (
-                  <Image src={profile.imageUrl} width={100} height={100} alt="Default Avatar" className="w-full h-full rounded-md" />
+                  <Image src={profile.imageUrl} width={100} height={100} alt="Default Avatar" unoptimized className="w-full h-full rounded-md" />
                 )}
               </div>
               <h5 className="text-xl">{profile.fullName}</h5>

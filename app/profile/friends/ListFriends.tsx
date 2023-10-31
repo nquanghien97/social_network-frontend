@@ -53,10 +53,11 @@ function ListFriends(props: ListFriendsProps) {
           <div className="mr-2 w-[48px] h-[48px]">
             <Image
               className="rounded-full w-full h-full"
-              src={friend.imageUrl}
+              src={friend.imageUrl || '/DefaultAvatar.svg'}
               alt={friend.imageUrl}
               width={48}
               height={48}
+              unoptimized
             />
           </div>
           <div className="flex flex-col">

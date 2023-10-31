@@ -62,7 +62,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
               <div className="rounder-md mb-4 p-6">
                 <div className="flex items-center max-md:flex-col">
                   <div className="w-[100px] h-[100px]">
-                    <Image className="border-2 rounded-full w-full h-full" width={100} height={100} src={profile.imageUrl} alt="avatar" />
+                    <Image className="border-2 rounded-full w-full h-full" width={100} height={100} src={profile.imageUrl} alt="avatar" unoptimized />
                   </div>
                   <div className="px-2">
                     <h1 className="font-bold text-xl">{profile.fullName}</h1>
