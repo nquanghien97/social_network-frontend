@@ -22,3 +22,12 @@ export const updateUser = async (data: FormData) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-user`, data);
   store.dispatch(setProfile(res.data.user));
 };
+
+interface UserId {
+  userId: number
+}
+
+export const findUser = async (data: UserId) => {
+  const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/find-user`, data);
+  return res.data.user;
+};

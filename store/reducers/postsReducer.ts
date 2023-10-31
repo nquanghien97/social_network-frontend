@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { PostEntity } from '../../entities/Post.entities';
+import { FeedEntity } from '../../entities/Post.entities';
 import { getAllPosts } from '../../services/post.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 
 export interface PostType {
-  posts: PostEntity[],
+  posts: FeedEntity[],
   loading: boolean,
 }
 const initialState: PostType = {

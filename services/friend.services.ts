@@ -6,3 +6,8 @@ export const getAllFriends = async () => {
 };
 
 export const removeFriend = async (friendId: number) => api.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/friend`, { data: { friendId } });
+
+export const getFriendsId = async () => {
+  const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/id-friend`);
+  return res.data;
+};
