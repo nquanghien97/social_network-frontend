@@ -17,7 +17,7 @@ import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
 import { AppDispatch, RootState } from '../../../store';
-import { getAllPostsAsync } from '../../../store/reducers/postsReducer';
+import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -42,7 +42,7 @@ function AppHeader() {
   });
 
   const fetchPosts = () => {
-    dispatch(getAllPostsAsync());
+    dispatch(getNewFeedAsync());
     router.push('/', { scroll: false });
   };
 
@@ -87,7 +87,7 @@ function AppHeader() {
         <div aria-hidden="true" onClick={fetchPosts} className="cursor-pointer">
           <Image src={logo} alt="logo" width={60} height={60} unoptimized />
         </div>
-        <div aria-hidden="true" className="lg:hidden relative flex gap-x-2 ml-auto">
+        <div className="lg:hidden relative flex gap-x-2 ml-auto">
           <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
             {isOpenMenu ? <CloseIcon fill="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
           </div>

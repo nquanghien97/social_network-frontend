@@ -1,13 +1,56 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import CloseIcon from '../../../_assets/icons/CloseIcon';
 import InsertPhoto from '../../../_assets/icons/InsertPhoto';
+import BaseInput from '../BaseInput';
+import BaseTextarea from '../BaseTextarea';
+import { createPost } from '@/services/post.services';
+import BaseButton from '../BaseButton';
+import { getNewFeedAsync } from '../../../../store/reducers/newFeedReducer';
+import { getAllPostsAsync } from '../../../../store/reducers/postsReducer';
+import { AppDispatch } from '../../../../store';
+
+interface FormValues {
+  title: string;
+  text: string;
+  image: File;
+}
 
 function PostFeed() {
+  const dispatch = useDispatch<AppDispatch>();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit } = useForm<FormValues>();
   const onCloseModal = () => {
     setIsOpenModal(false);
+  };
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setFile(e.target.files[0]);
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file as File);
+      formData.append('title', data.title!);
+      formData.append('text', data.text!);
+      await createPost(formData);
+      dispatch(getNewFeedAsync());
+      dispatch(getAllPostsAsync());
+      setIsOpenModal(false);
+      toast.success('Created Post Successfully');
+    } catch (err: unknown) {
+      toast.error('Create Post Failed');
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -38,25 +81,40 @@ function PostFeed() {
             </div>
           </div>
           <div className="flex flex-col items-center p-4 border-b border-b-[#ffffff0d]">
-            <div className="w-full flex mb-4">
-              <div className="h-12 w-12 mr-2">
+            <div className="w-full flex">
+              <div className="h-12 w-12 mr-4">
                 <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
               </div>
-              <textarea placeholder="Share your thoughts..." className="resize-none w-full bg-transparent outline-none px-4" />
+              <div className="flex flex-col w-full">
+                <BaseInput
+                  placeholder="Title"
+                  {...register('title')}
+                />
+                <BaseTextarea
+                  placeholder="Share your thoughts..."
+                  rows={5}
+                  {...register('text')}
+                />
+              </div>
             </div>
             <div className="w-full">
               <p className="mb-2">Upload attachment</p>
-              <div className="border-2 border-dashed rounded-md p-5 cursor-pointer w-full flex justify-center items-center">
-                <div className="my-5">
-                  <InsertPhoto width={90} height={90} />
+              <div className="border-2 border-dashed rounded-md p-5 cursor-pointer w-full flex justify-center items-center relative h-[300px]">
+                <div className="w-full h-full relative overflow-y-auto no-scrollbar">
+                  <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full flex absolute">
+                    <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                    {file ? (
+                      <Image className="border-2 m-auto h-auto cursor-pointer w-full p-4 rounded-md" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
+                    ) : (
+                      <InsertPhoto className="m-auto" width={90} height={90} />
+                    )}
+                  </label>
                 </div>
               </div>
             </div>
           </div>
           <div className="p-3">
-            <div className="flex justify-center items-center cursor-pointer duration-300 rounded-md border hover:bg-[#0f6fec] w-full py-3">
-              <span>Post</span>
-            </div>
+            <BaseButton onClick={handleSubmit(onSubmit)} loading={loading}>Post</BaseButton>
           </div>
         </div>
       </Modal>

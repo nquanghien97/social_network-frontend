@@ -1,29 +1,17 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import Story from './Story';
 import PostFeed from '../../common/PostFeed';
 import Feed from '../../common/Feed';
-import { getFriendsId } from '@/services/friend.services';
-import { getNewFeed } from '@/services/post.services';
+import { AppDispatch } from '../../../../store';
+import { PostType, getNewFeedAsync, getNewFeedSelector } from '../../../../store/reducers/newFeedReducer';
 
 function CenterSidebar() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { posts, loading } = useSelector(getNewFeedSelector) as PostType;
   useEffect(() => {
-    setLoading(true);
-    const fetchNewFeed = async () => {
-      try {
-        const listFriendsId = await getFriendsId();
-        const res = await getNewFeed({ listFriendsId: listFriendsId.listFriendsId });
-        setPosts(res.data.posts);
-      } catch (err) {
-        toast.error('Có lỗi xảy ra, vui lòng thử lại');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchNewFeed();
-  }, []);
+    dispatch(getNewFeedAsync());
+  }, [dispatch]);
   return (
     <div className="mt-4 flex-1 lg:w-1/2 w-full px-3">
       <div className="flex justify-center items-center flex-col gap-y-2">
