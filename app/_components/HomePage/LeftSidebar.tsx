@@ -23,8 +23,12 @@ export function LeftSidebarItem() {
             </div>
             <hr className="my-4" />
             <ul>
-              <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">Feed</li>
-              <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">Connections</li>
+              <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">
+                <Link href="/profile">Feed</Link>
+              </li>
+              <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">
+                <Link href="/profile/friends">Connections</Link>
+              </li>
               <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">Latest News</li>
               <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">Events</li>
               <li className="py-1.5 hover:text-[#0f6fec] cursor-pointer">Groups</li>
