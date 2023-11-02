@@ -27,7 +27,6 @@ function FeedHeader(props: FeedHeaderProps) {
 
   const [openFeedOptions, setOpenFeedOptions] = useState(false);
   const PostOptionsRef = useOutsideClick(() => setOpenFeedOptions(false));
-
   return (
     <div className="flex gap-x-4 mb-4 items-center">
       <div className="w-12">
@@ -43,9 +42,12 @@ function FeedHeader(props: FeedHeaderProps) {
       <div
         className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer relative"
         aria-hidden
-        onClick={() => setOpenFeedOptions(true)}
       >
-        <div>
+        <div
+          onClick={() => setOpenFeedOptions(!openFeedOptions)}
+          aria-hidden
+          className="w-full h-full flex items-center justify-center"
+        >
           <MoreHorizIcon fill="#0f6fec" width={16} height={16} />
         </div>
         {openFeedOptions && <PostOptions PostOptionsRef={PostOptionsRef} setOpenFeedOptions={setOpenFeedOptions} postId={postId} hasDeletePost={hasDeletePost} />}

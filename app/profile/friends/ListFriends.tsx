@@ -54,7 +54,7 @@ function ListFriends(props: ListFriendsProps) {
             <Image
               className="rounded-full w-full h-full"
               src={friend.imageUrl || '/DefaultAvatar.svg'}
-              alt={friend.imageUrl}
+              alt="avatar friend"
               width={48}
               height={48}
               unoptimized

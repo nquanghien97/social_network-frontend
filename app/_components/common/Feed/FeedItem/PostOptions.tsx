@@ -36,7 +36,7 @@ function PostOptions(props: PostOptionsProps) {
     }
   };
 
-  const onCofirmClick = async () => {
+  const onConfirmClick = async () => {
     try {
       if (onDeletePost) {
         await onDeletePost(postId);
@@ -47,32 +47,6 @@ function PostOptions(props: PostOptionsProps) {
       console.log(err.message);
     }
   };
-  const modalConfirmRemoveFriend = () => (
-    <Modal
-      open={openModalDeletePost}
-      onClose={() => setOpenModalDeletePost(false)}
-    >
-      <div className="p-5 bg-[#26262b] rounded-md" ref={PostOptionsRef}>
-        <p className="mb-4">Do you want to delete this post?</p>
-        <div className="flex gap-4">
-          <BaseButton
-            onClick={onCofirmClick}
-          >
-            Confirm
-          </BaseButton>
-          <BaseButton
-            className="text-[red] hover:bg-[red] hover:text-[white]"
-            onClick={() => {
-              setOpenModalDeletePost(false);
-              setOpenFeedOptions(false);
-            }}
-          >
-            Cancel
-          </BaseButton>
-        </div>
-      </div>
-    </Modal>
-  );
   return (
     <>
       <div
@@ -83,7 +57,9 @@ function PostOptions(props: PostOptionsProps) {
           {hasDeletePost && (
             <li
               className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
-              onClick={() => setOpenModalDeletePost(true)}
+              onClick={() => {
+                setOpenModalDeletePost(true);
+              }}
               aria-hidden
             >
               Delete Post
@@ -96,7 +72,30 @@ function PostOptions(props: PostOptionsProps) {
           </li>
         </ul>
       </div>
-      {modalConfirmRemoveFriend()}
+      <Modal
+        open={openModalDeletePost}
+        onClose={() => setOpenModalDeletePost(false)}
+      >
+        <div className="p-5 bg-[#26262b] rounded-md" ref={PostOptionsRef}>
+          <p className="mb-4">Do you want to delete this post?</p>
+          <div className="flex gap-4">
+            <BaseButton
+              onClick={onConfirmClick}
+            >
+              Confirm
+            </BaseButton>
+            <BaseButton
+              className="text-[red] hover:bg-[red] hover:text-[white]"
+              onClick={() => {
+                setOpenModalDeletePost(false);
+                setOpenFeedOptions(false);
+              }}
+            >
+              Cancel
+            </BaseButton>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }
