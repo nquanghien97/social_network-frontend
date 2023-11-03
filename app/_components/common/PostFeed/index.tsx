@@ -45,9 +45,9 @@ function PostFeed() {
       dispatch(getNewFeedAsync());
       dispatch(getAllPostsAsync());
       setIsOpenModal(false);
-      toast.success('Created Post Successfully');
+      toast.success('Tạo bài viết thành công!');
     } catch (err: unknown) {
-      toast.error('Create Post Failed');
+      toast.error('Có lỗi xảy ra, vui lòng thử lại!');
     } finally {
       setLoading(false);
     }
