@@ -20,7 +20,7 @@ function FeedItem(props: FeedBodyProps) {
         postId={post.id}
         hasDeletePost={hasDeletePost}
       />
-      <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} postId={post.id} liked={!!post.like.length} />
+      <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} postId={post.id} liked={post.like} />
       <Comments />
     </div>
   );
