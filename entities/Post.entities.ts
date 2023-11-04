@@ -1,3 +1,9 @@
+export interface LikeEntity {
+  id: string;
+  userId: number;
+  postId: string;
+  createdAt: Date;
+}
 export interface FeedEntity {
   id: string;
   title?: string;
@@ -9,6 +15,7 @@ export interface FeedEntity {
     job: string;
     imageUrl: string;
   }
+  like: LikeEntity[];
   createdAt: Date;
   updatedAt: Date;
 }

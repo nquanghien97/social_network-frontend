@@ -1,16 +1,32 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import LikeIcon from '../../../../_assets/icons/LikeIcon';
+import LikedIcon from '../../../../_assets/icons/LikedIcon';
 import MessageIcon from '../../../../_assets/icons/MessageIcon';
 import ShareIcon from '../../../../_assets/icons/ShareIcon';
+import { likePost } from '@/services/like.services';
 
 interface FeedBodyProps {
   title?: string;
   text?: string;
   imageUrl?: string;
+  postId: string;
+  liked: boolean;
 }
 
 function FeedBody(props: FeedBodyProps) {
-  const { title, text, imageUrl } = props;
+  const {
+    title, text, imageUrl, postId, liked,
+  } = props;
+  const [like, setLike] = useState(liked);
+  const onLikePost = async () => {
+    try {
+      await likePost({ postId });
+      setLike(!like);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   return (
     <div>
       <h2 className="text-2xl">{title}</h2>
@@ -27,8 +43,16 @@ function FeedBody(props: FeedBodyProps) {
         />
       ) : null}
       <div className="flex items-center justify-center gap-x-3 my-2">
-        <div className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
-          <LikeIcon />
+        <div
+          className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300"
+          onClick={onLikePost}
+          aria-hidden
+        >
+          {like ? (
+            <LikedIcon />
+          ) : (
+            <LikeIcon />
+          )}
           <span>Like</span>
         </div>
         <div className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
