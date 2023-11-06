@@ -21,7 +21,7 @@ function FeedItem(props: FeedBodyProps) {
         hasDeletePost={hasDeletePost}
       />
       <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} postId={post.id} liked={post.like} />
-      <Comments />
+      <Comments postId={post.id} />
     </div>
   );
 }

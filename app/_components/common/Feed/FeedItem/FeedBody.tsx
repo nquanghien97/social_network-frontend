@@ -22,7 +22,6 @@ function FeedBody(props: FeedBodyProps) {
     title, text, imageUrl, postId, liked,
   } = props;
   const likedId = liked?.map((item: LikeEntity) => item.userId);
-  console.log(likedId);
   const profile = useSelector((state: RootState) => state.profile);
   const [like, setLike] = useState(likedId.includes(profile.id));
   const onLikePost = async () => {
