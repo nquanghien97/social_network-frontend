@@ -75,7 +75,7 @@ function AppHeader() {
         </div>
       </div>
       <hr className="my-4" />
-      <div className="py-1.5 hover:text-[#0f6fec] cursor-pointer text-center" onClick={signOut} aria-hidden="true">
+      <div className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer text-center" onClick={signOut} aria-hidden="true">
         Signout
       </div>
     </div>
@@ -88,7 +88,7 @@ function AppHeader() {
           <Image src={logo} alt="logo" width={60} height={60} unoptimized />
         </div>
         <div className="lg:hidden relative flex gap-x-2 ml-auto">
-          <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
+          <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] text-[#0f6fec] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
             {isOpenMenu ? <CloseIcon fill="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
           </div>
           <Link
