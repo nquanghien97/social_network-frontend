@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import { getComments, postComments } from '@/services/comments.services';
 import Comment from './Comment';
 import { CommentEntity } from '@/entities/Comment.entities';
@@ -12,17 +13,22 @@ import { RootState } from '../../../../../../store';
 interface CommentsProps {
   // imageUrl?: string;
   postId: string;
-
+  comments?: CommentEntity[];
+  hasFirstComment?: boolean;
 }
 
 function Comments(props: CommentsProps) {
-  const { postId } = props;
-  const [comments, setComments] = useState([]);
+  const router = useRouter();
+  const { postId, comments, hasFirstComment } = props;
+  const [listComments, setListComments] = useState(comments);
   const profile = useSelector((state: RootState) => state.profile);
   const [replyText, setReplyText] = useState('');
   const fetchComments = async () => {
-    const res = await getComments({ postId });
-    setComments(res.data.comments);
+    if (hasFirstComment) {
+      const res = await getComments({ postId });
+      setListComments(res.data.comments);
+    }
+    return null;
   };
   useEffect(() => {
     fetchComments();
@@ -38,11 +44,11 @@ function Comments(props: CommentsProps) {
   return (
     <>
       <ul className="[&>*]:pl-0">
-        {comments?.map((comment: CommentEntity) => (
+        {listComments?.map((comment: CommentEntity) => (
           <Comment key={comment.id} comment={comment} addReply={addReply} />
         ))}
       </ul>
-      <div className="flex w-full">
+      <div className="flex w-full items-center">
         <div className="h-10 w-10">
           <Image
             src={profile.imageUrl || '/DefaultAvatar.svg'}
@@ -52,30 +58,41 @@ function Comments(props: CommentsProps) {
             className="rounded-full"
           />
         </div>
-        <div className="ml-2 w-full relative">
-          <BaseInput
-            onChange={(e) => {
-              setReplyText(e.target.value);
-            }}
-            type="text"
-            value={replyText}
-            fullWidth
-            className="w-full"
-            placeholder="Viết bình luận"
-            endIcon={(
-              <button
-                type="button"
-                className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer absolute right-2 top-0.5"
-                onClick={() => {
-                  addReply({ content: replyText });
-                  setReplyText('');
-                }}
-              >
-                <SendIcon />
-              </button>
-            )}
-          />
-        </div>
+        {!hasFirstComment ? (
+          <div
+            aria-hidden="true"
+            className="w-full flex items-center bg-[#26262b] py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"
+            onClick={() => router.push(`/${postId}`)}
+          >
+            <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
+          </div>
+        ) : (
+          <div className="ml-2 w-full relative [&>div]:mb-0">
+            <BaseInput
+              onChange={(e) => {
+                setReplyText(e.target.value);
+              }}
+              type="text"
+              value={replyText}
+              fullWidth
+              className="w-full"
+              placeholder="Viết bình luận"
+              endIcon={(
+                <button
+                  type="button"
+                  className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer absolute right-2 top-0.5"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addReply({ content: replyText });
+                    setReplyText('');
+                  }}
+                >
+                  <SendIcon />
+                </button>
+              )}
+            />
+          </div>
+        )}
       </div>
     </>
   );

@@ -4,28 +4,26 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import Modal from '../../Modal';
-import BaseButton from '../../BaseButton';
-import { AppDispatch, RootState } from '../../../../../store';
+import Modal from '../../../Modal';
+import BaseButton from '../../../BaseButton';
+import { AppDispatch } from '../../../../../../store';
 import { deletePost } from '@/services/post.services';
-import { getAllPostsAsync } from '../../../../../store/reducers/postsReducer';
+import { getAllPostsAsync } from '../../../../../../store/reducers/postsReducer';
 
 interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
   setOpenFeedOptions: Dispatch<SetStateAction<boolean>>
   postId: string;
-  authorId: number
+  hasDeletePost?: boolean;
 }
 
 function PostOptions(props: PostOptionsProps) {
   const dispatch = useDispatch<AppDispatch>();
   const {
-    PostOptionsRef, setOpenFeedOptions, postId, authorId,
+    PostOptionsRef, setOpenFeedOptions, postId, hasDeletePost,
   } = props;
-  const profile = useSelector((state: RootState) => state.profile);
-
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
 
   const onDeletePost = async (id: string) => {
@@ -56,7 +54,7 @@ function PostOptions(props: PostOptionsProps) {
         ref={PostOptionsRef}
       >
         <ul className="w-full">
-          {profile.id === authorId && (
+          {hasDeletePost && (
             <li
               className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
               onClick={() => {

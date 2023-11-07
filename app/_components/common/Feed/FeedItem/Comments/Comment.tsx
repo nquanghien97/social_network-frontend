@@ -32,9 +32,14 @@ function Comment(props: CommentProps) {
           />
         </div>
         <div className="flex flex-col w-full ml-2">
-          <div className="bg-[#202227] flex flex-col w-full rounded-md px-4 py-2">
-            <h5 className="font-bold">{comment.author.fullName}</h5>
-            <p className="text-sm py-1">{comment.content}</p>
+          <div className="bg-[#202227] flex justify-between w-full rounded-md px-4 py-2">
+            <div>
+              <h5 className="font-bold">{comment.author.fullName}</h5>
+              <p className="text-sm py-1">{comment.content}</p>
+            </div>
+            <div>
+              options
+            </div>
           </div>
           <div className="flex gap-4 items-center text-[#a1a1a8] p-2">
             <button
@@ -106,7 +111,7 @@ function Comment(props: CommentProps) {
           </div>
         </div>
       )}
-      {comment.children.length > 0 && (
+      {comment?.children?.length > 0 && (
         <ul>
           {comment.children.map((childComment) => (
             <Comment

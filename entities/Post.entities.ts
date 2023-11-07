@@ -1,9 +1,12 @@
+import { CommentEntity } from './Comment.entities';
+
 export interface LikeEntity {
   id: string;
   userId: number;
   postId: string;
   createdAt: Date;
 }
+
 export interface FeedEntity {
   id: string;
   title?: string;
@@ -16,6 +19,7 @@ export interface FeedEntity {
     imageUrl: string;
   }
   like: LikeEntity[];
+  comments: CommentEntity[];
   createdAt: Date;
   updatedAt: Date;
 }

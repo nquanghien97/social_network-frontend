@@ -12,7 +12,7 @@ interface FeedHeaderProps {
   updatedAt?: Date;
   imageUrl?: string;
   postId: string;
-  hasDeletePost?: boolean;
+  authorId: number;
 }
 
 function FeedHeader(props: FeedHeaderProps) {
@@ -22,7 +22,7 @@ function FeedHeader(props: FeedHeaderProps) {
     updatedAt,
     imageUrl,
     postId,
-    hasDeletePost,
+    authorId,
   } = props;
 
   const [openFeedOptions, setOpenFeedOptions] = useState(false);
@@ -50,7 +50,7 @@ function FeedHeader(props: FeedHeaderProps) {
         >
           <MoreHorizIcon fill="#0f6fec" width={16} height={16} />
         </div>
-        {openFeedOptions && <PostOptions PostOptionsRef={PostOptionsRef} setOpenFeedOptions={setOpenFeedOptions} postId={postId} hasDeletePost={hasDeletePost} />}
+        {openFeedOptions && <PostOptions authorId={authorId} PostOptionsRef={PostOptionsRef} setOpenFeedOptions={setOpenFeedOptions} postId={postId} />}
       </div>
     </div>
   );

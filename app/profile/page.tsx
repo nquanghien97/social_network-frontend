@@ -16,7 +16,7 @@ function Profile() {
   return (
     <div className="lg:container mx-auto w-full">
       <PostFeed />
-      <Feed posts={posts} loading={loading} hasDeletePost />
+      <Feed posts={posts} loading={loading} />
     </div>
   );
 }

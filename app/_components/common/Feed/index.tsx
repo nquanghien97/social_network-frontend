@@ -3,13 +3,9 @@ import { FeedEntity } from '@/entities/Post.entities';
 import { PostType } from '../../../../store/reducers/postsReducer';
 import LoadingIcon from '../../../_assets/icons/LoadingIcon';
 
-interface FeedProps extends PostType {
-  hasDeletePost?: boolean;
-}
-
-function Feed(props: FeedProps) {
+function Feed(props: PostType) {
   const {
-    posts, loading, hasDeletePost,
+    posts, loading,
   } = props;
   if (loading) {
     return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;
@@ -17,7 +13,7 @@ function Feed(props: FeedProps) {
   return (
     <div className="rounded-md w-full">
       {posts?.map((item: FeedEntity) => (
-        <FeedItem key={item.id} post={item} hasDeletePost={hasDeletePost} />
+        <FeedItem key={item.id} post={item} hasFirstComment={false} />
       ))}
     </div>
   );
