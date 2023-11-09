@@ -4,6 +4,7 @@ import {
   SetStateAction,
   useState,
 } from 'react';
+import { toast } from 'react-toastify';
 import Modal from '../../../Modal';
 import BaseButton from '../../../BaseButton';
 
@@ -32,10 +33,16 @@ function CommentOptions(props: CommentOptionsProps) {
       console.log(err.message);
     }
   };
+
+  const onReportClick = () => {
+    toast.success('Báo cáo bình luận thành công!');
+    setOpenCommentOptions(false);
+  };
+
   return (
     <>
       <div
-        className="px-4 py-2 bg-[#26262b] absolute top-full right-0 rounded-md min-w-[180px] text-center"
+        className="px-4 py-2 bg-[#26262b] absolute top-full right-0 rounded-md min-w-[180px] text-center z-10"
         ref={CommentOptionsRef}
       >
         <ul className="w-full">
@@ -52,6 +59,8 @@ function CommentOptions(props: CommentOptionsProps) {
           )}
           <li
             className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
+            onClick={onReportClick}
+            aria-hidden
           >
             Report Comment
           </li>

@@ -11,6 +11,7 @@ import BaseButton from '../../BaseButton';
 import { AppDispatch, RootState } from '../../../../../store';
 import { deletePost } from '@/services/post.services';
 import { getAllPostsAsync } from '../../../../../store/reducers/postsReducer';
+import { getNewFeedAsync } from '../../../../../store/reducers/newFeedReducer';
 
 interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
@@ -27,14 +28,19 @@ function PostOptions(props: PostOptionsProps) {
   const profile = useSelector((state: RootState) => state.profile);
 
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onDeletePost = async () => {
+    setLoading(true);
     try {
       await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
       dispatch(getAllPostsAsync());
+      dispatch(getNewFeedAsync());
     } catch (err) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,6 +89,7 @@ function PostOptions(props: PostOptionsProps) {
           <div className="flex gap-4">
             <BaseButton
               onClick={onConfirmClick}
+              loading={loading}
             >
               Confirm
             </BaseButton>
