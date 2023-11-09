@@ -4,45 +4,30 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 import Modal from '../../../Modal';
 import BaseButton from '../../../BaseButton';
-import { AppDispatch } from '../../../../../../store';
-import { deletePost } from '@/services/post.services';
-import { getAllPostsAsync } from '../../../../../../store/reducers/postsReducer';
 
-interface PostOptionsProps {
-  PostOptionsRef: RefObject<HTMLDivElement>
-  setOpenFeedOptions: Dispatch<SetStateAction<boolean>>
-  postId: string;
-  hasDeletePost?: boolean;
+interface CommentOptionsProps {
+  CommentOptionsRef: RefObject<HTMLDivElement>
+  setOpenCommentOptions: Dispatch<SetStateAction<boolean>>
+  commentId: string;
+  hasDeleteComment?: boolean;
+  onDeleteComment?: (id: string) => Promise<void>;
 }
 
-function PostOptions(props: PostOptionsProps) {
-  const dispatch = useDispatch<AppDispatch>();
+function CommentOptions(props: CommentOptionsProps) {
   const {
-    PostOptionsRef, setOpenFeedOptions, postId, hasDeletePost,
+    CommentOptionsRef, setOpenCommentOptions, commentId, hasDeleteComment, onDeleteComment,
   } = props;
-  const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
-
-  const onDeletePost = async (id: string) => {
-    try {
-      await deletePost({ postId: id });
-      toast.success('Xóa bài viết thành công');
-      dispatch(getAllPostsAsync());
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  const [openModalDeleteComment, setOpenModalDeleteComment] = useState(false);
 
   const onConfirmClick = async () => {
     try {
-      if (onDeletePost) {
-        await onDeletePost(postId);
+      if (onDeleteComment) {
+        await onDeleteComment(commentId);
       }
-      setOpenModalDeletePost(false);
-      setOpenFeedOptions(false);
+      setOpenModalDeleteComment(false);
+      setOpenCommentOptions(false);
     } catch (err) {
       console.log(err.message);
     }
@@ -50,33 +35,33 @@ function PostOptions(props: PostOptionsProps) {
   return (
     <>
       <div
-        className="px-4 py-2 bg-[#26262b] absolute top-full right-0 rounded-md min-w-[120px]"
-        ref={PostOptionsRef}
+        className="px-4 py-2 bg-[#26262b] absolute top-full right-0 rounded-md min-w-[180px] text-center"
+        ref={CommentOptionsRef}
       >
         <ul className="w-full">
-          {hasDeletePost && (
+          {hasDeleteComment && (
             <li
               className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
               onClick={() => {
-                setOpenModalDeletePost(true);
+                setOpenModalDeleteComment(true);
               }}
               aria-hidden
             >
-              Delete Post
+              Delete Comment
             </li>
           )}
           <li
             className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
           >
-            Share Post
+            Report Comment
           </li>
         </ul>
       </div>
       <Modal
-        open={openModalDeletePost}
-        onClose={() => setOpenModalDeletePost(false)}
+        open={openModalDeleteComment}
+        onClose={() => setOpenModalDeleteComment(false)}
       >
-        <div className="p-5 bg-[#26262b] rounded-md" ref={PostOptionsRef}>
+        <div className="p-5 bg-[#26262b] rounded-md" ref={CommentOptionsRef}>
           <p className="mb-4">Do you want to delete this post?</p>
           <div className="flex gap-4">
             <BaseButton
@@ -87,8 +72,8 @@ function PostOptions(props: PostOptionsProps) {
             <BaseButton
               className="text-[red] hover:bg-[red] hover:text-[white]"
               onClick={() => {
-                setOpenModalDeletePost(false);
-                setOpenFeedOptions(false);
+                setOpenModalDeleteComment(false);
+                setOpenCommentOptions(false);
               }}
             >
               Cancel
@@ -100,4 +85,4 @@ function PostOptions(props: PostOptionsProps) {
   );
 }
 
-export default PostOptions;
+export default CommentOptions;

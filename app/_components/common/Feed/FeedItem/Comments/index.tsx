@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { getComments, postComments } from '@/services/comments.services';
+import { deleteComments, getComments, postComments } from '@/services/comments.services';
 import Comment from './Comment';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
@@ -33,6 +33,15 @@ function Comments(props: CommentsProps) {
   useEffect(() => {
     fetchComments();
   }, []);
+  const onDeleteComment = async (commentId: string) => {
+    try {
+      await deleteComments({ commentId });
+      await fetchComments();
+      toast.success('Xóa bình luận thành công');
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   const addReply = async ({ content, parentId } : { content: string, parentId?: string }) => {
     try {
       await postComments({ postId, content, parentId });
@@ -45,7 +54,7 @@ function Comments(props: CommentsProps) {
     <>
       <ul className="[&>*]:pl-0">
         {listComments?.map((comment: CommentEntity) => (
-          <Comment key={comment.id} comment={comment} addReply={addReply} />
+          <Comment key={comment.id} comment={comment} addReply={addReply} onDeleteComment={onDeleteComment} />
         ))}
       </ul>
       <div className="flex w-full items-center">
@@ -67,7 +76,7 @@ function Comments(props: CommentsProps) {
             <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
           </div>
         ) : (
-          <div className="ml-2 w-full relative [&>div]:mb-0">
+          <div className="ml-2 w-full relative [&>divAEDQSCSRwezxscfrđvtgbx]:mb-0">
             <BaseInput
               onChange={(e) => {
                 setReplyText(e.target.value);

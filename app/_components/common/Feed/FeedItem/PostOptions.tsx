@@ -28,9 +28,9 @@ function PostOptions(props: PostOptionsProps) {
 
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
 
-  const onDeletePost = async (id: string) => {
+  const onDeletePost = async () => {
     try {
-      await deletePost({ postId: id });
+      await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
       dispatch(getAllPostsAsync());
     } catch (err) {
@@ -41,7 +41,7 @@ function PostOptions(props: PostOptionsProps) {
   const onConfirmClick = async () => {
     try {
       if (onDeletePost) {
-        await onDeletePost(postId);
+        await onDeletePost();
       }
       setOpenModalDeletePost(false);
       setOpenFeedOptions(false);
