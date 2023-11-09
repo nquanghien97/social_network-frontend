@@ -31,3 +31,8 @@ export const findUser = async (data: UserId) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/find-user`, data);
   return res.data.user;
 };
+
+export const getSuggestionsUser = async () => {
+  const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/suggestions-user`);
+  return res.data.suggesttionsUser;
+};

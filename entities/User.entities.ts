@@ -29,3 +29,15 @@ export const createUserFromUserResponse = (
     updatedAt: userResponse.updatedAt,
   };
 };
+
+export interface SuggestionsUserEntity {
+  id: number,
+  email: string,
+  fullName: string,
+  location: string,
+  job: string,
+  imageUrl: string,
+  description: string,
+  createdAt: Date,
+  updatedAt: Date,
+}
