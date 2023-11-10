@@ -7,11 +7,11 @@ import { SuggestionsUserEntity } from '@/entities/User.entities';
 
 function WhoToFollow() {
   const [listSuggestionsUser, setListSuggestionsUser] = useState<SuggestionsUserEntity[]>();
+  const fetchSuggestionsUser = async () => {
+    const res = await getSuggestionsUser();
+    setListSuggestionsUser(res);
+  };
   useEffect(() => {
-    const fetchSuggestionsUser = async () => {
-      const res = await getSuggestionsUser();
-      setListSuggestionsUser(res);
-    };
     fetchSuggestionsUser();
   }, []);
   if (!listSuggestionsUser) return <p>Loading...</p>;
@@ -19,16 +19,20 @@ function WhoToFollow() {
     <div className="lg:mt-4">
       <div>
         <h5 className="text-xl px-5 pt-5">Who to follow</h5>
-        <div className="p-5">
-          {listSuggestionsUser.map((user: SuggestionsUserEntity) => (
-            <WhoToFollowItem fullName={user.fullName} imageUrl={user.imageUrl} job={user.job} />
-          ))}
-          <BaseButton
-            className="mt-4 flex"
-          >
-            <Link scroll={false} href="/" className="">View More</Link>
-          </BaseButton>
-        </div>
+        {listSuggestionsUser.length === 0 ? (
+          <p className="text-center p-5 text-2xl">Tất cả đã là bạn bè của bạn</p>
+        ) : (
+          <div className="p-5">
+            {listSuggestionsUser.map((user: SuggestionsUserEntity) => (
+              <WhoToFollowItem key={user.id} fullName={user.fullName} imageUrl={user.imageUrl} job={user.job} friendId={user.id} />
+            ))}
+            <BaseButton
+              className="mt-4 flex"
+            >
+              <Link scroll={false} href="/" className="">View More</Link>
+            </BaseButton>
+          </div>
+        )}
       </div>
     </div>
   );

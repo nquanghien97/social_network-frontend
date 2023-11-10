@@ -11,3 +11,5 @@ export const getFriendsId = async () => {
   const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/id-friend`);
   return res.data;
 };
+
+export const addFriend = async (friendId: number) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/add-friend`, { friendId });
