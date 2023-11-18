@@ -16,7 +16,7 @@ function SuggestionsFriend() {
 
   useEffect(() => {
     (async () => {
-      const { suggesttionsUser } = await getSuggestionsUser(2, page);
+      const { suggesttionsUser } = await getSuggestionsUser(10, page);
       setListSuggestionsUser((prev) => [...prev, ...suggesttionsUser]);
       setCanLoadMore(suggesttionsUser.length > 0);
       setLoading(false);
@@ -39,7 +39,7 @@ function SuggestionsFriend() {
       <h1 className="text-2xl my-5">Những người bạn có thể biết</h1>
       <div className="flex flex-wrap gap-4 sm:justify-start justify-center">
         {listSuggestionsUser.map((user) => (
-          <SuggestionsFriendItem key={user.id} measureRef={measureRef} imageUrl={user.imageUrl} fullName={user.fullName} />
+          <SuggestionsFriendItem key={user.id} measureRef={measureRef} imageUrl={user.imageUrl} fullName={user.fullName} friendId={user.id} />
         ))}
       </div>
       {loading ? <LoadingIcon /> : null}
