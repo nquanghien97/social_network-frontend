@@ -39,7 +39,6 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
       });
     }
   };
-  console.log(loading.loading);
   const statusFriend = () => {
     if (loading.loading) {
       return (
@@ -50,7 +49,11 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
       return <CheckIcon fill="#0f6fec" width={16} height={16} />;
     }
     return (
-      <div onClick={onAddFriend} aria-hidden>
+      <div
+        onClick={onAddFriend}
+        aria-hidden
+        className="w-full h-full flex items-center justify-center"
+      >
         <PlusIcon fill="#0f6fec" width={16} height={16} />
       </div>
     );

@@ -32,7 +32,7 @@ export const findUser = async (data: UserId) => {
   return res.data.user;
 };
 
-export const getSuggestionsUser = async () => {
-  const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/suggestions-user`);
-  return res.data.suggesttionsUser;
+export const getSuggestionsUser = async (limit: number, offset = 1) => {
+  const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/suggestions-user`, { offset, limit });
+  return res.data;
 };

@@ -21,6 +21,7 @@ export const profileSlice = createSlice<User, {
         imageUrl: '',
         description: '',
         job: '',
+        friendQuantity: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -34,6 +35,7 @@ export const profileSlice = createSlice<User, {
           state.imageUrl = user.imageUrl || 'DefaultAvatar.svg';
           state.description = user?.description;
           state.job = user?.job;
+          state.friendQuantity = user?.friendQuantity;
           state.createdAt = user?.createdAt;
           state.updatedAt = user?.updatedAt;
         },

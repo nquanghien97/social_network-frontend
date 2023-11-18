@@ -15,11 +15,11 @@ const initialState: PostType = {
 
 export const getNewFeedAsync = createAsyncThunk(
   'feed/getNewFeed',
-  async (_, thunkApi) => {
+  async ({ limit, offset }: { limit: number, offset: number }, thunkApi) => {
     try {
       if (isAuthenticated()) {
         const listFriendsId = await getFriendsId();
-        const res = await getNewFeed({ listFriendsId: listFriendsId.listFriendsId });
+        const res = await getNewFeed({ listFriendsId: listFriendsId.listFriendsId, offset, limit });
         return res.data.posts;
       }
     } catch (err) {

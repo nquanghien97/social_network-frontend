@@ -8,8 +8,8 @@ import { SuggestionsUserEntity } from '@/entities/User.entities';
 function WhoToFollow() {
   const [listSuggestionsUser, setListSuggestionsUser] = useState<SuggestionsUserEntity[]>();
   const fetchSuggestionsUser = async () => {
-    const res = await getSuggestionsUser();
-    setListSuggestionsUser(res);
+    const res = await getSuggestionsUser(3);
+    setListSuggestionsUser(res.suggesttionsUser);
   };
   useEffect(() => {
     fetchSuggestionsUser();
@@ -18,7 +18,7 @@ function WhoToFollow() {
   return (
     <div className="lg:mt-4">
       <div>
-        <h5 className="text-xl px-5 pt-5">Who to follow</h5>
+        <h5 className="text-xl px-5 pt-5">Who to know</h5>
         {listSuggestionsUser.length === 0 ? (
           <p className="text-center p-5 text-2xl">Tất cả đã là bạn bè của bạn</p>
         ) : (
@@ -29,7 +29,7 @@ function WhoToFollow() {
             <BaseButton
               className="mt-4 flex"
             >
-              <Link scroll={false} href="/" className="">View More</Link>
+              <Link scroll={false} href="/suggestions-friend" className="">View More</Link>
             </BaseButton>
           </div>
         )}

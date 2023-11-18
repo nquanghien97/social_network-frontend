@@ -2,6 +2,8 @@ import api from '../app/_config/api';
 
 interface ListFriendsType {
   listFriendsId: number[];
+  limit: number;
+  offset: number;
 }
 
 export const createPost = (data: FormData) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, data);

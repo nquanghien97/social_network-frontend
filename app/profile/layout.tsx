@@ -66,8 +66,9 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                       <Image className="border-2 rounded-full w-full h-full" width={100} height={100} src={profile.imageUrl} alt="avatar" unoptimized />
                     )}
                   </div>
-                  <div className="px-2">
+                  <div className="px-4 pt-3">
                     <h1 className="font-bold text-xl">{profile.fullName}</h1>
+                    <p className="text-[#a1a1a8]">{`${profile.friendQuantity} friends`}</p>
                   </div>
                   <div className="md:ml-auto">
                     <BaseButton className="text-[red] hover:bg-[#39435b]" onClick={() => setOpen(true)}>
@@ -78,19 +79,19 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                 </div>
               </div>
               <div className="flex items-center text-[#a1a1a8] px-6">
-                <div className="flex items-center mr-2">
+                <div className="flex items-center mr-4">
                   <div className="mr-1">
                     <WorkIcon fill="#a1a1a8" />
                   </div>
                   <p>{profile.job}</p>
                 </div>
-                <div className="flex items-center mr-2">
+                <div className="flex items-center mr-4">
                   <div className="mr-1">
                     <LocationIcon fill="#a1a1a8" />
                   </div>
                   <p>{profile.location}</p>
                 </div>
-                <div className="flex items-center mr-2">
+                <div className="flex items-center mr-4">
                   <div className="mr-1">
                     <CalendarIcon fill="#a1a1a8" />
                   </div>

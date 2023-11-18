@@ -8,6 +8,7 @@ export default interface UserEntity {
   imageUrl: string;
   description?: string;
   job?: string;
+  friendQuantity: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,6 +26,7 @@ export const createUserFromUserResponse = (
     imageUrl: userResponse.imageUrl,
     description: userResponse.description,
     job: userResponse.job,
+    friendQuantity: userResponse.friendQuantity,
     createdAt: userResponse.createdAt,
     updatedAt: userResponse.updatedAt,
   };

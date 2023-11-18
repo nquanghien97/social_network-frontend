@@ -3,9 +3,14 @@ import { FeedEntity } from '@/entities/Post.entities';
 import { PostType } from '../../../../store/reducers/postsReducer';
 import LoadingIcon from '../../../_assets/icons/LoadingIcon';
 
-function Feed(props: PostType) {
+interface FeedProps extends PostType {
+  // measureRef: (node: HTMLDivElement) => void;
+}
+function Feed(props: FeedProps) {
   const {
-    posts, loading,
+    posts,
+    loading,
+    // measureRef,
   } = props;
   if (loading) {
     return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;

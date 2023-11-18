@@ -7,6 +7,7 @@ export default interface UserDTO {
   imageUrl: string;
   description?: string;
   job?: string;
+  friendQuantity: number;
   accessToken: string,
   refreshToken?: string,
   createdAt: Date;

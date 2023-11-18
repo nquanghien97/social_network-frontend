@@ -42,7 +42,7 @@ function PostFeed() {
       formData.append('title', data.title!);
       formData.append('text', data.text!);
       await createPost(formData);
-      dispatch(getNewFeedAsync());
+      dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
       dispatch(getAllPostsAsync());
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
