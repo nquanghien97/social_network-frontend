@@ -30,16 +30,15 @@ function Friend() {
       toast.error('Xóa bạn thất bại');
     }
   };
-
   return (
     <div className="lg:container mx-auto h-full px-3 bg-[#0f0f10] rounded-md w-full">
       <div className="px-5 pt-5">
         <h5 className="text-2xl font-bold">Friends</h5>
       </div>
-      {listFriends ? (
+      {listFriends.length ? (
         <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
       ) : (
-        <p>Bạn chưa có người bạn nào</p>
+        <p className="p-5 text-center text-2xl">Bạn chưa có người bạn nào</p>
       )}
     </div>
   );
