@@ -37,7 +37,7 @@ function SuggestionsFriend() {
   return (
     <div className="pt-14 p-6">
       <h1 className="text-2xl my-5">Những người bạn có thể biết</h1>
-      <div className="flex flex-wrap flex-col gap-4 sm:justify-start justify-center">
+      <div className="flex flex-wrap gap-4 sm:justify-start justify-center">
         {listSuggestionsUser.map((user) => (
           <SuggestionsFriendItem key={user.id} measureRef={measureRef} imageUrl={user.imageUrl} fullName={user.fullName} />
         ))}

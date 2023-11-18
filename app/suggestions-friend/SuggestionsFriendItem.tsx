@@ -12,7 +12,7 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
   const { imageUrl, fullName, measureRef } = props;
   return (
     <div ref={measureRef} className="max-w-[250px] min-w-[200px] flex flex-1 flex-col bg-[#0f0f10] p-5 rounded-md">
-      <div>
+      <div className="flex flex-1">
         <Image src={imageUrl || 'DefaultAvatar.svg'} alt="" width={100} height={100} className="w-full" />
       </div>
       <div className="py-2">

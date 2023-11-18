@@ -86,9 +86,9 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 </label>
               </div>
               {file ? (
-                <Image className="border-2 rounded-full m-auto h-auto cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
+                <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
               ) : (
-                <Image className="border-2 rounded-full m-auto h-auto cursor-pointer" unoptimized width={100} height={100} src={profile.imageUrl} alt="avatar" />
+                <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={profile.imageUrl} alt="avatar" />
               )}
             </div>
             <div className="w-full">

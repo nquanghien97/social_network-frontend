@@ -60,7 +60,7 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
   };
   return (
     <div className="flex gap-x-4 mb-4 items-center text-sm">
-      <div className="w-10 shrink-0">
+      <div className="w-10 h-10 shrink-0">
         <Image src={imageUrl || DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" unoptimized width={48} height={48} />
       </div>
       <div className="w-full">
