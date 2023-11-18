@@ -25,10 +25,10 @@ function Post() {
     };
     fetchPost();
   }, []);
-  if (loading && !post) return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;
+  if (loading || !post) return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;
   return (
     <div className="lg:w-1/2 w-full m-auto max-lg:flex-col pt-14 px-3">
-      <FeedItem post={post!} hasFirstComment />
+      <FeedItem post={post} hasFirstComment />
     </div>
   );
 }

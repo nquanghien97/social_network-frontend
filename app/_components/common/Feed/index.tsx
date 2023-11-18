@@ -12,12 +12,12 @@ function Feed(props: FeedProps) {
     loading,
     // measureRef,
   } = props;
-  if (loading) {
+  if (loading || !posts) {
     return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;
   }
   return (
     <div className="rounded-md w-full">
-      {posts?.map((item: FeedEntity) => (
+      {posts.map((item: FeedEntity) => (
         <FeedItem key={item.id} post={item} hasFirstComment={false} />
       ))}
     </div>

@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { deleteComments, getComments, postComments } from '@/services/comments.services';
 import Comment from './Comment';
 import { CommentEntity } from '@/entities/Comment.entities';
@@ -17,12 +20,32 @@ interface CommentsProps {
   hasFirstComment?: boolean;
 }
 
+interface CommentFormState {
+  comment: string;
+}
+
+const schema = yup
+  .object({
+    comment: yup
+      .string()
+      .required('Bạn phải nhập bình luận'),
+  });
+
 function Comments(props: CommentsProps) {
   const router = useRouter();
   const { postId, comments, hasFirstComment } = props;
   const [listComments, setListComments] = useState(comments);
   const profile = useSelector((state: RootState) => state.profile);
-  const [replyText, setReplyText] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CommentFormState>({
+    resolver: yupResolver(schema),
+  });
+
   const fetchComments = async () => {
     if (hasFirstComment) {
       const res = await getComments({ postId });
@@ -50,6 +73,12 @@ function Comments(props: CommentsProps) {
       toast.error('Có lỗi xảy ra, vui lòng thử lại');
     }
   };
+
+  const onSendComment: SubmitHandler<CommentFormState> = async (data: CommentFormState) => {
+    await addReply({ content: data.comment });
+    reset();
+  };
+
   return (
     <>
       <ul className="[&>*]:pl-0">
@@ -76,31 +105,27 @@ function Comments(props: CommentsProps) {
             <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
           </div>
         ) : (
-          <div className="ml-2 w-full relative [&>divAEDQSCSRwezxscfrđvtgbx]:mb-0">
+          <form
+            className="ml-2 w-full relative [&>div]:mb-0"
+            onSubmit={handleSubmit(onSendComment)}
+          >
             <BaseInput
-              onChange={(e) => {
-                setReplyText(e.target.value);
-              }}
+              {...register('comment')}
+              message={errors.comment?.message}
               type="text"
-              value={replyText}
               fullWidth
               className="w-full"
               placeholder="Viết bình luận"
               endIcon={(
                 <button
-                  type="button"
+                  type="submit"
                   className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer absolute right-2 top-0.5"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addReply({ content: replyText });
-                    setReplyText('');
-                  }}
                 >
                   <SendIcon />
                 </button>
               )}
             />
-          </div>
+          </form>
         )}
       </div>
     </>

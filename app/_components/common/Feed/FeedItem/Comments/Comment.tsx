@@ -1,6 +1,9 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
 import { RootState } from '../../../../../../store';
@@ -13,19 +16,43 @@ import { useOutsideClick } from '../../../../../_hooks/useOutsideClick';
 
 interface CommentProps {
   comment: CommentEntity
-  addReply: ({ parentId, content } : { parentId?: string, content: string }) => void
+  addReply: ({ parentId, content } : { parentId?: string, content: string }) => Promise<void>
   onDeleteComment?: (id: string) => Promise<void>
 }
 
+interface CommentFormState {
+  comment: string;
+}
+
+const schema = yup
+  .object({
+    comment: yup
+      .string()
+      .required('Bạn phải nhập bình luận'),
+  });
+
 function Comment(props: CommentProps) {
   const { comment, addReply, onDeleteComment } = props;
-  const [replyText, setReplyText] = useState('');
   const [showReplyBox, setShowReplyBox] = useState(false);
   const profile = useSelector((state: RootState) => state.profile);
-  const inputEl = useRef<HTMLInputElement>(null);
   const [openCommentOptions, setOpenCommentOptions] = useState(false);
   const CommentOptionsRef = useOutsideClick(() => setOpenCommentOptions(false));
   const hasDeleteComment = profile.id === comment.author.id;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CommentFormState>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSendComment: SubmitHandler<CommentFormState> = async (data) => {
+    await addReply({ parentId: comment.id, content: data.comment });
+    setShowReplyBox(false);
+    reset();
+  };
   return (
     <li key={comment.id} className="pl-6 w-full py-1">
       <div className="flex">
@@ -97,26 +124,19 @@ function Comment(props: CommentProps) {
               className="rounded-full"
             />
           </div>
-          <div className="ml-2 w-full relative">
+          <form className="ml-2 w-full relative" onSubmit={handleSubmit(onSendComment)}>
             <BaseInput
-              ref={inputEl}
-              onChange={(e) => {
-                setReplyText(e.target.value);
-              }}
+              {...register('comment')}
               type="text"
               fullWidth
               className="w-full"
               placeholder="Viết bình luận"
+              message={errors.comment?.message}
               endIcon={(
                 <div>
                   <button
-                    type="button"
+                    type="submit"
                     className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer absolute right-10 top-0.5"
-                    onClick={() => {
-                      addReply({ parentId: comment.id, content: replyText });
-                      setReplyText('');
-                      setShowReplyBox(false);
-                    }}
                   >
                     <SendIcon />
                   </button>
@@ -125,7 +145,7 @@ function Comment(props: CommentProps) {
                     className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer absolute right-2 top-0.5"
                     onClick={() => {
                       setShowReplyBox(false);
-                      setReplyText('');
+                      reset();
                     }}
                   >
                     <CloseIcon fill="white" />
@@ -133,7 +153,7 @@ function Comment(props: CommentProps) {
                 </div>
               )}
             />
-          </div>
+          </form>
         </div>
       )}
       {comment?.children?.length > 0 && (
@@ -143,6 +163,7 @@ function Comment(props: CommentProps) {
               key={childComment.id}
               comment={childComment}
               addReply={addReply}
+              onDeleteComment={onDeleteComment}
             />
           ))}
         </ul>
