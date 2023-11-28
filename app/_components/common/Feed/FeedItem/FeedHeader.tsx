@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import MoreHorizIcon from '../../../../_assets/icons/MoreHorizIcon';
@@ -24,18 +25,26 @@ function FeedHeader(props: FeedHeaderProps) {
     postId,
     authorId,
   } = props;
-
+  const router = useRouter();
   const [openFeedOptions, setOpenFeedOptions] = useState(false);
   const PostOptionsRef = useOutsideClick(() => setOpenFeedOptions(false));
   return (
     <div className="flex gap-x-4 mb-4 items-center">
-      <div className="w-12">
+      <div className="w-12" onClick={() => router.push(`/${authorId}`)} aria-hidden>
         <Image src={imageUrl || '/DefaultAvatar.svg'} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
       </div>
       <div>
         <div className="flex">
-          <Link scroll={false} href="/" className="cursor-pointer">{fullName}</Link>
-          <span className="flex items-center justify-center text-xs font-normal opacity-80 before:content-['•'] before:color-[red] before:px-2">{timeSince(new Date(updatedAt!)) || ''}</span>
+          <Link scroll={false} href={`/${authorId}`} className="cursor-pointer">{fullName}</Link>
+          <div
+            className="flex items-center justify-center text-xs font-normal opacity-80 before:content-['•'] before:color-[red] before:px-2"
+            onClick={() => router.push(`/posts/${postId}`)}
+            aria-hidden
+          >
+            <span className="hover:underline cursor-pointer">
+              {timeSince(new Date(updatedAt!)) || ''}
+            </span>
+          </div>
         </div>
         <p className="text-xs font-normal opacity-80">{job}</p>
       </div>

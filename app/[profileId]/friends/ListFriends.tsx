@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import BaseButton from '../../_components/common/BaseButton';
 import Modal from '../../_components/common/Modal';
@@ -17,6 +18,7 @@ interface ListFriendsProps {
 
 function ListFriends(props: ListFriendsProps) {
   const { listFriends, onRemoveFriend } = props;
+  const router = useRouter();
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
   const [idFriend, setIdFriend] = useState(-1);
 
@@ -46,26 +48,31 @@ function ListFriends(props: ListFriendsProps) {
       </div>
     </Modal>
   );
+  const onNavigateProfileClick = (friendId: number) => {
+    router.push(`/${friendId}`);
+  };
   return (
     <div className="p-5">
       {listFriends.map((friend: Friend) => (
         <div className="flex mb-8" key={friend.id}>
-          <div className="mr-2 w-[48px] h-[48px]">
-            <Image
-              className="rounded-full w-full h-full"
-              src={friend.imageUrl || '/DefaultAvatar.svg'}
-              alt="avatar friend"
-              width={48}
-              height={48}
-              unoptimized
-            />
-          </div>
-          <div className="flex flex-col">
-            <div>
-              {friend.fullName}
+          <div className="flex" onClick={() => onNavigateProfileClick(friend.id)} aria-hidden>
+            <div className="mr-2 w-[48px] h-[48px] cursor-pointer">
+              <Image
+                className="rounded-full w-full h-full"
+                src={friend.imageUrl || '/DefaultAvatar.svg'}
+                alt="avatar friend"
+                width={48}
+                height={48}
+                unoptimized
+              />
             </div>
-            <div>
-              {friend.email}
+            <div className="flex flex-col">
+              <div className="cursor-pointer">
+                {friend.fullName}
+              </div>
+              <div className="cursor-pointer">
+                {friend.email}
+              </div>
             </div>
           </div>
           <div className="flex ml-auto gap-3">

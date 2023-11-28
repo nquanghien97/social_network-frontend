@@ -13,6 +13,7 @@ import BaseButton from '../BaseButton';
 import { getNewFeedAsync } from '../../../../store/reducers/newFeedReducer';
 import { getAllPostsAsync } from '../../../../store/reducers/postsReducer';
 import { AppDispatch } from '../../../../store';
+import { getUserId } from '@/services/user.services';
 
 interface FormValues {
   title: string;
@@ -43,7 +44,7 @@ function PostFeed() {
       formData.append('text', data.text!);
       await createPost(formData);
       dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
-      dispatch(getAllPostsAsync());
+      dispatch(getAllPostsAsync(getUserId()));
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
     } catch (err: unknown) {

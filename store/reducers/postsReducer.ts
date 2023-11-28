@@ -14,10 +14,10 @@ const initialState: PostType = {
 
 export const getAllPostsAsync = createAsyncThunk(
   'post/getPosts',
-  async (_, thunkApi) => {
+  async (userId: number, thunkApi) => {
     try {
       if (isAuthenticated()) {
-        const response = await getAllPosts();
+        const response = await getAllPosts(userId);
         return response.data.post;
       }
     } catch (err) {

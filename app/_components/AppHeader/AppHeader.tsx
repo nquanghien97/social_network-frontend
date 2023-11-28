@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
-import { listMenuAccount, listMenuPage } from '../../_config/listMenuDropdown';
 import SearchIcon from '../../_assets/icons/SearchIcon';
 import CloseIcon from '../../_assets/icons/CloseIcon';
 import MenuIcon from '../../_assets/icons/MenuIcon';
@@ -46,6 +46,10 @@ function AppHeader() {
     router.push('/', { scroll: false });
   };
 
+  const toastUnDeveloped = () => {
+    toast.info('Tính năng chưa được phát triển');
+  };
+
   const signOut = () => {
     logOut();
     router.push('/sign-in');
@@ -66,12 +70,12 @@ function AppHeader() {
             />
           </div>
           <div>
-            <Link href="/profile" scroll={false}>{profile.fullName}</Link>
+            <Link href={`/${profile.id}`} scroll={false}>{profile.fullName}</Link>
             <p className="text-sm font-normal text-[#a1a1a8]">{profile.job}</p>
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href="/profile" scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <Link href={`/${profile.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
       </div>
       <hr className="my-4" />
@@ -117,13 +121,36 @@ function AppHeader() {
           </div>
           <div className="flex lg:ml-auto max-lg:flex-col max-lg:w-full">
             <MenuDropdown
-              listMenu={listMenuPage}
               title="Page"
-            />
+            >
+              <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
+                <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Albums</li>
+                <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Messages</li>
+                <li
+                  className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
+                  onClick={() => router.push(`/${profile.id}`)}
+                  aria-hidden
+                >
+                  Profile
+                </li>
+                <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Today News</li>
+              </ul>
+            </MenuDropdown>
             <MenuDropdown
-              listMenu={listMenuAccount}
               title="Account"
-            />
+            >
+              <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
+                <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Settings</li>
+                <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Privacy & terms</li>
+                <li
+                  className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
+                  onClick={signOut}
+                  aria-hidden
+                >
+                  Sign Out
+                </li>
+              </ul>
+            </MenuDropdown>
           </div>
         </div>
         <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>

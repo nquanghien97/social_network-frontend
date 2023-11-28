@@ -1,23 +1,18 @@
 /* eslint-disable no-octal-escape */
 import {
+  ReactNode,
   useState,
 } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { useOutsideClick } from '../../_hooks/useOutsideClick';
 
-interface ListMenuType {
-  index: number;
-  subTitle: string;
-  href: string;
-}
 interface MenuDropdownProps {
-  listMenu: ListMenuType[];
   title: string;
+  children: ReactNode;
 }
 
 function MenuDropdown(props: MenuDropdownProps) {
-  const { listMenu, title } = props;
+  const { children, title } = props;
   const [isHover, setIsHover] = useState(false);
   const onHover = () => {
     if (window.innerWidth > 1024) {
@@ -71,11 +66,7 @@ function MenuDropdown(props: MenuDropdownProps) {
           animate={isHover ? 'enter' : 'exit'}
           variants={subMenuAnimate}
         >
-          <div className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-            {listMenu.map((item) => (
-              <Link scroll={false} key={item.index} href={item.href} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">{item.subTitle}</Link>
-            ))}
-          </div>
+          {children}
         </motion.div>
       </motion.div>
     </div>

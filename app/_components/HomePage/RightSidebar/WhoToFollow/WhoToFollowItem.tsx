@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import DefaultAvatar from '../../../../_assets/DefaultAvatar.svg';
 import PlusIcon from '../../../../_assets/icons/PlusIcon';
@@ -19,11 +20,13 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
   const {
     imageUrl, fullName, job, friendId,
   } = props;
+  const router = useRouter();
   const [loading, setLoading] = useState({
     loading: false,
     addedFriend: false,
   });
-  const onAddFriend = async () => {
+  const onAddFriend = async (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setLoading({
       loading: true,
       addedFriend: false,
@@ -50,7 +53,7 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
     }
     return (
       <div
-        onClick={onAddFriend}
+        onClick={(e) => onAddFriend(e)}
         aria-hidden
         className="w-full h-full flex items-center justify-center"
       >
@@ -58,8 +61,13 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
       </div>
     );
   };
+
+  const onNavigateProfileClick = () => {
+    router.push(`/${friendId}`);
+  };
+
   return (
-    <div className="flex gap-x-4 mb-4 items-center text-sm">
+    <div className="flex gap-x-2 mb-4 items-center text-sm" onClick={onNavigateProfileClick} aria-hidden>
       <div className="w-10 h-10 shrink-0">
         <Image src={imageUrl || DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" unoptimized width={48} height={48} />
       </div>

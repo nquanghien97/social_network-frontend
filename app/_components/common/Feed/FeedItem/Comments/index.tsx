@@ -100,7 +100,7 @@ function Comments(props: CommentsProps) {
           <div
             aria-hidden="true"
             className="w-full flex items-center bg-[#26262b] py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"
-            onClick={() => router.push(`/${postId}`)}
+            onClick={() => router.push(`/posts/${postId}`)}
           >
             <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
           </div>

@@ -1,17 +1,32 @@
 'use client';
 
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import React, { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../../store';
 import WorkIcon from '../../_assets/icons/WorkIcon';
 import LocationIcon from '../../_assets/icons/LocationIcon';
 import CalendarIcon from '../../_assets/icons/CalendarIcon';
 import MessageIcon from '../../_assets/icons/MessageIcon';
+import { UserType, getUserAsync, getUserSelector } from '../../../store/reducers/userReducer';
 
 function About() {
-  const profile = useSelector((state: RootState) => state.profile);
+  const dispatch = useDispatch<AppDispatch>();
+  const param = usePathname();
+  const userId = Number(param.slice(1, 2));
+  const { user } = useSelector(getUserSelector) as UserType;
 
-  const timeCreated = new Date(profile.createdAt);
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getUserAsync(userId));
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [dispatch]);
+
+  const timeCreated = new Date(user.createdAt);
   // eslint-disable-next-line max-len
   const formatTimeCreated = `Join on ${timeCreated.getDate() > 9 ? timeCreated.getDate() : `0${timeCreated.getDate()}`} / ${timeCreated.getMonth() + 1 > 9 ? timeCreated.getMonth() + 1 : `0${timeCreated.getMonth() + 1}`} / ${timeCreated.getFullYear()}`;
   return (
@@ -23,22 +38,30 @@ function About() {
         <div className="px-4 mb-4">
           <div className="p-3 border border-[#313235] rounded-lg">
             <h5 className="font-bold mb-2">Overview</h5>
-            <p className="text-[#a1a1a8]">{profile.description}</p>
+            {user.description ? (
+              <p className="text-[#a1a1a8]">{user.description}</p>
+            ) : (
+              <p className="text-[#a1a1a8]">Chưa có thông tin</p>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap">
-          <div className="px-4 w-1/2">
-            <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
-              <WorkIcon fill="#a1a1a8" />
-              <p className="text-[#a1a1a8] px-2">{profile.job}</p>
+          {user.job && (
+            <div className="px-4 w-1/2">
+              <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
+                <WorkIcon fill="#a1a1a8" />
+                <p className="text-[#a1a1a8] px-2">{user.job}</p>
+              </div>
             </div>
-          </div>
-          <div className="px-4 w-1/2">
-            <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
-              <LocationIcon fill="#a1a1a8" />
-              <p className="text-[#a1a1a8] px-2">{`Live in: ${profile.location}`}</p>
+          )}
+          {user.location && (
+            <div className="px-4 w-1/2">
+              <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
+                <LocationIcon fill="#a1a1a8" />
+                <p className="text-[#a1a1a8] px-2">{`Live in: ${user.location}`}</p>
+              </div>
             </div>
-          </div>
+          )}
           <div className="px-4 w-1/2">
             <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
               <CalendarIcon fill="#a1a1a8" />
@@ -48,7 +71,7 @@ function About() {
           <div className="px-4 w-1/2">
             <div className="px-3 py-2 border border-[#313235] rounded-lg mb-4 flex items-center">
               <MessageIcon fill="#a1a1a8" />
-              <p className="text-[#a1a1a8] px-2">{`Email: ${profile.email}`}</p>
+              <p className="text-[#a1a1a8] px-2">{`Email: ${user.email}`}</p>
             </div>
           </div>
         </div>

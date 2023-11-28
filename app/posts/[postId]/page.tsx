@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { getPost } from '@/services/post.services';
-import FeedItem from '../_components/common/Feed/FeedItem';
+import FeedItem from '../../_components/common/Feed/FeedItem';
 import { FeedEntity } from '@/entities/Post.entities';
-import LoadingIcon from '../_assets/icons/LoadingIcon';
+import LoadingIcon from '../../_assets/icons/LoadingIcon';
 
 function Post() {
   const param = usePathname();
@@ -15,7 +15,7 @@ function Post() {
     const fetchPost = async () => {
       setLoading(true);
       try {
-        const res = await getPost(param.slice(1, param.length));
+        const res = await getPost(param.slice(7, param.length));
         setPost(res.data.post);
       } catch (err) {
         console.log(err.message);

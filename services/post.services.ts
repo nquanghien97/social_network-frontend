@@ -8,7 +8,7 @@ interface ListFriendsType {
 
 export const createPost = (data: FormData) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, data);
 
-export const getAllPosts = () => api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`);
+export const getAllPosts = (userId: number) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, { userId });
 
 export const deletePost = (data: { postId: string }) => api.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, { data });
 

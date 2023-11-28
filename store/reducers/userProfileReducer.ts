@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import User from '../../entities/User.entities';
+import UserEntity from '../../entities/User.entities';
 
-export const profileSlice = createSlice<User, {
+export const profileSlice = createSlice<UserEntity, {
   setProfile:(
-  state: User,
-  action: { type: string, payload: User }
+  state: UserEntity,
+  action: { type: string, payload: UserEntity }
   ) => void;
   updateProfile: (
-    state: User,
-    action: { type: string, payload: Partial<User> }
+    state: UserEntity,
+    action: { type: string, payload: Partial<UserEntity> }
   ) => void;
 }
 >({
@@ -26,7 +26,7 @@ export const profileSlice = createSlice<User, {
         updatedAt: new Date(),
       },
       reducers: {
-        setProfile(state, action: { type: string; payload: User }) {
+        setProfile(state, action: { type: string; payload: UserEntity }) {
           const user = action.payload;
           state.id = user?.id;
           state.email = user?.email;
@@ -40,7 +40,7 @@ export const profileSlice = createSlice<User, {
           state.updatedAt = user?.updatedAt;
         },
 
-        updateProfile(state, action: { type: string; payload: Partial<User> }) {
+        updateProfile(state, action: { type: string; payload: Partial<UserEntity> }) {
           const userInfo = action.payload;
           state.email = userInfo.email ?? '';
           state.fullName = userInfo.fullName ?? '';

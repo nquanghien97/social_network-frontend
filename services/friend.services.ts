@@ -1,7 +1,7 @@
 import api from '../app/_config/api';
 
-export const getAllFriends = async () => {
-  const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/friend`);
+export const getAllFriends = async (userId: number) => {
+  const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/friend`, { userId });
   return res.data;
 };
 

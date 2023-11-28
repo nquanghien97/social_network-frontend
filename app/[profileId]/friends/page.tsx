@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getAllFriends, removeFriend } from '@/services/friend.services';
@@ -7,10 +8,12 @@ import ListFriends from './ListFriends';
 
 function Friend() {
   const [listFriends, setListFriends] = useState([]);
+  const param = usePathname();
+  const userId = Number(param.slice(1, 2));
   useEffect(() => {
     const fetchListFriends = async () => {
       try {
-        const res = await getAllFriends();
+        const res = await getAllFriends(userId);
         setListFriends(res.listFriends);
       } catch (err) {
         console.log(err.message);
@@ -22,7 +25,7 @@ function Friend() {
   const onRemoveFriend = async (idFriend: number) => {
     try {
       await removeFriend(idFriend);
-      const res = await getAllFriends();
+      const res = await getAllFriends(userId);
       setListFriends(res.listFriends);
       toast.success('Xóa bạn thành công');
     } catch (err) {
@@ -38,7 +41,7 @@ function Friend() {
       {listFriends.length ? (
         <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
       ) : (
-        <p className="p-5 text-center text-2xl">Bạn chưa có người bạn nào</p>
+        <p className="p-5 text-center text-2xl">Chưa có người bạn nào</p>
       )}
     </div>
   );

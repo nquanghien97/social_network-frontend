@@ -1,10 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
 export function LeftSidebarItem() {
   const profile = useSelector((state: RootState) => state.profile);
+  const toastUnDeveloped = () => {
+    toast.info('Tính năng chưa được phát triển');
+  };
   return (
     <div className="lg:mt-4">
       <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md">
@@ -19,25 +23,25 @@ export function LeftSidebarItem() {
               <h5 className="text-xl">{profile.fullName}</h5>
               <small className="text-sm text-[#ccc]">{profile.job}</small>
               <p className="my-4 text-[#ccc] text-sm">{profile.description}</p>
-              <div>Thông số</div>
+              {/* <div>Thông số</div> */}
             </div>
             <hr className="my-4" />
             <ul>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href="/profile">Feed</Link>
+                <Link href={`/${profile.id}`}>Feed</Link>
               </li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href="/profile/friends">Connections</Link>
+                <Link href={`/${profile.id}/friends`}>Connections</Link>
               </li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">Latest News</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">Events</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">Groups</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">Notifications</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">Settings</li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Latest News</li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Events</li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Groups</li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Notifications</li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Settings</li>
             </ul>
           </div>
           <hr className="my-4" />
-          <Link scroll={false} aria-hidden="true" href="/profile" className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
+          <Link scroll={false} aria-hidden="true" href={`/${profile.id}`} className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
             View Profile
           </Link>
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import BaseButton from '../_components/common/BaseButton';
@@ -20,11 +21,13 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
     measureRef,
     friendId,
   } = props;
+  const router = useRouter();
   const [loading, setLoading] = useState({
     loading: false,
     addedFriend: false,
   });
-  const onAddFriend = async () => {
+  const onAddFriend = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setLoading({
       loading: true,
       addedFriend: false,
@@ -66,7 +69,7 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
     return (
       <div>
         <BaseButton
-          onClick={onAddFriend}
+          onClick={(e) => onAddFriend(e)}
           loading={loading.loading}
         >
           Thêm Bạn Bè
@@ -74,12 +77,17 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
       </div>
     );
   };
+
+  const onNavigateProfileClick = () => {
+    router.push(`/${friendId}`);
+  };
+
   return (
-    <div ref={measureRef} className="max-w-[250px] min-w-[200px] flex flex-1 flex-col bg-[#0f0f10] p-5 rounded-md">
-      <div className="flex flex-1">
+    <div ref={measureRef} className="max-w-[250px] min-w-[200px] flex flex-1 flex-col bg-[#0f0f10] p-5 rounded-md" onClick={onNavigateProfileClick} aria-hidden>
+      <div className="flex flex-1 cursor-pointer">
         <Image src={imageUrl || 'DefaultAvatar.svg'} alt="" width={100} height={100} className="w-full" />
       </div>
-      <div className="py-2">
+      <div className="py-2 cursor-pointer">
         <p>{fullName}</p>
       </div>
       {statusFriend()}
