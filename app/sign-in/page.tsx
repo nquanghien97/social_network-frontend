@@ -92,21 +92,25 @@ function SignIn() {
               <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
             </div>
             <div>
-              <BaseInput
-                label="Email"
-                placeholder="Enter your email address"
-                message={errors.email?.message}
-                {...register('email')}
-              />
-              <BaseInput
-                label="Password"
-                placeholder="Enter your password"
-                endIcon={togglePassword ? <ShowPassword /> : <HidePassword />}
-                onShowPassword={toggleClickPassword}
-                type={togglePassword ? 'text' : 'password'}
-                message={errors.password?.message}
-                {...register('password')}
-              />
+              <div className="mb-4">
+                <BaseInput
+                  label="Email"
+                  placeholder="Enter your email address"
+                  message={errors.email?.message}
+                  {...register('email')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Password"
+                  placeholder="Enter your password"
+                  endIcon={togglePassword ? <ShowPassword /> : <HidePassword />}
+                  onShowPassword={toggleClickPassword}
+                  type={togglePassword ? 'text' : 'password'}
+                  message={errors.password?.message}
+                  {...register('password')}
+                />
+              </div>
             </div>
             <div className="pt-2">
               <BaseButton

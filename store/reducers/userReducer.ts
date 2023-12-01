@@ -68,13 +68,10 @@ const userReducer = createSlice({
   },
 });
 
-export const getUserSelector = createSelector((state) => {
-  console.log(state);
-  return {
-    user: state.user.user,
-    loading: state.user.loading,
-    error: state.user.error,
-  };
-}, (state) => state);
+export const getUserSelector = createSelector((state) => ({
+  user: state.user.user,
+  loading: state.user.loading,
+  error: state.user.error,
+}), (state) => state);
 
 export default userReducer.reducer;

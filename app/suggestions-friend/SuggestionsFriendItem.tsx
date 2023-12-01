@@ -59,6 +59,7 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
         <div>
           <BaseButton
             disabled
+            onClick={(e) => e.stopPropagation()}
           >
             Bạn Bè
             <CheckIcon />

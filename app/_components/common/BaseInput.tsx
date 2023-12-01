@@ -31,7 +31,7 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>((props, ref) => {
   } = props;
 
   const fullWidthStyle = fullWidth ? 'w-full' : '';
-  const containerClass = clsx(fullWidthStyle, 'mb-4');
+  const containerClass = clsx(fullWidthStyle);
   const startIconStyle = startIcon ? 'pl-14' : 'pl-5';
   const inputClass = clsx('px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-lg w-full hover:transition-all duration-300', startIconStyle);
   return (

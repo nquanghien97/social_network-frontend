@@ -124,7 +124,7 @@ function Comment(props: CommentProps) {
               className="rounded-full"
             />
           </div>
-          <form className="ml-2 w-full relative" onSubmit={handleSubmit(onSendComment)}>
+          <form className="ml-2 w-full relative mb-4" onSubmit={handleSubmit(onSendComment)}>
             <BaseInput
               {...register('comment')}
               type="text"

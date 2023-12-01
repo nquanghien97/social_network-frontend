@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,10 +18,15 @@ import { useOutsideClick } from '../../_hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
 import { AppDispatch, RootState } from '../../../store';
 import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
+import { searchUsers } from '@/services/user.services';
+import UserEntity from '@/entities/User.entities';
+import BaseInput from '../common/BaseInput';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootState) => state.profile);
 
@@ -54,6 +59,16 @@ function AppHeader() {
     logOut();
     router.push('/sign-in');
   };
+
+  useEffect(() => {
+    (async () => {
+      if (searchText) {
+        const res = await searchUsers(searchText);
+        setResultSearch(res.users);
+      }
+    })();
+  }, [searchText]);
+  console.log(resultSearch);
 
   const modalProfile = () => (
     <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[280px]">
@@ -93,7 +108,7 @@ function AppHeader() {
         </div>
         <div className="lg:hidden relative flex gap-x-2 ml-auto">
           <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] text-[#0f6fec] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
-            {isOpenMenu ? <CloseIcon fill="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
+            {isOpenMenu ? <CloseIcon color="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
           </div>
           <Link
             className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]"
@@ -110,13 +125,28 @@ function AppHeader() {
         <div className={menuClass}>
           <div className="w-full">
             <div className="relative max-lg:px-4">
-              <button type="button" className="cursor-pointer px-2 max-lg:px-6 absolute top-1/2 left-0 -translate-y-1/2">
+              {/* <button type="button" className="cursor-pointer px-2 max-lg:px-6 absolute top-1/2 left-0 -translate-y-1/2">
                 <SearchIcon color="#8a909b" />
-              </button>
-              <input
+              </button> */}
+              <BaseInput
                 className="pl-12 px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-lg w-full"
                 placeholder="Search..."
+                onChange={(e) => setSearchText(e.target.value)}
+                startIcon={<SearchIcon color="#8a909b" />}
+                value={searchText}
+                endIcon={searchText ? <CloseIcon onClick={() => setSearchText('')} color="#8a909b" /> : null}
               />
+              {searchText ? (
+                <ul className="bg-[#0f0f10] absolute w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
+                  {resultSearch.length > 0 ? resultSearch.map((user) => (
+                    <li key={user.id} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">
+                      {user.fullName}
+                    </li>
+                  )) : (
+                    <p>Không có người dùng phù hợp</p>
+                  )}
+                </ul>
+              ) : null}
             </div>
           </div>
           <div className="flex lg:ml-auto max-lg:flex-col max-lg:w-full">

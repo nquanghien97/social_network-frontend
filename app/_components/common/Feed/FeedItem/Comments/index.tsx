@@ -106,7 +106,7 @@ function Comments(props: CommentsProps) {
           </div>
         ) : (
           <form
-            className="ml-2 w-full relative [&>div]:mb-0"
+            className="ml-2 mb-4 w-full relative [&>div]:mb-0"
             onSubmit={handleSubmit(onSendComment)}
           >
             <BaseInput

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { AppHeader } from '../_components/AppHeader';
 import { AppDispatch } from '../../store';
@@ -19,21 +19,23 @@ import PencilEdit from '../_assets/icons/PencilEdit';
 import Modal from '../_components/common/Modal';
 import EditProfile from './_editProfile';
 import { getUserId } from '@/services/user.services';
-import { addFriend } from '@/services/friend.services';
+import { addFriend, findFriend, removeFriend } from '@/services/friend.services';
 import LoadingIcon from '../_assets/icons/LoadingIcon';
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
 
 function RootLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
-  const param = usePathname();
+  const { profileId } = useParams();
   const [open, setOpen] = useState(false);
   const [statusAddFriend, setStatusAddFriend] = useState({
     loading: false,
     addedFriend: false,
   });
+  const [loadingRemoveFriend, setLoadingRemoveFriend] = useState(false);
+  const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const userId = Number(param.slice(1, 2));
+  const userId = Number(profileId);
   const currentUserId = getUserId() === userId;
 
   const { user } = useSelector(getUserSelector) as UserType;
@@ -66,6 +68,29 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
     }
   };
 
+  // get friend
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!currentUserId) {
+          const res = await findFriend(userId);
+          if (res) {
+            setStatusAddFriend({
+              loading: false,
+              addedFriend: true,
+            });
+          }
+        }
+      } catch (err) {
+        setStatusAddFriend({
+          loading: false,
+          addedFriend: false,
+        });
+      }
+    })();
+  }, []);
+
+  // add friend
   const onAddFriend = async () => {
     setStatusAddFriend({
       loading: true,
@@ -73,6 +98,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
     });
     try {
       await addFriend(userId);
+      toast.success('Thêm bạn thành công');
     } catch (err) {
       toast.error('Có lỗi xảy ra, vui lòng thử lại');
     } finally {
@@ -82,6 +108,52 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
       });
     }
   };
+
+  // remove friend
+  const onRemoveFriend = async () => {
+    setLoadingRemoveFriend(true);
+    try {
+      await removeFriend(userId);
+      setStatusAddFriend({
+        loading: false,
+        addedFriend: false,
+      });
+      setLoadingRemoveFriend(false);
+      toast.success('Xóa bạn thành công');
+    } catch (err) {
+      console.log(err.message);
+      toast.error('Xóa bạn thất bại');
+    }
+  };
+  const modalConfirmRemoveFriend = () => (
+    <Modal
+      open={openModalRemoveFriend}
+      onClose={() => setOpenModalRemoveFriend(false)}
+    >
+      <div className="p-5 bg-[#26262b] rounded-md">
+        <p className="mb-4">Do you want to remove this person?</p>
+        <div className="flex gap-4">
+          <BaseButton
+            onClick={() => {
+              onRemoveFriend();
+              setOpenModalRemoveFriend(false);
+            }}
+            loading={loadingRemoveFriend}
+          >
+            Confirm
+          </BaseButton>
+          <BaseButton
+            className="text-[red] hover:bg-[red] hover:text-[white]"
+            onClick={() => setOpenModalRemoveFriend(false)}
+          >
+            Cancel
+          </BaseButton>
+        </div>
+      </div>
+    </Modal>
+  );
+
+  // status add friend
   const statusFriend = () => {
     if (statusAddFriend.loading) {
       return (
@@ -102,7 +174,9 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
         <div className="md:ml-auto">
           <BaseButton
             className="text-[red] hover:bg-[#39435b]"
-            onClick={onAddFriend}
+            onClick={() => {
+              setOpenModalRemoveFriend(true);
+            }}
             aria-hidden
           >
             <span className="mr-2">Bạn bè</span>
@@ -112,13 +186,6 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
       );
     }
     return (
-      // <div
-      //   onClick={onAddFriend}
-      //   aria-hidden
-      //   className="w-full h-full flex items-center justify-center"
-      // >
-      //   <PlusIcon fill="#0f6fec" width={16} height={16} />
-      // </div>
       <div className="md:ml-auto">
         <BaseButton
           className="text-[red] hover:bg-[#39435b]"
@@ -216,6 +283,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
       >
         <EditProfile onClose={onCloseEditProfile} />
       </Modal>
+      {modalConfirmRemoveFriend()}
     </>
   );
 }

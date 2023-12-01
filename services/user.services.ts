@@ -27,3 +27,8 @@ export const getSuggestionsUser = async (limit: number, offset = 1) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/suggestions-user`, { offset, limit });
   return res.data;
 };
+
+export const searchUsers = async (searchText: string) => {
+  const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/search-users`, { searchText });
+  return res.data;
+};

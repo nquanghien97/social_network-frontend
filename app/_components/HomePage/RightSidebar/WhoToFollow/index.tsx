@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import WhoToFollowItem from './WhoToFollowItem';
 import BaseButton from '../../../common/BaseButton';
 import { getSuggestionsUser } from '@/services/user.services';
@@ -7,6 +7,7 @@ import { SuggestionsUserEntity } from '@/entities/User.entities';
 
 function WhoToFollow() {
   const [listSuggestionsUser, setListSuggestionsUser] = useState<SuggestionsUserEntity[]>();
+  const router = useRouter();
   const fetchSuggestionsUser = async () => {
     const res = await getSuggestionsUser(3);
     setListSuggestionsUser(res.suggesttionsUser);
@@ -28,8 +29,9 @@ function WhoToFollow() {
             ))}
             <BaseButton
               className="mt-4 flex"
+              onClick={() => router.push('/suggestions-friend')}
             >
-              <Link scroll={false} href="/suggestions-friend" className="">View More</Link>
+              View More
             </BaseButton>
           </div>
         )}

@@ -4,6 +4,8 @@ import { ComponentType, useState, useEffect } from 'react';
 import { isAuthenticated } from '../utils/isAuthenticated';
 import getComponentName from '../utils/getComponentName';
 import LoadingIcon from '../app/_assets/icons/LoadingIcon';
+import isRefreshTokenExpired from '../utils/isRefreshTokenExpired';
+import { logOut } from '@/services/auth.services';
 
 export default function withAuthetication(Page: ComponentType) {
   function WithAuthentication(props: AppProps['pageProps']) {
@@ -12,7 +14,8 @@ export default function withAuthetication(Page: ComponentType) {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
-      if (!isAuthenticated()) {
+      if (!isAuthenticated() && isRefreshTokenExpired()) {
+        logOut();
         router.push('/sign-in');
       }
     }, []);

@@ -92,27 +92,33 @@ function EditProfile({ onClose } : { onClose: () => void }) {
               )}
             </div>
             <div className="w-full">
-              <BaseInput
-                label="Full Name"
-                placeholder="Enter your Full Name"
-                message={errors.fullName?.message}
-                defaultValue={profile.fullName || ''}
-                {...register('fullName')}
-              />
-              <BaseInput
-                label="Location"
-                placeholder="Enter your location"
-                message={errors.location?.message}
-                defaultValue={profile.location || ''}
-                {...register('location')}
-              />
-              <BaseInput
-                label="Job Title"
-                placeholder="Enter your description"
-                message={errors.job?.message}
-                defaultValue={profile.job || ''}
-                {...register('job')}
-              />
+              <div className="mb-4">
+                <BaseInput
+                  label="Full Name"
+                  placeholder="Enter your Full Name"
+                  message={errors.fullName?.message}
+                  defaultValue={profile.fullName || ''}
+                  {...register('fullName')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Location"
+                  placeholder="Enter your location"
+                  message={errors.location?.message}
+                  defaultValue={profile.location || ''}
+                  {...register('location')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Job Title"
+                  placeholder="Enter your description"
+                  message={errors.job?.message}
+                  defaultValue={profile.job || ''}
+                  {...register('job')}
+                />
+              </div>
               <BaseTextarea
                 label="Description"
                 placeholder="Enter your description"

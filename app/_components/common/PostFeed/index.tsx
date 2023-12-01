@@ -87,10 +87,12 @@ function PostFeed() {
                 <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
               </div>
               <div className="flex flex-col w-full">
-                <BaseInput
-                  placeholder="Title"
-                  {...register('title')}
-                />
+                <div className="mb-4">
+                  <BaseInput
+                    placeholder="Title"
+                    {...register('title')}
+                  />
+                </div>
                 <BaseTextarea
                   placeholder="Share your thoughts..."
                   rows={5}

@@ -65,7 +65,7 @@ function SignIn() {
     setLoading(true);
     try {
       await signUp(data);
-      toast.success('Đăng nhập thành công!', {
+      toast.success('Đăng ký thành công!', {
         position: toast.POSITION.TOP_RIGHT,
       });
       router.push('/', { scroll: false });
@@ -101,34 +101,42 @@ function SignIn() {
               <Link scroll={false} href="/sign-in" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
             </div>
             <div>
-              <BaseInput
-                label="Your Name"
-                placeholder="Enter your name"
-                message={errors.fullName?.message}
-                {...register('fullName')}
-              />
-              <BaseInput
-                label="Email"
-                placeholder="Enter your email address"
-                message={errors.email?.message}
-                {...register('email')}
-              />
-              <BaseInput
-                label="Password"
-                placeholder="Enter your password"
-                endIcon={togglePassword ? <ShowPassword /> : <HidePassword />}
-                onShowPassword={toggleClickPassword}
-                type={togglePassword ? 'text' : 'password'}
-                message={errors.password?.message}
-                {...register('password')}
-              />
-              <BaseInput
-                label="Confirm Password"
-                placeholder="Confirm password"
-                message={errors.confirmPassword?.message}
-                type="password"
-                {...register('confirmPassword')}
-              />
+              <div className="mb-4">
+                <BaseInput
+                  label="Your Name"
+                  placeholder="Enter your name"
+                  message={errors.fullName?.message}
+                  {...register('fullName')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Email"
+                  placeholder="Enter your email address"
+                  message={errors.email?.message}
+                  {...register('email')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Password"
+                  placeholder="Enter your password"
+                  endIcon={togglePassword ? <ShowPassword /> : <HidePassword />}
+                  onShowPassword={toggleClickPassword}
+                  type={togglePassword ? 'text' : 'password'}
+                  message={errors.password?.message}
+                  {...register('password')}
+                />
+              </div>
+              <div className="mb-4">
+                <BaseInput
+                  label="Confirm Password"
+                  placeholder="Confirm password"
+                  message={errors.confirmPassword?.message}
+                  type="password"
+                  {...register('confirmPassword')}
+                />
+              </div>
             </div>
             <div className="pt-2">
               <BaseButton type="submit" className="py-4" loading={loading}>Sign up</BaseButton>
