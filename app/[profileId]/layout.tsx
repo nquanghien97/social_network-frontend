@@ -20,7 +20,6 @@ import Modal from '../_components/common/Modal';
 import EditProfile from './_editProfile';
 import { getUserId } from '@/services/user.services';
 import { addFriend, findFriend, removeFriend } from '@/services/friend.services';
-import LoadingIcon from '../_assets/icons/LoadingIcon';
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
 
@@ -162,9 +161,9 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
             className="text-[red] hover:bg-[#39435b]"
             onClick={onAddFriend}
             aria-hidden
+            loading={statusAddFriend.loading}
           >
             Thêm bạn
-            <LoadingIcon />
           </BaseButton>
         </div>
       );

@@ -134,12 +134,22 @@ function AppHeader() {
                 onChange={(e) => setSearchText(e.target.value)}
                 startIcon={<SearchIcon color="#8a909b" />}
                 value={searchText}
-                endIcon={searchText ? <CloseIcon onClick={() => setSearchText('')} color="#8a909b" /> : null}
+                endIcon={searchText ? (
+                  <div className="p-1 rounded-full hover:bg-[#ffffff1a] hover:text-[black] duration-300">
+                    <CloseIcon onClick={() => setSearchText('')} color="#8a909b" />
+                  </div>
+                )
+                  : null}
               />
               {searchText ? (
                 <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
                   {resultSearch.length > 0 ? resultSearch.map((user) => (
-                    <li key={user.id} aria-hidden onClick={() => router.push(`/${user.id}`)} className="flex items-center gap-2 cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">
+                    <li
+                      key={user.id}
+                      aria-hidden
+                      onClick={() => router.push(`/${user.id}`)}
+                      className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
+                    >
                       <Image
                         width={40}
                         height={40}

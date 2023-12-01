@@ -76,7 +76,7 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
         <p>{job}</p>
       </div>
       <div
-        className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer shrink-0"
+        className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#ffffff1a] duration-300 cursor-pointer shrink-0"
       >
         {statusFriend()}
       </div>
