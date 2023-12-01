@@ -68,7 +68,6 @@ function AppHeader() {
       }
     })();
   }, [searchText]);
-  console.log(resultSearch);
 
   const modalProfile = () => (
     <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[280px]">

@@ -14,11 +14,12 @@ export default function withAuthetication(Page: ComponentType) {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
-      if (!isAuthenticated() && isRefreshTokenExpired()) {
+      if (!isAuthenticated() && !isRefreshTokenExpired()) {
         logOut();
         router.push('/sign-in');
       }
     }, []);
+    console.log(isAuthenticated());
     if (!mounted) return null;
     if (!isAuthenticated()) {
       return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;

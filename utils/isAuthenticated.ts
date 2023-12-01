@@ -7,5 +7,7 @@ export const isAuthenticated = () => {
   if (!token) return false;
 
   const data = parseJwt(token);
-  return !!data?.userId;
+  const expirationTime = data.exp * 1000;
+  const isExpired = expirationTime < Date.now();
+  return !isExpired;
 };
