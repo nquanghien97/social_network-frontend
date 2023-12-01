@@ -224,18 +224,20 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                   <div className="w-[100px] h-[100px]">
                     <Image className="border-2 rounded-full w-full h-full" width={100} height={100} src={user.imageUrl || '/DefaultAvatar.svg'} alt="avatar" unoptimized />
                   </div>
-                  <div className="px-4 pt-3">
-                    <h1 className="font-bold text-xl">{user.fullName}</h1>
-                    <p className="text-[#a1a1a8]">{`${user.friendQuantity} bạn bè`}</p>
-                  </div>
-                  {currentUserId ? (
-                    <div className="md:ml-auto">
-                      <BaseButton className="text-[red] hover:bg-[#39435b]" onClick={() => setOpen(true)}>
-                        <PencilEdit color="red" />
-                        Edit Profile
-                      </BaseButton>
+                  <div className="flex justify-center items-center flex-1">
+                    <div className="px-4 pt-3">
+                      <h1 className="font-bold text-xl">{user.fullName}</h1>
+                      <p className="text-[#a1a1a8]">{`${user.friendQuantity} bạn bè`}</p>
                     </div>
-                  ) : statusFriend()}
+                    {currentUserId ? (
+                      <div className="md:ml-auto">
+                        <BaseButton className="text-[red] hover:bg-[#39435b]" onClick={() => setOpen(true)}>
+                          <PencilEdit color="red" />
+                          Edit Profile
+                        </BaseButton>
+                      </div>
+                    ) : statusFriend()}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center text-[#a1a1a8] px-6">

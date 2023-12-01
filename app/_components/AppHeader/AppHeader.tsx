@@ -137,13 +137,20 @@ function AppHeader() {
                 endIcon={searchText ? <CloseIcon onClick={() => setSearchText('')} color="#8a909b" /> : null}
               />
               {searchText ? (
-                <ul className="bg-[#0f0f10] absolute w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
+                <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
                   {resultSearch.length > 0 ? resultSearch.map((user) => (
-                    <li key={user.id} className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">
-                      {user.fullName}
+                    <li key={user.id} aria-hidden onClick={() => router.push(`/${user.id}`)} className="flex items-center gap-2 cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full">
+                      <Image
+                        width={40}
+                        height={40}
+                        src={user.imageUrl || 'DefaultAvatar.svg'}
+                        alt={user.fullName || ''}
+                        className="rounded"
+                      />
+                      <p>{user.fullName}</p>
                     </li>
                   )) : (
-                    <p>Không có người dùng phù hợp</p>
+                    <p className="px-4 py-2">Không có người dùng phù hợp</p>
                   )}
                 </ul>
               ) : null}
