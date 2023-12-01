@@ -35,7 +35,7 @@ function PostOptions(props: PostOptionsProps) {
     try {
       await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
-      dispatch(getAllPostsAsync());
+      dispatch(getAllPostsAsync(profile.id));
       dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
     } catch (err) {
       console.log(err.message);

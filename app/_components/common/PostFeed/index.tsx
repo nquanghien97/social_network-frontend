@@ -78,7 +78,7 @@ function PostFeed() {
               className="absolute right-4 top-3 h-8 w-8 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer"
               onClick={() => setIsOpenModal(false)}
             >
-              <CloseIcon fill="#0f6fec" />
+              <CloseIcon color="#0f6fec" />
             </div>
           </div>
           <div className="flex flex-col items-center p-4 border-b border-b-[#ffffff0d]">

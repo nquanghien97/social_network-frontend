@@ -148,7 +148,7 @@ function Comment(props: CommentProps) {
                       reset();
                     }}
                   >
-                    <CloseIcon fill="white" />
+                    <CloseIcon color="white" />
                   </button>
                 </div>
               )}
