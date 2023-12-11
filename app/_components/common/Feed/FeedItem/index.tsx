@@ -6,7 +6,7 @@ import { FeedEntity } from '@/entities/Post.entities';
 interface FeedBodyProps {
   post: FeedEntity
   hasFirstComment?: boolean
-  measureRef?: (node: HTMLDivElement) => void;
+  measureRef: (node: HTMLDivElement) => void;
 }
 
 function FeedItem(props: FeedBodyProps) {

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../Modal';
 import CloseIcon from '../../../_assets/icons/CloseIcon';
 import InsertPhoto from '../../../_assets/icons/InsertPhoto';
@@ -10,9 +10,9 @@ import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
 import { createPost } from '@/services/post.services';
 import BaseButton from '../BaseButton';
-import { getNewFeedAsync } from '../../../../store/reducers/newFeedReducer';
 import { getAllPostsAsync } from '../../../../store/reducers/postsReducer';
-import { AppDispatch } from '../../../../store';
+import { setPosts } from '../../../../store/reducers/newFeedReducer';
+import { AppDispatch, RootState } from '../../../../store';
 import { getUserId } from '@/services/user.services';
 
 interface FormValues {
@@ -35,6 +35,8 @@ function PostFeed() {
     setFile(e.target.files[0]);
   };
 
+  const posts = useSelector((state: RootState) => state.newfeed.posts);
+
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     try {
@@ -42,8 +44,8 @@ function PostFeed() {
       formData.append('image', file as File);
       formData.append('title', data.title!);
       formData.append('text', data.text!);
-      await createPost(formData);
-      dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+      const res = await createPost(formData);
+      dispatch(setPosts([res.data.post]));
       dispatch(getAllPostsAsync(getUserId()));
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');

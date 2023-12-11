@@ -19,7 +19,6 @@ export default function withAuthetication(Page: ComponentType) {
         router.push('/sign-in');
       }
     }, []);
-    console.log(isAuthenticated());
     if (!mounted) return null;
     if (!isAuthenticated()) {
       return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;

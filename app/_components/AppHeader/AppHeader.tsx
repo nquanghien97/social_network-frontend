@@ -47,7 +47,7 @@ function AppHeader() {
   });
 
   const fetchPosts = () => {
-    dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+    // dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
     router.push('/', { scroll: false });
   };
 

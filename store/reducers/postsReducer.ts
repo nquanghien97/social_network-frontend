@@ -30,7 +30,11 @@ export const getAllPostsAsync = createAsyncThunk(
 const postsReducer = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    setPosts(state, action: { type: string, payload: FeedEntity[] }) {
+      state.posts = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllPostsAsync.pending, (state) => {
       state.posts = [];
@@ -51,5 +55,7 @@ export const getPostSelector = createSelector((state) => ({
   loading: state.posts.loading,
   error: state.posts.error,
 }), (state) => state);
+
+export const { setPosts } = postsReducer.actions;
 
 export default postsReducer.reducer;
