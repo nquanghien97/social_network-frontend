@@ -11,7 +11,7 @@ import BaseButton from '../../BaseButton';
 import { AppDispatch, RootState } from '../../../../../store';
 import { deletePost } from '@/services/post.services';
 import { getAllPostsAsync } from '../../../../../store/reducers/postsReducer';
-import { getNewFeedAsync } from '../../../../../store/reducers/newFeedReducer';
+import { deletedPost, getNewFeedAsync } from '../../../../../store/reducers/newFeedReducer';
 
 interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
@@ -29,14 +29,14 @@ function PostOptions(props: PostOptionsProps) {
 
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const onDeletePost = async () => {
     setLoading(true);
     try {
-      await deletePost({ postId });
+      const postDeleted = await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
       dispatch(getAllPostsAsync(profile.id));
       dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+      dispatch(deletedPost(postDeleted.data.post));
     } catch (err) {
       console.log(err.message);
     } finally {

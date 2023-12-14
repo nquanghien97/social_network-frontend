@@ -1,54 +1,71 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Story from './Story';
 import PostFeed from '../../common/PostFeed';
 import Feed from '../../common/Feed';
-import { AppDispatch } from '../../../../store';
-import { PostType, getNewFeedAsync, getNewFeedSelector } from '../../../../store/reducers/newFeedReducer';
-// import LoadMore from '../../common/LoadMore';
-// import { FeedEntity } from '@/entities/Post.entities';
+import { AppDispatch, RootState } from '../../../../store';
+import {
+  setPosts,
+} from '../../../../store/reducers/newFeedReducer';
+import LoadMore from '../../common/LoadMore';
+import { FeedEntity } from '@/entities/Post.entities';
+import { getNewFeed } from '@/services/post.services';
+import { getFriendsId } from '@/services/friend.services';
 
 function CenterSidebar() {
+  const posts = useSelector((state: RootState) => state.newfeed.posts);
+  const deletedPost = useSelector((state: RootState) => state.newfeed.deletedPost);
+  console.log(deletedPost);
   const dispatch = useDispatch<AppDispatch>();
-  // const [canLoadMore, setCanLoadMore] = useState(false);
-  // const [listPosts, setListPosts] = useState<FeedEntity[]>([]);
-  // const [page, setPage] = useState(1);
-  // const {
-  //   // measureRef,
-  //   isIntersecting,
-  //   observer,
-  // } = LoadMore();
+  const [canLoadMore, setCanLoadMore] = useState(false);
+  const [listPosts, setListPosts] = useState<FeedEntity[]>(posts);
+  const [page, setPage] = useState(1);
+  const [friendsId, setFriendsId] = useState([]);
+  const {
+    measureRef,
+    isIntersecting,
+    observer,
+  } = LoadMore();
 
-  const { posts, loading } = useSelector(getNewFeedSelector) as PostType;
   useEffect(() => {
     (async () => {
-      await dispatch(getNewFeedAsync({ limit: 2, offset: 0 }));
+      const listFriendsId = await getFriendsId();
+      setFriendsId(listFriendsId.listFriendsId);
     })();
-  }, [dispatch]);
+  }, []);
 
-  // useEffect(() => {
-  //   setCanLoadMore(posts.length > 0);
-  //   setListPosts((prev) => [...prev, ...posts]);
-  // }, [posts]);
+  useEffect(() => {
+    (async () => {
+      const res = await getNewFeed({ listFriendsId: friendsId, offset: page, limit: 2 });
+      dispatch(setPosts(res.data.posts));
+    })();
+  }, [dispatch, page]);
 
-  // const loadMore = useCallback(() => {
-  //   setPage((p) => p + 1);
-  // }, []);
+  useEffect(() => {
+    setCanLoadMore(posts.length > 0);
+    setListPosts((prev) => [...prev, ...posts]);
+  }, [posts]);
 
-  // console.log({ posts, listPosts });
+  const loadMore = useCallback(() => {
+    setPage((p) => p + 1);
+  }, []);
 
-  // useEffect(() => {
-  //   if (isIntersecting && canLoadMore) {
-  //     loadMore();
-  //     observer?.disconnect();
-  //   }
-  // }, [isIntersecting, canLoadMore, loadMore]);
+  useEffect(() => {
+    if (isIntersecting && canLoadMore) {
+      loadMore();
+      observer?.disconnect();
+    }
+  }, [isIntersecting, canLoadMore, loadMore]);
+  const listPostsUnique = [...listPosts]
+    .sort((a, b) => (new Date(b.createdAt)).getTime() - (new Date(a.createdAt)).getTime())
+    .filter((post, index, self) => index === self.findIndex((p) => p.id === post.id))
+    .filter((post) => post.id !== deletedPost?.id);
   return (
     <div className="mt-4 flex-1 lg:w-1/2 w-full px-3">
       <div className="flex justify-center items-center flex-col gap-y-2">
         <Story />
         <PostFeed />
-        <Feed posts={posts} loading={loading} />
+        <Feed posts={listPostsUnique} loading={false} measureRef={measureRef} />
       </div>
     </div>
   );
