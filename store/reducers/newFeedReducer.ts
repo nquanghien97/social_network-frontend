@@ -5,10 +5,12 @@ import { isAuthenticated } from '../../utils/isAuthenticated';
 import { getFriendsId } from '@/services/friend.services';
 
 export interface PostType {
+  deletedPost?: FeedEntity,
   posts: FeedEntity[],
   loading: boolean,
 }
 const initialState: PostType = {
+  deletedPost: undefined,
   posts: [],
   loading: false,
 };
@@ -36,6 +38,9 @@ const newFeedReducer = createSlice({
     setPosts(state, action: { type: string, payload: FeedEntity[] }) {
       state.posts = action.payload;
     },
+    deletedPost(state, action: { type: string, payload: FeedEntity }) {
+      state.deletedPost = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getNewFeedAsync.pending, (state) => {
@@ -54,10 +59,11 @@ const newFeedReducer = createSlice({
 
 export const getNewFeedSelector = createSelector((state) => ({
   posts: state.newfeed.posts,
+  deletedPost: state.newfeed.deletedPost,
   loading: state.newfeed.loading,
   error: state.newfeed.error,
 }), (state) => state);
 
-export const { setPosts } = newFeedReducer.actions;
+export const { setPosts, deletedPost } = newFeedReducer.actions;
 
 export default newFeedReducer.reducer;

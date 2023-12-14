@@ -10,7 +10,7 @@ import withAuthetication from '../hocs/withAuthentication';
 function Home() {
   const [openMessage, setOpenMessage] = useState(false);
   return (
-    <>
+    <div className="scroll-smooth">
       <AppHeader />
       <main className="xl:container mx-auto">
         <HomePage />
@@ -31,7 +31,7 @@ function Home() {
       >
         <h3>Message</h3>
       </AppSidebar>
-    </>
+    </div>
   );
 }
 

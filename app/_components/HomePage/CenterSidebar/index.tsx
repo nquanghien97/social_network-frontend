@@ -14,10 +14,13 @@ import { getFriendsId } from '@/services/friend.services';
 
 function CenterSidebar() {
   const posts = useSelector((state: RootState) => state.newfeed.posts);
+  const deletedPost = useSelector((state: RootState) => state.newfeed.deletedPost);
+  console.log(deletedPost);
   const dispatch = useDispatch<AppDispatch>();
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [listPosts, setListPosts] = useState<FeedEntity[]>(posts);
   const [page, setPage] = useState(1);
+  const [friendsId, setFriendsId] = useState([]);
   const {
     measureRef,
     isIntersecting,
@@ -27,20 +30,25 @@ function CenterSidebar() {
   useEffect(() => {
     (async () => {
       const listFriendsId = await getFriendsId();
-      const res = await getNewFeed({ listFriendsId: listFriendsId.listFriendsId, offset: page, limit: 1 });
+      setFriendsId(listFriendsId.listFriendsId);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getNewFeed({ listFriendsId: friendsId, offset: page, limit: 2 });
       dispatch(setPosts(res.data.posts));
     })();
   }, [dispatch, page]);
 
   useEffect(() => {
     setCanLoadMore(posts.length > 0);
-    setListPosts((prev) => Array.from(new Set([...prev, ...posts])));
+    setListPosts((prev) => [...prev, ...posts]);
   }, [posts]);
 
   const loadMore = useCallback(() => {
     setPage((p) => p + 1);
   }, []);
-  console.log({ listPosts, posts });
 
   useEffect(() => {
     if (isIntersecting && canLoadMore) {
@@ -48,13 +56,16 @@ function CenterSidebar() {
       observer?.disconnect();
     }
   }, [isIntersecting, canLoadMore, loadMore]);
-
+  const listPostsUnique = [...listPosts]
+    .sort((a, b) => (new Date(b.createdAt)).getTime() - (new Date(a.createdAt)).getTime())
+    .filter((post, index, self) => index === self.findIndex((p) => p.id === post.id))
+    .filter((post) => post.id !== deletedPost?.id);
   return (
     <div className="mt-4 flex-1 lg:w-1/2 w-full px-3">
       <div className="flex justify-center items-center flex-col gap-y-2">
         <Story />
         <PostFeed />
-        <Feed posts={listPosts} loading={false} measureRef={measureRef} />
+        <Feed posts={listPostsUnique} loading={false} measureRef={measureRef} />
       </div>
     </div>
   );
