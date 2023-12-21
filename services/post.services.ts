@@ -1,4 +1,4 @@
-import api from '../app/_config/api';
+import api from '../config/api';
 
 interface ListFriendsType {
   listFriendsId: number[];

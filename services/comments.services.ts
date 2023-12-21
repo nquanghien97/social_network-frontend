@@ -1,4 +1,4 @@
-import api from '../app/_config/api';
+import api from '../config/api';
 
 export const getComments = ({ postId }: { postId: string }) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/get-comments`, { postId });
 

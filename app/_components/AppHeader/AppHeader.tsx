@@ -14,7 +14,7 @@ import CloseIcon from '../../_assets/icons/CloseIcon';
 import MenuIcon from '../../_assets/icons/MenuIcon';
 import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
-import { useOutsideClick } from '../../_hooks/useOutsideClick';
+import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
 import { RootState } from '../../../store';
 import { searchUsers } from '@/services/user.services';

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import MoreHorizIcon from '../../../../_assets/icons/MoreHorizIcon';
 import { timeSince } from '../../../../../utils/date';
 import PostOptions from './PostOptions';
-import { useOutsideClick } from '../../../../_hooks/useOutsideClick';
+import { useOutsideClick } from '../../../../../hooks/useOutsideClick';
 
 interface FeedHeaderProps {
   fullName?: string;

@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getFromLocalStorage, setToLocalStorage } from '../../utils/localStorage';
+import { getFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

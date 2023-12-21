@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import CloseIcon from '../../../_assets/icons/CloseIcon';
 import InsertPhoto from '../../../_assets/icons/InsertPhoto';
@@ -12,7 +12,7 @@ import { createPost } from '@/services/post.services';
 import BaseButton from '../BaseButton';
 import { getAllPostsAsync } from '../../../../store/reducers/postsReducer';
 import { setPosts } from '../../../../store/reducers/newFeedReducer';
-import { AppDispatch, RootState } from '../../../../store';
+import { AppDispatch } from '../../../../store';
 import { getUserId } from '@/services/user.services';
 
 interface FormValues {
@@ -34,8 +34,6 @@ function PostFeed() {
     if (!e.target.files) return;
     setFile(e.target.files[0]);
   };
-
-  const posts = useSelector((state: RootState) => state.newfeed.posts);
 
   const onSubmit = async (data: FormValues) => {
     setLoading(true);

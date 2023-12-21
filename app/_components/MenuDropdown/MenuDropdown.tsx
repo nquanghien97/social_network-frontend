@@ -4,7 +4,7 @@ import {
   useState,
 } from 'react';
 import { motion } from 'framer-motion';
-import { useOutsideClick } from '../../_hooks/useOutsideClick';
+import { useOutsideClick } from '../../../hooks/useOutsideClick';
 
 interface MenuDropdownProps {
   title: string;

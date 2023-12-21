@@ -12,7 +12,7 @@ import CloseIcon from '../../../../../_assets/icons/CloseIcon';
 import { timeSince } from '../../../../../../utils/date';
 import CommentOptions from './CommentOptions';
 import MoreHorizIcon from '../../../../../_assets/icons/MoreHorizIcon';
-import { useOutsideClick } from '../../../../../_hooks/useOutsideClick';
+import { useOutsideClick } from '../../../../../../hooks/useOutsideClick';
 
 interface CommentProps {
   comment: CommentEntity

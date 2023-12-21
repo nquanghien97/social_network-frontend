@@ -3,7 +3,7 @@ import store from '../store';
 import { setProfile } from '../store/reducers/userProfileReducer';
 import { createUserFromUserResponse } from '@/entities/User.entities';
 import { removeFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
-import api from '../app/_config/api';
+import api from '../config/api';
 
 export const signIn = async (data: { email: string, password: string }) => {
   const dataResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, data);

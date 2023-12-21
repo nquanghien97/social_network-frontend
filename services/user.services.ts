@@ -1,6 +1,6 @@
 import store from '../store';
 import { getFromLocalStorage } from '../utils/localStorage';
-import api from '../app/_config/api';
+import api from '../config/api';
 import { parseJwt } from '../utils/parseJwt';
 import { setProfile } from '../store/reducers/userProfileReducer';
 // import { UpdateUserDTO } from '@/dto/User.dto';
