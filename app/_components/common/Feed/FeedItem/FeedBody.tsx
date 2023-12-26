@@ -15,18 +15,26 @@ interface FeedBodyProps {
   imageUrl?: string;
   postId: string;
   liked: LikeEntity[];
+  likeCount: number;
+  commentsCount: number;
 }
 
 function FeedBody(props: FeedBodyProps) {
   const {
-    title, text, imageUrl, postId, liked,
+    title, text, imageUrl, postId, liked, likeCount, commentsCount,
   } = props;
   const likedId = liked?.map((item: LikeEntity) => item.userId);
   const profile = useSelector((state: RootState) => state.profile);
   const [like, setLike] = useState(likedId.includes(profile.id));
+  const [likesCount, setLikesCount] = useState(likeCount);
   const onLikePost = async () => {
     try {
-      await likePost({ postId });
+      const res = await likePost({ postId });
+      if (res.data.status === 'like') {
+        setLikesCount((prev) => prev + 1);
+      } else {
+        setLikesCount((prev) => prev - 1);
+      }
       setLike(!like);
     } catch (err) {
       console.log(err.message);
@@ -59,10 +67,12 @@ function FeedBody(props: FeedBodyProps) {
             <LikeIcon />
           )}
           <span>Like</span>
+          {!!likesCount && <span>{`(${likesCount})`}</span>}
         </div>
         <div className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
           <MessageIcon fill="#a1a1a7" width={29} height={29} />
           <span>Comment</span>
+          {!!commentsCount && <span>{`(${commentsCount})`}</span>}
         </div>
         <div className="flex gap-1 ml-auto px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
           <ShareIcon />

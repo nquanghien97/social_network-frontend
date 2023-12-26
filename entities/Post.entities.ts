@@ -22,4 +22,8 @@ export interface FeedEntity {
   comments: CommentEntity[];
   createdAt: Date;
   updatedAt: Date;
+  _count: {
+    like: number;
+    comments: number
+  }
 }

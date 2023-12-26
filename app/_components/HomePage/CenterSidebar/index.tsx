@@ -15,12 +15,11 @@ import { getFriendsId } from '@/services/friend.services';
 function CenterSidebar() {
   const posts = useSelector((state: RootState) => state.newfeed.posts);
   const deletedPost = useSelector((state: RootState) => state.newfeed.deletedPost);
-  console.log(deletedPost);
   const dispatch = useDispatch<AppDispatch>();
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [listPosts, setListPosts] = useState<FeedEntity[]>(posts);
   const [page, setPage] = useState(1);
-  const [friendsId, setFriendsId] = useState([]);
+  const [friendsId, setFriendsId] = useState();
   const {
     measureRef,
     isIntersecting,
@@ -36,10 +35,12 @@ function CenterSidebar() {
 
   useEffect(() => {
     (async () => {
-      const res = await getNewFeed({ listFriendsId: friendsId, offset: page, limit: 2 });
-      dispatch(setPosts(res.data.posts));
+      if (friendsId) {
+        const res = await getNewFeed({ listFriendsId: friendsId, offset: page, limit: 2 });
+        dispatch(setPosts(res.data.posts));
+      }
     })();
-  }, [dispatch, page]);
+  }, [dispatch, page, friendsId]);
 
   useEffect(() => {
     setCanLoadMore(posts.length > 0);

@@ -6,7 +6,7 @@ import { FeedEntity } from '@/entities/Post.entities';
 interface FeedBodyProps {
   post: FeedEntity
   hasFirstComment?: boolean
-  measureRef: (node: HTMLDivElement) => void;
+  measureRef?: (node: HTMLDivElement) => void;
 }
 
 function FeedItem(props: FeedBodyProps) {
@@ -25,7 +25,7 @@ function FeedItem(props: FeedBodyProps) {
         postId={post.id}
         authorId={post.author.id}
       />
-      <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} postId={post.id} liked={post.like} />
+      <FeedBody title={post.title} text={post.text} imageUrl={post.imageUrl} postId={post.id} liked={post.like} likeCount={post._count.like} commentsCount={post._count.comments} />
       <Comments postId={post.id} comments={post.comments} hasFirstComment={hasFirstComment} />
     </div>
   );

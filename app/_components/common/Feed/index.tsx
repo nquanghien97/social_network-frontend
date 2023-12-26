@@ -4,7 +4,7 @@ import { PostType } from '../../../../store/reducers/postsReducer';
 import LoadingIcon from '../../../_assets/icons/LoadingIcon';
 
 interface FeedProps extends PostType {
-  measureRef: (node: HTMLDivElement) => void;
+  measureRef?: (node: HTMLDivElement) => void;
 }
 function Feed(props: FeedProps) {
   const {

@@ -1,7 +1,7 @@
 import api from '../config/api';
 
 interface ListFriendsType {
-  listFriendsId: number[];
+  listFriendsId?: number[];
   limit: number;
   offset: number;
 }
