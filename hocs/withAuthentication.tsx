@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/navigation';
 import { ComponentType, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { isAuthenticated } from '../utils/isAuthenticated';
 import getComponentName from '../utils/getComponentName';
 import LoadingIcon from '../app/_assets/icons/LoadingIcon';
@@ -14,7 +15,8 @@ export default function withAuthetication(Page: ComponentType) {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
-      if (!isAuthenticated() && !isRefreshTokenExpired()) {
+      if (!isAuthenticated() || isRefreshTokenExpired()) {
+        toast.warning('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại');
         logOut();
         router.push('/sign-in');
       }

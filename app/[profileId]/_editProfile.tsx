@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Image from 'next/image';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -10,7 +9,6 @@ import { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
 import { updateUser } from '@/services/user.services';
 import BaseTextarea from '../_components/common/BaseTextarea';
-import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
 
 interface FormValues {
   fullName?: string;
@@ -36,12 +34,6 @@ const schema = yup
 function EditProfile({ onClose } : { onClose: () => void }) {
   const [loading, setLoading] = useState(false);
   const profile = useSelector((state: RootState) => state.profile);
-  const [file, setFile] = useState<File>();
-
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setFile(e.target.files[0]);
-  };
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -51,7 +43,6 @@ function EditProfile({ onClose } : { onClose: () => void }) {
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append('image', file as File);
       formData.append('fullName', data.fullName!);
       formData.append('location', data.location!);
       formData.append('description', data.description!);
@@ -76,21 +67,6 @@ function EditProfile({ onClose } : { onClose: () => void }) {
         <div className="flex items-center">
           <form className="w-full p-6 bg-[#0f0f10] rounded-md max-lg:h-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-6 text-center text-4xl font-bold">Update Profile</h2>
-            <div className="relative">
-              <div className="absolute right-1 z-10 w-full h-full">
-                <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
-                  <div>
-                    <AddAPhotoIcon fill="white" />
-                  </div>
-                  <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
-                </label>
-              </div>
-              {file ? (
-                <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
-              ) : (
-                <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={profile.imageUrl} alt="avatar" />
-              )}
-            </div>
             <div className="w-full">
               <div className="mb-4">
                 <BaseInput

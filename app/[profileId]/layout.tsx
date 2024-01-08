@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { AppHeader } from '../_components/AppHeader';
@@ -18,10 +18,11 @@ import BaseButton from '../_components/common/BaseButton';
 import PencilEdit from '../_assets/icons/PencilEdit';
 import Modal from '../_components/common/Modal';
 import EditProfile from './_editProfile';
-import { getUserId } from '@/services/user.services';
+import { getUserId, updateAvatarUser } from '@/services/user.services';
 import { addFriend, findFriend, removeFriend } from '@/services/friend.services';
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
+import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
 
 function RootLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
@@ -33,6 +34,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   });
   const [loadingRemoveFriend, setLoadingRemoveFriend] = useState(false);
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
+  const [file, setFile] = useState<File>();
   const dispatch = useDispatch<AppDispatch>();
   const userId = Number(profileId);
   const currentUserId = getUserId() === userId;
@@ -45,6 +47,23 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
 
   const onCloseEditProfile = () => {
     setOpen(false);
+  };
+
+  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    try {
+      const formData = new FormData();
+      formData.append('image', e.target.files as unknown as File);
+      await updateAvatarUser(formData);
+      setFile(e.target.files[0]);
+      toast.success('Cập nhật thành công', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      toast.error('Cập nhật thất bại, vui lòng thử lại', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const handleChangeTab = (value: number) => {
@@ -220,8 +239,20 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
             <div className="flex flex-col w-full bg-[#0f0f10] rounded-md">
               <div className="rounder-md mb-4 p-6">
                 <div className="flex items-center max-md:flex-col">
-                  <div className="w-[100px] h-[100px]">
-                    <Image className="border-2 rounded-full w-full h-full" width={100} height={100} src={user.imageUrl || '/DefaultAvatar.svg'} alt="avatar" unoptimized />
+                  <div className="w-[100px] h-[100px] relative">
+                    <div className="absolute right-1 z-10 w-full h-full">
+                      <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
+                        <div>
+                          <AddAPhotoIcon fill="white" />
+                        </div>
+                        <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                      </label>
+                    </div>
+                    {file ? (
+                      <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
+                    ) : (
+                      <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={user.imageUrl || 'DefaultAvatar.svg'} alt="avatar" />
+                    )}
                   </div>
                   <div className="flex justify-center items-center flex-1">
                     <div className="px-4 pt-3">
