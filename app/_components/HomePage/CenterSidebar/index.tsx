@@ -57,6 +57,8 @@ function CenterSidebar() {
       observer?.disconnect();
     }
   }, [isIntersecting, canLoadMore, loadMore]);
+
+  // sort feed
   const listPostsUnique = [...listPosts]
     .sort((a, b) => (new Date(b.createdAt)).getTime() - (new Date(a.createdAt)).getTime())
     .filter((post, index, self) => index === self.findIndex((p) => p.id === post.id))

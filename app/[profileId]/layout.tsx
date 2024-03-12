@@ -80,6 +80,10 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
         handleClickTab(`/${userId}/friends`);
         break;
       }
+      case 3: {
+        handleClickTab(`/${userId}/photos`);
+        break;
+      }
       default: {
         handleClickTab(`/${userId}`);
       }
@@ -299,6 +303,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                   <TabItem label="Post" path={`/${userId}`} />
                   <TabItem label="About" path={`/${userId}/about`} />
                   <TabItem label="Friends" path={`/${userId}/friends`} />
+                  <TabItem label="Photos" path={`/${userId}/photos`} />
                 </TabList>
               </div>
             </div>
