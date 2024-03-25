@@ -44,6 +44,10 @@ function PostOptions(props: PostOptionsProps) {
     }
   };
 
+  const onSharePost = () => {
+    toast.info('Tính năng đang phát triển');
+  };
+
   const onConfirmClick = async () => {
     try {
       if (onDeletePost) {
@@ -75,6 +79,8 @@ function PostOptions(props: PostOptionsProps) {
           )}
           <li
             className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
+            onClick={onSharePost}
+            aria-hidden
           >
             Share Post
           </li>

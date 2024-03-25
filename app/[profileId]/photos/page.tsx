@@ -1,17 +1,19 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getImagePosts } from '@/services/post.services';
 
 interface ListPhotos {
   imageUrl: string;
+  id: number;
 }
 
 function Photos() {
   const [listPhotos, setListPhotos] = useState<ListPhotos[]>([]);
   const { profileId } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -20,7 +22,10 @@ function Photos() {
     })();
   }, []);
 
-  console.log(listPhotos);
+  const onImagesClick = (postId: number) => {
+    console.log(postId);
+    router.push(`/posts/${postId}`);
+  };
 
   if (listPhotos.length === 0) {
     return <p>Loading....</p>;
@@ -28,11 +33,16 @@ function Photos() {
 
   return (
     <div className="flex flex-col w-full bg-[#0f0f10] rounded-md p-6">
-      <p>Photos</p>
+      <p className="py-4 text-3xl font-bold">Photos</p>
       <div className="flex gap-2">
         {listPhotos.map((photo) => (
-          <div className="w-[150px] h-[150px]">
-            <Image className="w-full h-full rounded-md" src={photo.imageUrl} alt={photo.imageUrl} width={150} height={150} />
+          <div
+            className="w-[150px] h-[150px]"
+            onClick={() => onImagesClick(photo.id)}
+            aria-hidden
+            key={photo.id}
+          >
+            <Image className="w-full h-full rounded-md cursor-pointer" src={photo.imageUrl} alt={photo.imageUrl} width={150} height={150} />
           </div>
         ))}
       </div>

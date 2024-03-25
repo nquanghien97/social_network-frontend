@@ -30,7 +30,7 @@ function FeedHeader(props: FeedHeaderProps) {
   const PostOptionsRef = useOutsideClick(() => setOpenFeedOptions(false));
   return (
     <div className="flex gap-x-4 mb-4 items-center">
-      <div className="w-12" onClick={() => router.push(`/${authorId}`)} aria-hidden>
+      <div className="w-12 h-12" onClick={() => router.push(`/${authorId}`)} aria-hidden>
         <Image src={imageUrl || '/DefaultAvatar.svg'} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
       </div>
       <div>

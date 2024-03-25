@@ -255,7 +255,14 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                     {file ? (
                       <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
                     ) : (
-                      <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={user.imageUrl || 'DefaultAvatar.svg'} alt="avatar" />
+                      <Image
+                        className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer"
+                        unoptimized
+                        width={100}
+                        height={100}
+                        src={user.imageUrl || '/DefaultAvatar.svg'}
+                        alt="avatar"
+                      />
                     )}
                   </div>
                   <div className="flex justify-center items-center flex-1">

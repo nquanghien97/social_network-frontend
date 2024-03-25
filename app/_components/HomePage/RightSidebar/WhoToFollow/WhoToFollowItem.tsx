@@ -33,6 +33,7 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
     });
     try {
       await addFriend(friendId);
+      toast.success('Thêm bạn thành công');
     } catch (err) {
       toast.error('Có lỗi xảy ra, vui lòng thử lại');
     } finally {

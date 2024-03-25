@@ -86,7 +86,7 @@ function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {
   return (
     <div ref={measureRef} className="max-w-[250px] min-w-[200px] flex flex-1 flex-col bg-[#0f0f10] p-5 rounded-md" onClick={onNavigateProfileClick} aria-hidden>
       <div className="flex flex-1 cursor-pointer">
-        <Image src={imageUrl || 'DefaultAvatar.svg'} alt="" width={100} height={100} className="w-full" />
+        <Image src={imageUrl || '/DefaultAvatar.svg'} alt="" width={100} height={100} className="w-full" />
       </div>
       <div className="py-2 cursor-pointer">
         <p>{fullName}</p>

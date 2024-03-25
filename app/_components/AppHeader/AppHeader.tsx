@@ -152,7 +152,7 @@ function AppHeader() {
                         <Image
                           width={40}
                           height={40}
-                          src={user.imageUrl || 'DefaultAvatar.svg'}
+                          src={user.imageUrl || '/DefaultAvatar.svg'}
                           alt={user.fullName || ''}
                           className="rounded"
                         />

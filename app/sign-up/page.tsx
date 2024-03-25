@@ -87,14 +87,17 @@ function SignIn() {
         alt=""
         unoptimized
       />
-      <div className="flex justify-center items-center flex-col max-lg:h-full">
-        <div className="w-full">
+      <div className="flex justify-center items-center flex-col max-lg:h-full relative">
+        <div className="w-full absolute top-[-60px]">
           <div className="w-full relative z-10 flex justify-center items-center mt-16">
-            <Image src={signinImage} alt="" className="" unoptimized />
+            <Image className="" src={signinImage} alt="" unoptimized />
           </div>
         </div>
-        <div className="w-full flex justify-center items-center relative max-lg:h-full">
-          <form className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full" onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full flex justify-center items-center relative h-screen bg-[#0f0f10]">
+          <form
+            className="lg:w-1/2 w-full p-12 rounded-md max-lg:h-full lg:mt-[106px] mt-6 flex flex-col justify-center"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <h2 className="mb-6 text-center text-4xl font-bold">Sign up</h2>
             <div className="mb-4 text-center">
               <span>Already have an account?</span>
