@@ -5,10 +5,11 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import BaseButton from '../_components/common/BaseButton';
-import { RootState } from '../../store';
+import store, { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
 import { updateUser } from '@/services/user.services';
 import BaseTextarea from '../_components/common/BaseTextarea';
+import { setProfile } from '../../store/reducers/userProfileReducer';
 
 interface FormValues {
   fullName?: string;
@@ -42,12 +43,9 @@ function EditProfile({ onClose } : { onClose: () => void }) {
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append('fullName', data.fullName!);
-      formData.append('location', data.location!);
-      formData.append('description', data.description!);
-      formData.append('job', data.job!);
-      await updateUser(formData);
+      await updateUser(data);
+      store.dispatch(setProfile({ ...profile, ...data }));
+      // console.log({ ...profile, ...data });
       toast.success('Cập nhật thành công', {
         position: toast.POSITION.TOP_RIGHT,
       });

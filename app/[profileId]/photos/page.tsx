@@ -28,7 +28,7 @@ function Photos() {
   };
 
   if (listPhotos.length === 0) {
-    return <p>Loading....</p>;
+    return <p>Chưa có ảnh nào</p>;
   }
 
   return (

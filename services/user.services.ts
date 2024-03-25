@@ -3,6 +3,7 @@ import { getFromLocalStorage } from '../utils/localStorage';
 import api from '../config/api';
 import { parseJwt } from '../utils/parseJwt';
 import { setProfile } from '../store/reducers/userProfileReducer';
+import { UpdateUserDTO } from '@/dto/User.dto';
 // import { UpdateUserDTO } from '@/dto/User.dto';
 
 export const getUserId = () => {
@@ -18,7 +19,7 @@ export const getUser = async () => {
   return res.data.user;
 };
 
-export const updateUser = async (data: FormData) => {
+export const updateUser = async (data: UpdateUserDTO) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-user`, data);
   store.dispatch(setProfile(res.data.user));
 };

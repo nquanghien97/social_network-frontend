@@ -6,7 +6,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { AppHeader } from '../_components/AppHeader';
-import { AppDispatch } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 import WorkIcon from '../_assets/icons/WorkIcon';
 import CalendarIcon from '../_assets/icons/CalendarIcon';
 import LocationIcon from '../_assets/icons/LocationIcon';
@@ -40,6 +40,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const currentUserId = getUserId() === userId;
 
   const { user } = useSelector(getUserSelector) as UserType;
+  const profile = useSelector((state: RootState) => state.profile);
 
   const handleClickTab = (path: string) => {
     router.push(path);
@@ -260,15 +261,15 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                         unoptimized
                         width={100}
                         height={100}
-                        src={user.imageUrl || '/DefaultAvatar.svg'}
+                        src={profile.imageUrl || '/DefaultAvatar.svg'}
                         alt="avatar"
                       />
                     )}
                   </div>
                   <div className="flex justify-center items-center flex-1">
                     <div className="px-4 pt-3">
-                      <h1 className="font-bold text-xl">{user.fullName}</h1>
-                      <p className="text-[#a1a1a8]">{`${user.friendQuantity} bạn bè`}</p>
+                      <h1 className="font-bold text-xl">{profile.fullName}</h1>
+                      <p className="text-[#a1a1a8]">{`${user.friendQuantity || 0} bạn bè`}</p>
                     </div>
                     {currentUserId ? (
                       <div className="md:ml-auto">
@@ -282,20 +283,20 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                 </div>
               </div>
               <div className="flex items-center text-[#a1a1a8] px-6">
-                {user.job && (
+                {profile.job && (
                   <div className="flex items-center mr-4">
                     <div className="mr-1">
                       <WorkIcon fill="#a1a1a8" />
                     </div>
-                    <p>{user.job}</p>
+                    <p>{profile.job}</p>
                   </div>
                 )}
-                {user.location && (
+                {profile.location && (
                   <div className="flex items-center mr-4">
                     <div className="mr-1">
                       <LocationIcon fill="#a1a1a8" />
                     </div>
-                    <p>{user.location}</p>
+                    <p>{profile.location}</p>
                   </div>
                 )}
                 <div className="flex items-center mr-4">
