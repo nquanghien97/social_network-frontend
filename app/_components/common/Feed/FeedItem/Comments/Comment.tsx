@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
 import { RootState } from '../../../../../../store';
@@ -18,6 +19,7 @@ interface CommentProps {
   comment: CommentEntity
   addReply: ({ parentId, content } : { parentId?: string, content: string }) => Promise<void>
   onDeleteComment?: (id: string) => Promise<void>
+  hasFirstComment?: boolean
 }
 
 interface CommentFormState {
@@ -32,7 +34,13 @@ const schema = yup
   });
 
 function Comment(props: CommentProps) {
-  const { comment, addReply, onDeleteComment } = props;
+  const {
+    comment,
+    addReply,
+    onDeleteComment,
+    hasFirstComment,
+  } = props;
+  const router = useRouter();
   const [showReplyBox, setShowReplyBox] = useState(false);
   const profile = useSelector((state: RootState) => state.profile);
   const [openCommentOptions, setOpenCommentOptions] = useState(false);
@@ -48,6 +56,10 @@ function Comment(props: CommentProps) {
     resolver: yupResolver(schema),
   });
 
+  const onGoToProfile = () => {
+    router.push(`/${comment.author.id}`);
+  };
+
   const onSendComment: SubmitHandler<CommentFormState> = async (data) => {
     await addReply({ parentId: comment.id, content: data.comment });
     setShowReplyBox(false);
@@ -62,55 +74,60 @@ function Comment(props: CommentProps) {
             alt="avatar"
             width={100}
             height={100}
-            className="rounded-full"
+            onClick={onGoToProfile}
+            className="rounded-full cursor-pointer"
           />
         </div>
         <div className="flex flex-col w-full ml-2">
           <div className="bg-[#202227] flex justify-between w-full rounded-md px-4 py-2">
             <div>
-              <h5 className="font-bold">{comment.author.fullName}</h5>
+              <h5 className="font-bold cursor-pointer" onClick={onGoToProfile} aria-hidden>{comment.author.fullName}</h5>
               <p className="text-sm py-1">{comment.content}</p>
             </div>
-            <div
-              className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer relative"
-              aria-hidden
-            >
+            { hasFirstComment && (
               <div
-                onClick={() => setOpenCommentOptions(!openCommentOptions)}
+                className="h-10 w-10 bg-[#0f6fec1a] ml-auto rounded-full flex items-center justify-center hover:bg-[#a1a1a7] duration-300 cursor-pointer relative"
                 aria-hidden
-                className="w-full h-full flex items-center justify-center"
               >
-                <MoreHorizIcon fill="#0f6fec" width={16} height={16} />
+                <div
+                  onClick={() => setOpenCommentOptions(!openCommentOptions)}
+                  aria-hidden
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <MoreHorizIcon fill="#0f6fec" width={16} height={16} />
+                </div>
+                {openCommentOptions && (
+                  <CommentOptions
+                    onDeleteComment={onDeleteComment}
+                    hasDeleteComment={hasDeleteComment}
+                    CommentOptionsRef={CommentOptionsRef}
+                    setOpenCommentOptions={setOpenCommentOptions}
+                    commentId={comment.id}
+                  />
+                )}
               </div>
-              {openCommentOptions && (
-                <CommentOptions
-                  onDeleteComment={onDeleteComment}
-                  hasDeleteComment={hasDeleteComment}
-                  CommentOptionsRef={CommentOptionsRef}
-                  setOpenCommentOptions={setOpenCommentOptions}
-                  commentId={comment.id}
-                />
-              )}
+            )}
+          </div>
+          {hasFirstComment && (
+            <div className="flex gap-4 items-center text-[#a1a1a8] p-2">
+              <button
+                type="button"
+                className="text-sm hover:text-[#0f6fec] duration-300 cursor-pointer"
+              >
+                Like
+              </button>
+              <button
+                type="button"
+                className="text-sm hover:text-[#0f6fec] duration-300 cursor-pointer"
+                onClick={() => {
+                  setShowReplyBox(true);
+                }}
+              >
+                Reply
+              </button>
+              <p className="text-xs">{timeSince(new Date(comment.updatedAt))}</p>
             </div>
-          </div>
-          <div className="flex gap-4 items-center text-[#a1a1a8] p-2">
-            <button
-              type="button"
-              className="text-sm hover:text-[#0f6fec] duration-300 cursor-pointer"
-            >
-              Like
-            </button>
-            <button
-              type="button"
-              className="text-sm hover:text-[#0f6fec] duration-300 cursor-pointer"
-              onClick={() => {
-                setShowReplyBox(true);
-              }}
-            >
-              Reply
-            </button>
-            <p className="text-xs">{timeSince(new Date(comment.updatedAt))}</p>
-          </div>
+          )}
         </div>
       </div>
       {showReplyBox && (

@@ -246,12 +246,14 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                 <div className="flex items-center max-md:flex-col">
                   <div className="w-[100px] h-[100px] relative">
                     <div className="absolute right-1 z-10 w-full h-full">
-                      <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
-                        <div>
-                          <AddAPhotoIcon fill="white" />
-                        </div>
-                        <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
-                      </label>
+                      { currentUserId && (
+                        <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
+                          <div>
+                            <AddAPhotoIcon fill="white" />
+                          </div>
+                          <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                        </label>
+                      )}
                     </div>
                     {file ? (
                       <Image className="border-2 rounded-full m-auto w-[100px] h-[100px] cursor-pointer" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
@@ -261,14 +263,14 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                         unoptimized
                         width={100}
                         height={100}
-                        src={profile.imageUrl || '/DefaultAvatar.svg'}
+                        src={user.imageUrl || '/DefaultAvatar.svg'}
                         alt="avatar"
                       />
                     )}
                   </div>
                   <div className="flex justify-center items-center flex-1">
                     <div className="px-4 pt-3">
-                      <h1 className="font-bold text-xl">{profile.fullName}</h1>
+                      <h1 className="font-bold text-xl">{user.fullName}</h1>
                       <p className="text-[#a1a1a8]">{`${user.friendQuantity || 0} bạn bè`}</p>
                     </div>
                     {currentUserId ? (
@@ -283,15 +285,15 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                 </div>
               </div>
               <div className="flex items-center text-[#a1a1a8] px-6">
-                {profile.job && (
+                {user.job && (
                   <div className="flex items-center mr-4">
                     <div className="mr-1">
                       <WorkIcon fill="#a1a1a8" />
                     </div>
-                    <p>{profile.job}</p>
+                    <p>{user.job}</p>
                   </div>
                 )}
-                {profile.location && (
+                {user.location && (
                   <div className="flex items-center mr-4">
                     <div className="mr-1">
                       <LocationIcon fill="#a1a1a8" />

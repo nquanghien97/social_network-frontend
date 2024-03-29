@@ -83,7 +83,7 @@ function Comments(props: CommentsProps) {
     <>
       <ul className="[&>*]:pl-0">
         {listComments?.map((comment: CommentEntity) => (
-          <Comment key={comment.id} comment={comment} addReply={addReply} onDeleteComment={onDeleteComment} />
+          <Comment key={comment.id} comment={comment} addReply={addReply} onDeleteComment={onDeleteComment} hasFirstComment={hasFirstComment} />
         ))}
       </ul>
       <div className="flex w-full items-center">
@@ -99,7 +99,7 @@ function Comments(props: CommentsProps) {
         {!hasFirstComment ? (
           <div
             aria-hidden="true"
-            className="w-full flex items-center bg-[#26262b] py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"
+            className="w-full flex items-center bg-[#26262b] my-2 py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"
             onClick={() => router.push(`/posts/${postId}`)}
           >
             <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
