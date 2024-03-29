@@ -23,7 +23,6 @@ function Photos() {
   }, []);
 
   const onImagesClick = (postId: number) => {
-    console.log(postId);
     router.push(`/posts/${postId}`);
   };
 

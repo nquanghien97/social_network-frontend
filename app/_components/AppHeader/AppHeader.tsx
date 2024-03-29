@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -16,10 +16,11 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { RootState } from '../../../store';
+import { AppDispatch, RootState } from '../../../store';
 import { searchUsers } from '@/services/user.services';
 import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
+import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -27,7 +28,7 @@ function AppHeader() {
   const [searchText, setSearchText] = useState('');
   const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
   const profile = useSelector((state: RootState) => state.profile);
-
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   const toggleClickMenu = () => {
@@ -45,7 +46,7 @@ function AppHeader() {
   });
 
   const fetchPosts = () => {
-    // dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+    dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
     router.push('/');
   };
 

@@ -70,7 +70,7 @@ function FeedBody(props: FeedBodyProps) {
           {!!likesCount && <span>{`(${likesCount})`}</span>}
         </div>
         <div className="flex gap-1 px-4 py-1 hover:bg-[#0f6fec] rounded-md cursor-pointer duration-300">
-          <MessageIcon fill="#a1a1a7" width={29} height={29} />
+          <MessageIcon fill="#a1a1a7" width={24} height={24} />
           <span>Comment</span>
           {!!commentsCount && <span>{`(${commentsCount})`}</span>}
         </div>

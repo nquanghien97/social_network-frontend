@@ -45,7 +45,6 @@ function EditProfile({ onClose } : { onClose: () => void }) {
     try {
       await updateUser(data);
       store.dispatch(setProfile({ ...profile, ...data }));
-      // console.log({ ...profile, ...data });
       toast.success('Cập nhật thành công', {
         position: toast.POSITION.TOP_RIGHT,
       });
