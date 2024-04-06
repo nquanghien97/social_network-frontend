@@ -61,7 +61,7 @@ function SignIn() {
       });
       router.push('/', { scroll: false });
     } catch (err) {
-      toast.error(err.response.data.message, {
+      toast.error(err.response?.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     } finally {

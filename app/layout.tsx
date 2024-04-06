@@ -8,9 +8,8 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import { ReduxProvider } from '../store/provider';
 import { getUser } from '@/services/user.services';
-import store from '../store';
-import { setProfile } from '../store/reducers/userProfileReducer';
 import { isAuthenticated } from '../utils/isAuthenticated';
+import { useAuth } from '@/zustand/auth.store';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,14 +18,14 @@ function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { setProfile } = useAuth();
   useEffect(() => {
-    const fetchUser = async () => {
+    (async () => {
       if (isAuthenticated()) {
         const res = await getUser();
-        store.dispatch(setProfile(res));
+        setProfile(res);
       }
-    };
-    fetchUser();
+    })();
   }, []);
   return (
     <html lang="en">

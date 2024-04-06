@@ -1,10 +1,8 @@
-import store from '../store';
 import { getFromLocalStorage } from '../utils/localStorage';
 import api from '../config/api';
 import { parseJwt } from '../utils/parseJwt';
-import { setProfile } from '../store/reducers/userProfileReducer';
 import { UpdateUserDTO } from '@/dto/User.dto';
-// import { UpdateUserDTO } from '@/dto/User.dto';
+import { useAuth } from '@/zustand/auth.store';
 
 export const getUserId = () => {
   const token = getFromLocalStorage('accessToken');
@@ -21,7 +19,7 @@ export const getUser = async () => {
 
 export const updateUser = async (data: UpdateUserDTO) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-user`, data);
-  store.dispatch(setProfile(res.data.user));
+  useAuth.getState().setProfile(res.data.user);
 };
 
 export const getSuggestionsUser = async (limit: number, offset = 1) => {
@@ -36,5 +34,5 @@ export const searchUsers = async (searchText: string) => {
 
 export const updateAvatarUser = async (data: FormData) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-avatar`, data);
-  store.dispatch(setProfile(res.data.user));
+  useAuth.getState().setProfile(res.data.user);
 };

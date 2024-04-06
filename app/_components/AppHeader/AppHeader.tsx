@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -16,18 +16,19 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { AppDispatch, RootState } from '../../../store';
 import { searchUsers } from '@/services/user.services';
 import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
 import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
+import { useAuth } from '@/zustand/auth.store';
+import { AppDispatch } from '../../../store';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
@@ -74,7 +75,7 @@ function AppHeader() {
         <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
             <Image
-              src={profile.imageUrl}
+              src={user.imageUrl}
               width={100}
               height={100}
               alt="Default Avatar"
@@ -83,12 +84,12 @@ function AppHeader() {
             />
           </div>
           <div>
-            <Link href={`/${profile.id}`} scroll={false}>{profile.fullName}</Link>
-            <p className="text-sm font-normal text-[#a1a1a8]">{profile.job}</p>
+            <Link href={`/${user.id}`} scroll={false}>{user.fullName}</Link>
+            <p className="text-sm font-normal text-[#a1a1a8]">{user.job}</p>
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href={`/${profile.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <Link href={`/${user.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
       </div>
       <hr className="my-4" />
@@ -143,11 +144,11 @@ function AppHeader() {
                 />
                 {searchText ? (
                   <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                    {resultSearch.length > 0 ? resultSearch.map((user) => (
+                    {resultSearch.length > 0 ? resultSearch.map((item) => (
                       <li
-                        key={user.id}
+                        key={item.id}
                         aria-hidden
-                        onClick={() => router.push(`/${user.id}`)}
+                        onClick={() => router.push(`/${item.id}`)}
                         className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
                       >
                         <Image
@@ -175,7 +176,7 @@ function AppHeader() {
                   <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Messages</li>
                   <li
                     className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
-                    onClick={() => router.push(`/${profile.id}`)}
+                    onClick={() => router.push(`/${user.id}`)}
                     aria-hidden
                   >
                     Profile
@@ -201,9 +202,9 @@ function AppHeader() {
             </div>
           </div>
           <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>
-            {profile.imageUrl && (
+            {user.imageUrl && (
               <Image
-                src={profile.imageUrl}
+                src={user.imageUrl}
                 width={100}
                 height={100}
                 alt="Avatar"

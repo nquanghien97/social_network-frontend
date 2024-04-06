@@ -1,30 +1,13 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../store';
 import WorkIcon from '../../_assets/icons/WorkIcon';
 import LocationIcon from '../../_assets/icons/LocationIcon';
 import CalendarIcon from '../../_assets/icons/CalendarIcon';
 import MessageIcon from '../../_assets/icons/MessageIcon';
-import { UserType, getUserAsync, getUserSelector } from '../../../store/reducers/userReducer';
+import { useAuth } from '@/zustand/auth.store';
 
 function About() {
-  const dispatch = useDispatch<AppDispatch>();
-  const param = usePathname();
-  const userId = Number(param.slice(1, 2));
-  const { user } = useSelector(getUserSelector) as UserType;
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await dispatch(getUserAsync(userId));
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [dispatch]);
+  const { user } = useAuth();
 
   const timeCreated = new Date(user.createdAt);
   // eslint-disable-next-line max-len

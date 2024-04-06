@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,13 +6,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
-import { RootState } from '../../../../../../store';
 import SendIcon from '../../../../../_assets/icons/SendIcon';
 import CloseIcon from '../../../../../_assets/icons/CloseIcon';
 import { timeSince } from '../../../../../../utils/date';
 import CommentOptions from './CommentOptions';
 import MoreHorizIcon from '../../../../../_assets/icons/MoreHorizIcon';
 import { useOutsideClick } from '../../../../../../hooks/useOutsideClick';
+import { useAuth } from '@/zustand/auth.store';
 
 interface CommentProps {
   comment: CommentEntity
@@ -42,10 +41,10 @@ function Comment(props: CommentProps) {
   } = props;
   const router = useRouter();
   const [showReplyBox, setShowReplyBox] = useState(false);
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user } = useAuth();
   const [openCommentOptions, setOpenCommentOptions] = useState(false);
   const CommentOptionsRef = useOutsideClick(() => setOpenCommentOptions(false));
-  const hasDeleteComment = profile.id === comment.author.id;
+  const hasDeleteComment = user.id === comment.author.id;
 
   const {
     register,
@@ -134,7 +133,7 @@ function Comment(props: CommentProps) {
         <div className="w-full flex pl-6">
           <div className="h-10 w-10">
             <Image
-              src={profile.imageUrl || '/DefaultAvatar.svg'}
+              src={user.imageUrl || '/DefaultAvatar.svg'}
               alt="avatar"
               width={100}
               height={100}
