@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { FeedEntity } from '../../entities/Post.entities';
+import { PostEntity } from '../../entities/Post.entities';
 import { getNewFeed } from '../../services/post.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 import { getFriendsId } from '@/services/friend.services';
 
 export interface PostType {
-  deletedPost?: FeedEntity,
-  posts: FeedEntity[],
+  deletedPost?: PostEntity,
+  posts: PostEntity[],
   loading: boolean,
 }
 const initialState: PostType = {
@@ -35,10 +35,10 @@ const newFeedReducer = createSlice({
   name: 'newfeed',
   initialState,
   reducers: {
-    setPosts(state, action: { type: string, payload: FeedEntity[] }) {
+    setPosts(state, action: { type: string, payload: PostEntity[] }) {
       state.posts = action.payload;
     },
-    deletedPost(state, action: { type: string, payload: FeedEntity }) {
+    deletedPost(state, action: { type: string, payload: PostEntity }) {
       state.deletedPost = action.payload;
     },
   },

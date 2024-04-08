@@ -1,10 +1,11 @@
 import FeedItem from './FeedItem';
-import { FeedEntity } from '@/entities/Post.entities';
-import { PostType } from '../../../../store/reducers/postsReducer';
+import { PostEntity } from '@/entities/Post.entities';
 import LoadingIcon from '../../../_assets/icons/LoadingIcon';
 
-interface FeedProps extends PostType {
+interface FeedProps {
   measureRef?: (node: HTMLDivElement) => void;
+  posts: PostEntity[];
+  loading: boolean;
 }
 function Feed(props: FeedProps) {
   const {
@@ -17,7 +18,7 @@ function Feed(props: FeedProps) {
   }
   return (
     <div className="rounded-md w-full">
-      {posts.map((item: FeedEntity) => (
+      {posts.map((item: PostEntity) => (
         <FeedItem key={item.id} post={item} hasFirstComment={false} measureRef={measureRef} />
       ))}
     </div>

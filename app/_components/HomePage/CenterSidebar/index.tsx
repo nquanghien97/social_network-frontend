@@ -8,7 +8,7 @@ import {
   setPosts,
 } from '../../../../store/reducers/newFeedReducer';
 import LoadMore from '../../common/LoadMore';
-import { FeedEntity } from '@/entities/Post.entities';
+import { PostEntity } from '@/entities/Post.entities';
 import { getNewFeed } from '@/services/post.services';
 import { getFriendsId } from '@/services/friend.services';
 
@@ -17,7 +17,7 @@ function CenterSidebar() {
   const deletedPost = useSelector((state: RootState) => state.newfeed.deletedPost);
   const dispatch = useDispatch<AppDispatch>();
   const [canLoadMore, setCanLoadMore] = useState(false);
-  const [listPosts, setListPosts] = useState<FeedEntity[]>(posts);
+  const [listPosts, setListPosts] = useState<PostEntity[]>(posts);
   const [page, setPage] = useState(1);
   const [friendsId, setFriendsId] = useState();
   const {

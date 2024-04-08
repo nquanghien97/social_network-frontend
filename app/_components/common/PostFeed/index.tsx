@@ -10,10 +10,9 @@ import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
 import { createPost } from '@/services/post.services';
 import BaseButton from '../BaseButton';
-import { getAllPostsAsync } from '../../../../store/reducers/postsReducer';
 import { setPosts } from '../../../../store/reducers/newFeedReducer';
-import { AppDispatch } from '../../../../store';
 import { getUserId } from '@/services/user.services';
+import { usePost } from '@/zustand/posts.store';
 
 interface FormValues {
   title: string;
@@ -22,11 +21,12 @@ interface FormValues {
 }
 
 function PostFeed() {
-  const dispatch = useDispatch<AppDispatch>();
+  const { getAllPosts } = usePost();
+  const dispatch = useDispatch();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [file, setFile] = useState<File>();
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, reset } = useForm<FormValues>();
   const onCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -44,7 +44,7 @@ function PostFeed() {
       formData.append('text', data.text!);
       const res = await createPost(formData);
       dispatch(setPosts([res.data.post]));
-      dispatch(getAllPostsAsync(getUserId()));
+      await getAllPosts(getUserId());
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
     } catch (err: unknown) {
@@ -52,10 +52,11 @@ function PostFeed() {
     } finally {
       setLoading(false);
     }
+    reset();
   };
   return (
     <>
-      <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5">
+      <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[100]">
         <div className="h-12 w-12 mr-2">
           <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
         </div>
@@ -104,8 +105,8 @@ function PostFeed() {
               <p className="mb-2">Upload attachment</p>
               <div className="border-2 border-dashed rounded-md p-5 cursor-pointer w-full flex justify-center items-center relative h-[300px]">
                 <div className="w-full h-full relative overflow-y-auto no-scrollbar">
-                  <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full flex absolute">
-                    <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                  <label htmlFor="icon-button-file-post" className="cursor-pointer w-full h-full flex absolute">
+                    <input onChange={onFileChange} id="icon-button-file-post" type="file" className="hidden" />
                     {file ? (
                       <Image className="border-2 m-auto h-auto cursor-pointer w-full p-4 rounded-md" unoptimized width={100} height={100} src={URL.createObjectURL(file!)} alt="preview avatar" />
                     ) : (

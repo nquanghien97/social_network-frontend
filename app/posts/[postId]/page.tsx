@@ -4,12 +4,12 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { getPost } from '@/services/post.services';
 import FeedItem from '../../_components/common/Feed/FeedItem';
-import { FeedEntity } from '@/entities/Post.entities';
+import { PostEntity } from '@/entities/Post.entities';
 import LoadingIcon from '../../_assets/icons/LoadingIcon';
 
 function Post() {
   const param = usePathname();
-  const [post, setPost] = useState<FeedEntity>();
+  const [post, setPost] = useState<PostEntity>();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchPost = async () => {

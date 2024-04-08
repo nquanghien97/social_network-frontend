@@ -239,11 +239,11 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                   <div className="w-[100px] h-[100px] relative">
                     <div className="absolute right-1 z-10 w-full h-full">
                       { currentUserId && (
-                        <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
+                        <label htmlFor="icon-button-file-avatar" className="cursor-pointer w-full h-full block">
                           <div>
                             <AddAPhotoIcon fill="white" />
                           </div>
-                          <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                          <input onChange={onFileChange} id="icon-button-file-avatar" type="file" className="hidden" />
                         </label>
                       )}
                     </div>
