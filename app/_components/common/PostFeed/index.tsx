@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import CloseIcon from '../../../_assets/icons/CloseIcon';
 import InsertPhoto from '../../../_assets/icons/InsertPhoto';
@@ -10,7 +9,6 @@ import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
 import { createPost } from '@/services/post.services';
 import BaseButton from '../BaseButton';
-import { setPosts } from '../../../../store/reducers/newFeedReducer';
 import { getUserId } from '@/services/user.services';
 import { usePost } from '@/zustand/posts.store';
 
@@ -22,7 +20,6 @@ interface FormValues {
 
 function PostFeed() {
   const { getAllPosts } = usePost();
-  const dispatch = useDispatch();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [file, setFile] = useState<File>();
   const [loading, setLoading] = useState(false);
@@ -42,8 +39,7 @@ function PostFeed() {
       formData.append('image', file as File);
       formData.append('title', data.title!);
       formData.append('text', data.text!);
-      const res = await createPost(formData);
-      dispatch(setPosts([res.data.post]));
+      await createPost(formData);
       await getAllPosts(getUserId());
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
@@ -56,7 +52,7 @@ function PostFeed() {
   };
   return (
     <>
-      <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[100]">
+      <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[10]">
         <div className="h-12 w-12 mr-2">
           <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
         </div>

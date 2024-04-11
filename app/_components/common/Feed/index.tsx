@@ -13,15 +13,22 @@ function Feed(props: FeedProps) {
     loading,
     measureRef,
   } = props;
-  if (loading || !posts) {
+  if (!posts) {
     return <div className="mt-4 flex items-center justify-center"><LoadingIcon /></div>;
   }
   return (
-    <div className="rounded-md w-full">
-      {posts.map((item: PostEntity) => (
-        <FeedItem key={item.id} post={item} hasFirstComment={false} measureRef={measureRef} />
-      ))}
-    </div>
+    <>
+      <div className="rounded-md w-full">
+        {posts.map((item: PostEntity) => (
+          <FeedItem key={item.id} post={item} hasFirstComment={false} measureRef={measureRef} />
+        ))}
+      </div>
+      <div>
+        {loading && (
+          <div><LoadingIcon /></div>
+        )}
+      </div>
+    </>
   );
 }
 

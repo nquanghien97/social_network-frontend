@@ -11,7 +11,7 @@ interface Auth {
   setFeeds: (post: PostEntity[]) => void
 }
 
-export const usePost = create<Auth>()((set) => ({
+export const useNewFeed = create<Auth>()((set) => ({
   loading: false,
   feeds: [],
   getNewFeed: async ({ limit, offset }: { limit: number, offset: number }) => {
@@ -19,8 +19,8 @@ export const usePost = create<Auth>()((set) => ({
     try {
       const listFriendsId = await getFriendsId();
       if (isAuthenticated()) {
-        const response = await getNewFeed({ listFriendsId: listFriendsId.listFriendsId, offset, limit });
-        set(() => ({ feeds: response.data.post as PostEntity[] }));
+        const response = await getNewFeed({ listFriendsId, offset, limit });
+        set(() => ({ feeds: response.data.posts as PostEntity[] }));
       }
     } catch (err) {
       console.log(err.message);

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -19,9 +18,8 @@ import { logOut } from '../../../services/auth.services';
 import { searchUsers } from '@/services/user.services';
 import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
-import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
+import { useNewFeed } from '@/zustand/newfeed.store';
 import { useAuth } from '@/zustand/auth.store';
-import { AppDispatch } from '../../../store';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -29,7 +27,7 @@ function AppHeader() {
   const [searchText, setSearchText] = useState('');
   const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
   const { user } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
+  const { getNewFeed } = useNewFeed();
   const router = useRouter();
 
   const toggleClickMenu = () => {
@@ -46,9 +44,9 @@ function AppHeader() {
     setIsOpenModalProfile(false);
   });
 
-  const fetchPosts = () => {
-    dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+  const onClickLogo = async () => {
     router.push('/');
+    await getNewFeed({ offset: 1, limit: 2 });
   };
 
   const toastUnDeveloped = () => {
@@ -102,9 +100,9 @@ function AppHeader() {
   return (
     <>
       <div />
-      <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
+      <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[20] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
         <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-          <div aria-hidden="true" onClick={fetchPosts} className="cursor-pointer">
+          <div aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
             <Image src={logo} alt="logo" width={60} height={60} unoptimized />
           </div>
           <div className="lg:hidden relative flex gap-x-2 ml-auto">
@@ -126,9 +124,6 @@ function AppHeader() {
           <div className={menuClass}>
             <div className="w-full">
               <div className="relative max-lg:px-4">
-                {/* <button type="button" className="cursor-pointer px-2 max-lg:px-6 absolute top-1/2 left-0 -translate-y-1/2">
-                  <SearchIcon color="#8a909b" />
-                </button> */}
                 <BaseInput
                   className="pl-12 px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-lg w-full"
                   placeholder="Search..."
@@ -154,11 +149,11 @@ function AppHeader() {
                         <Image
                           width={40}
                           height={40}
-                          src={user.imageUrl || '/DefaultAvatar.svg'}
-                          alt={user.fullName || ''}
+                          src={item.imageUrl || '/DefaultAvatar.svg'}
+                          alt={item.fullName || ''}
                           className="rounded"
                         />
-                        <p>{user.fullName}</p>
+                        <p>{item.fullName}</p>
                       </li>
                     )) : (
                       <p className="px-4 py-2">Không có người dùng phù hợp</p>
