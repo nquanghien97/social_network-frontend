@@ -1,10 +1,10 @@
 import FeedBody from './FeedBody';
 import FeedHeader from './FeedHeader';
 import Comments from './Comments';
-import { FeedEntity } from '@/entities/Post.entities';
+import { PostEntity } from '@/entities/Post.entities';
 
 interface FeedBodyProps {
-  post: FeedEntity
+  post: PostEntity
   hasFirstComment?: boolean
   measureRef?: (node: HTMLDivElement) => void;
 }

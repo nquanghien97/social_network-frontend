@@ -5,31 +5,35 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getAllFriends, removeFriend } from '@/services/friend.services';
 import ListFriends from './ListFriends';
+import LoadingIcon from '../../_assets/icons/LoadingIcon';
 
 function Friend() {
   const [listFriends, setListFriends] = useState([]);
+  const [loading, setLoading] = useState(false);
   const param = usePathname();
   const userId = Number(param.slice(1, 2));
   useEffect(() => {
-    const fetchListFriends = async () => {
+    setLoading(true);
+    setLoading(true);
+    (async () => {
       try {
         const res = await getAllFriends(userId);
         setListFriends(res.listFriends);
+        setLoading(false);
       } catch (err) {
         console.log(err.message);
+        setLoading(false);
       }
-    };
-    fetchListFriends();
+    })();
   }, []);
 
   const onRemoveFriend = async (idFriend: number) => {
     try {
       await removeFriend(idFriend);
+      toast.success('Xóa bạn thành công');
       const res = await getAllFriends(userId);
       setListFriends(res.listFriends);
-      toast.success('Xóa bạn thành công');
     } catch (err) {
-      console.log(err.message);
       toast.error('Xóa bạn thất bại');
     }
   };
@@ -38,10 +42,16 @@ function Friend() {
       <div className="px-5 pt-5">
         <h5 className="text-2xl font-bold">Friends</h5>
       </div>
-      {listFriends.length ? (
-        <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
+      {loading ? (
+        <p className="flex justify-center items-center p-5"><LoadingIcon /></p>
       ) : (
-        <p className="p-5 text-center text-2xl">Chưa có người bạn nào</p>
+        <div>
+          {listFriends.length > 0 ? (
+            <ListFriends listFriends={listFriends} onRemoveFriend={onRemoveFriend} />
+          ) : (
+            <p className="p-5 text-center text-2xl">Chưa có người bạn nào</p>
+          )}
+        </div>
       )}
     </div>
   );

@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAuth } from '@/zustand/auth.store';
 
 export function LeftSidebarItem() {
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user } = useAuth();
+
   const toastUnDeveloped = () => {
     toast.info('Tính năng chưa được phát triển');
   };
@@ -16,22 +16,22 @@ export function LeftSidebarItem() {
           <div>
             <div className="text-center">
               <div className="h-16 w-16 m-auto mb-4">
-                {profile.imageUrl && (
-                  <Image src={profile.imageUrl} width={100} height={100} alt="Default Avatar" unoptimized className="w-full h-full rounded-md" />
+                {user.imageUrl && (
+                  <Image src={user.imageUrl} width={100} height={100} alt="Default Avatar" unoptimized className="w-full h-full rounded-md" />
                 )}
               </div>
-              <h5 className="text-xl">{profile.fullName}</h5>
-              <small className="text-sm text-[#ccc]">{profile.job}</small>
-              <p className="my-4 text-[#ccc] text-sm">{profile.description}</p>
+              <h5 className="text-xl">{user.fullName}</h5>
+              <small className="text-sm text-[#ccc]">{user.job}</small>
+              <p className="my-4 text-[#ccc] text-sm">{user.description}</p>
               {/* <div>Thông số</div> */}
             </div>
             <hr className="my-4" />
             <ul>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href={`/${profile.id}`}>Feed</Link>
+                <Link href={`/${user.id}`}>Feed</Link>
               </li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href={`/${profile.id}/friends`}>Connections</Link>
+                <Link href={`/${user.id}/friends`}>Connections</Link>
               </li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Latest News</li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Events</li>
@@ -41,7 +41,7 @@ export function LeftSidebarItem() {
             </ul>
           </div>
           <hr className="my-4" />
-          <Link scroll={false} aria-hidden="true" href={`/${profile.id}`} className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
+          <Link scroll={false} aria-hidden="true" href={`/${user.id}`} className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
             View Profile
           </Link>
         </div>

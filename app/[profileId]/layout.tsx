@@ -1,19 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { AppHeader } from '../_components/AppHeader';
-import { AppDispatch, RootState } from '../../store';
 import WorkIcon from '../_assets/icons/WorkIcon';
 import CalendarIcon from '../_assets/icons/CalendarIcon';
 import LocationIcon from '../_assets/icons/LocationIcon';
 import TabList from '../_components/common/TabList';
 import TabItem from '../_components/common/TabItem';
 import withAuthetication from '../../hocs/withAuthentication';
-import { UserType, getUserAsync, getUserSelector } from '../../store/reducers/userReducer';
 import BaseButton from '../_components/common/BaseButton';
 import PencilEdit from '../_assets/icons/PencilEdit';
 import Modal from '../_components/common/Modal';
@@ -23,6 +20,7 @@ import { addFriend, findFriend, removeFriend } from '@/services/friend.services'
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
 import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
+import { useAuth } from '@/zustand/auth.store';
 
 function RootLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
@@ -35,12 +33,10 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const [loadingRemoveFriend, setLoadingRemoveFriend] = useState(false);
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
   const [file, setFile] = useState<File>();
-  const dispatch = useDispatch<AppDispatch>();
   const userId = Number(profileId);
   const currentUserId = getUserId() === userId;
 
-  const { user } = useSelector(getUserSelector) as UserType;
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user, getUser } = useAuth();
 
   const handleClickTab = (path: string) => {
     router.push(path);
@@ -224,13 +220,9 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
 
   useEffect(() => {
     (async () => {
-      try {
-        await dispatch(getUserAsync(userId));
-      } catch (err) {
-        console.log(err);
-      }
+      await getUser(userId);
     })();
-  }, [dispatch]);
+  }, []);
 
   const timeCreated = new Date(user.createdAt);
   // eslint-disable-next-line max-len
@@ -247,11 +239,11 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                   <div className="w-[100px] h-[100px] relative">
                     <div className="absolute right-1 z-10 w-full h-full">
                       { currentUserId && (
-                        <label htmlFor="icon-button-file" className="cursor-pointer w-full h-full block">
+                        <label htmlFor="icon-button-file-avatar" className="cursor-pointer w-full h-full block">
                           <div>
                             <AddAPhotoIcon fill="white" />
                           </div>
-                          <input onChange={onFileChange} id="icon-button-file" type="file" className="hidden" />
+                          <input onChange={onFileChange} id="icon-button-file-avatar" type="file" className="hidden" />
                         </label>
                       )}
                     </div>
@@ -298,7 +290,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                     <div className="mr-1">
                       <LocationIcon fill="#a1a1a8" />
                     </div>
-                    <p>{profile.location}</p>
+                    <p>{user.location}</p>
                   </div>
                 )}
                 <div className="flex items-center mr-4">

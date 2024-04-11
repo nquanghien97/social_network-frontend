@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -16,19 +15,19 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { AppDispatch, RootState } from '../../../store';
 import { searchUsers } from '@/services/user.services';
 import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
-import { getNewFeedAsync } from '../../../store/reducers/newFeedReducer';
+import { useNewFeed } from '@/zustand/newfeed.store';
+import { useAuth } from '@/zustand/auth.store';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
-  const profile = useSelector((state: RootState) => state.profile);
-  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useAuth();
+  const { getNewFeed } = useNewFeed();
   const router = useRouter();
 
   const toggleClickMenu = () => {
@@ -45,9 +44,9 @@ function AppHeader() {
     setIsOpenModalProfile(false);
   });
 
-  const fetchPosts = () => {
-    dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
+  const onClickLogo = async () => {
     router.push('/');
+    await getNewFeed({ offset: 1, limit: 2 });
   };
 
   const toastUnDeveloped = () => {
@@ -74,7 +73,7 @@ function AppHeader() {
         <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
             <Image
-              src={profile.imageUrl}
+              src={user.imageUrl}
               width={100}
               height={100}
               alt="Default Avatar"
@@ -83,12 +82,12 @@ function AppHeader() {
             />
           </div>
           <div>
-            <Link href={`/${profile.id}`} scroll={false}>{profile.fullName}</Link>
-            <p className="text-sm font-normal text-[#a1a1a8]">{profile.job}</p>
+            <Link href={`/${user.id}`} scroll={false}>{user.fullName}</Link>
+            <p className="text-sm font-normal text-[#a1a1a8]">{user.job}</p>
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href={`/${profile.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <Link href={`/${user.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
       </div>
       <hr className="my-4" />
@@ -101,9 +100,9 @@ function AppHeader() {
   return (
     <>
       <div />
-      <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[10] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
+      <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[20] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
         <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-          <div aria-hidden="true" onClick={fetchPosts} className="cursor-pointer">
+          <div aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
             <Image src={logo} alt="logo" width={60} height={60} unoptimized />
           </div>
           <div className="lg:hidden relative flex gap-x-2 ml-auto">
@@ -125,9 +124,6 @@ function AppHeader() {
           <div className={menuClass}>
             <div className="w-full">
               <div className="relative max-lg:px-4">
-                {/* <button type="button" className="cursor-pointer px-2 max-lg:px-6 absolute top-1/2 left-0 -translate-y-1/2">
-                  <SearchIcon color="#8a909b" />
-                </button> */}
                 <BaseInput
                   className="pl-12 px-4 py-2 bg-[#202227] outline-0 border border-[#313235] rounded-lg w-full"
                   placeholder="Search..."
@@ -143,21 +139,21 @@ function AppHeader() {
                 />
                 {searchText ? (
                   <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                    {resultSearch.length > 0 ? resultSearch.map((user) => (
+                    {resultSearch.length > 0 ? resultSearch.map((item) => (
                       <li
-                        key={user.id}
+                        key={item.id}
                         aria-hidden
-                        onClick={() => router.push(`/${user.id}`)}
+                        onClick={() => router.push(`/${item.id}`)}
                         className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
                       >
                         <Image
                           width={40}
                           height={40}
-                          src={user.imageUrl || '/DefaultAvatar.svg'}
-                          alt={user.fullName || ''}
+                          src={item.imageUrl || '/DefaultAvatar.svg'}
+                          alt={item.fullName || ''}
                           className="rounded"
                         />
-                        <p>{user.fullName}</p>
+                        <p>{item.fullName}</p>
                       </li>
                     )) : (
                       <p className="px-4 py-2">Không có người dùng phù hợp</p>
@@ -175,7 +171,7 @@ function AppHeader() {
                   <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Messages</li>
                   <li
                     className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
-                    onClick={() => router.push(`/${profile.id}`)}
+                    onClick={() => router.push(`/${user.id}`)}
                     aria-hidden
                   >
                     Profile
@@ -201,9 +197,9 @@ function AppHeader() {
             </div>
           </div>
           <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>
-            {profile.imageUrl && (
+            {user.imageUrl && (
               <Image
-                src={profile.imageUrl}
+                src={user.imageUrl}
                 width={100}
                 height={100}
                 alt="Avatar"

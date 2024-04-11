@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
 import LikeIcon from '../../../../_assets/icons/LikeIcon';
 import LikedIcon from '../../../../_assets/icons/LikedIcon';
 import MessageIcon from '../../../../_assets/icons/MessageIcon';
 import ShareIcon from '../../../../_assets/icons/ShareIcon';
 import { likePost } from '@/services/like.services';
 import { LikeEntity } from '@/entities/Post.entities';
-import { RootState } from '../../../../../store';
+import { useAuth } from '@/zustand/auth.store';
 
 interface FeedBodyProps {
   title?: string;
@@ -23,9 +22,9 @@ function FeedBody(props: FeedBodyProps) {
   const {
     title, text, imageUrl, postId, liked, likeCount, commentsCount,
   } = props;
+  const { user } = useAuth();
   const likedId = liked?.map((item: LikeEntity) => item.userId);
-  const profile = useSelector((state: RootState) => state.profile);
-  const [like, setLike] = useState(likedId.includes(profile.id));
+  const [like, setLike] = useState(likedId.includes(user.id));
   const [likesCount, setLikesCount] = useState(likeCount);
   const onLikePost = async () => {
     try {

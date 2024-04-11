@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,7 +10,7 @@ import Comment from './Comment';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
 import SendIcon from '../../../../../_assets/icons/SendIcon';
-import { RootState } from '../../../../../../store';
+import { useAuth } from '@/zustand/auth.store';
 
 interface CommentsProps {
   // imageUrl?: string;
@@ -35,7 +34,7 @@ function Comments(props: CommentsProps) {
   const router = useRouter();
   const { postId, comments, hasFirstComment } = props;
   const [listComments, setListComments] = useState(comments);
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user } = useAuth();
 
   const {
     register,
@@ -89,7 +88,7 @@ function Comments(props: CommentsProps) {
       <div className="flex w-full items-center">
         <div className="h-10 w-10">
           <Image
-            src={profile.imageUrl || '/DefaultAvatar.svg'}
+            src={user.imageUrl || '/DefaultAvatar.svg'}
             alt="avatar"
             width={100}
             height={100}

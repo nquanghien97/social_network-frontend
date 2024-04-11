@@ -4,14 +4,13 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Modal from '../../Modal';
 import BaseButton from '../../BaseButton';
-import { AppDispatch, RootState } from '../../../../../store';
 import { deletePost } from '@/services/post.services';
-import { getAllPostsAsync } from '../../../../../store/reducers/postsReducer';
-import { deletedPost, getNewFeedAsync } from '../../../../../store/reducers/newFeedReducer';
+import { useAuth } from '@/zustand/auth.store';
+import { usePost } from '@/zustand/posts.store';
+import { useNewFeed } from '@/zustand/newfeed.store';
 
 interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
@@ -21,22 +20,23 @@ interface PostOptionsProps {
 }
 
 function PostOptions(props: PostOptionsProps) {
-  const dispatch = useDispatch<AppDispatch>();
+  const { getNewFeed } = useNewFeed();
   const {
     PostOptionsRef, setOpenFeedOptions, postId, authorId,
   } = props;
-  const profile = useSelector((state: RootState) => state.profile);
+
+  const { user } = useAuth();
+  const { getAllPosts } = usePost();
 
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
   const [loading, setLoading] = useState(false);
   const onDeletePost = async () => {
     setLoading(true);
     try {
-      const postDeleted = await deletePost({ postId });
+      await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
-      dispatch(getAllPostsAsync(profile.id));
-      dispatch(getNewFeedAsync({ limit: 2, offset: 1 }));
-      dispatch(deletedPost(postDeleted.data.post));
+      await getAllPosts(user.id);
+      await getNewFeed({ limit: 2, offset: 1 });
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -66,7 +66,7 @@ function PostOptions(props: PostOptionsProps) {
         ref={PostOptionsRef}
       >
         <ul className="w-full">
-          {profile.id === authorId && (
+          {user.id === authorId && (
             <li
               className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
               onClick={() => {

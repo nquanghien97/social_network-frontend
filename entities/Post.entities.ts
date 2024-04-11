@@ -7,7 +7,7 @@ export interface LikeEntity {
   createdAt: Date;
 }
 
-export interface FeedEntity {
+export interface PostEntity {
   id: string;
   title?: string;
   text?: string;

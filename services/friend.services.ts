@@ -9,7 +9,7 @@ export const removeFriend = async (friendId: number) => api.delete(`${process.en
 
 export const getFriendsId = async () => {
   const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/api/id-friend`);
-  return res.data;
+  return res.data.listFriendsId;
 };
 
 export const addFriend = async (friendId: number) => api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/add-friend`, { friendId });

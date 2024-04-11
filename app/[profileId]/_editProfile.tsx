@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import BaseButton from '../_components/common/BaseButton';
-import store, { RootState } from '../../store';
 import BaseInput from '../_components/common/BaseInput';
 import { updateUser } from '@/services/user.services';
 import BaseTextarea from '../_components/common/BaseTextarea';
-import { setProfile } from '../../store/reducers/userProfileReducer';
+import { useAuth } from '@/zustand/auth.store';
 
 interface FormValues {
   fullName?: string;
@@ -33,8 +31,8 @@ const schema = yup
   });
 
 function EditProfile({ onClose } : { onClose: () => void }) {
+  const { user, setProfile } = useAuth();
   const [loading, setLoading] = useState(false);
-  const profile = useSelector((state: RootState) => state.profile);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -44,7 +42,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
     setLoading(true);
     try {
       await updateUser(data);
-      store.dispatch(setProfile({ ...profile, ...data }));
+      setProfile({ ...user, ...data });
       toast.success('Cập nhật thành công', {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -70,7 +68,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                   label="Full Name"
                   placeholder="Enter your Full Name"
                   message={errors.fullName?.message}
-                  defaultValue={profile.fullName || ''}
+                  defaultValue={user.fullName || ''}
                   {...register('fullName')}
                 />
               </div>
@@ -79,7 +77,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                   label="Location"
                   placeholder="Enter your location"
                   message={errors.location?.message}
-                  defaultValue={profile.location || ''}
+                  defaultValue={user.location || ''}
                   {...register('location')}
                 />
               </div>
@@ -88,7 +86,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                   label="Job Title"
                   placeholder="Enter your description"
                   message={errors.job?.message}
-                  defaultValue={profile.job || ''}
+                  defaultValue={user.job || ''}
                   {...register('job')}
                 />
               </div>
@@ -96,7 +94,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 label="Description"
                 placeholder="Enter your description"
                 message={errors.description?.message}
-                defaultValue={profile.description || ''}
+                defaultValue={user.description || ''}
                 rows={5}
                 {...register('description')}
               />
