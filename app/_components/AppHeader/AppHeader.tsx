@@ -73,7 +73,7 @@ function AppHeader() {
         <div className="flex justify-center">
           <div className="w-12 h-12 mr-4">
             <Image
-              src={user.imageUrl}
+              src={user.imageUrl || '/DefaultAvatar.svg'}
               width={100}
               height={100}
               alt="Default Avatar"
@@ -197,16 +197,14 @@ function AppHeader() {
             </div>
           </div>
           <div aria-hidden="true" className="w-10 h-10 cursor-pointer ml-4 relative" onClick={() => setIsOpenModalProfile(!isOpenModalProfile)}>
-            {user.imageUrl && (
-              <Image
-                src={user.imageUrl}
-                width={100}
-                height={100}
-                alt="Avatar"
-                className="w-full h-full rounded-lg"
-                unoptimized
-              />
-            )}
+            <Image
+              src={user.imageUrl || '/DefaultAvatar.svg'}
+              width={100}
+              height={100}
+              alt="Avatar"
+              className="w-full h-full rounded-lg"
+              unoptimized
+            />
             { isOpenModalProfile && modalProfile()}
           </div>
         </div>
