@@ -9,6 +9,7 @@ import Head from 'next/head';
 import { getUser } from '@/services/user.services';
 import { isAuthenticated } from '../utils/isAuthenticated';
 import { useAuth } from '@/zustand/auth.store';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

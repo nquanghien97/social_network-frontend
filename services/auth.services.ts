@@ -28,6 +28,14 @@ export const refreshTokenServices = async (payload: string | null) => {
   };
 };
 
+export const sendRequestPasswordResetServices = async (email: string) => {
+  await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/reset-password`, { email });
+};
+
+export const passwordResetServices = async (password: string, id: string, token: string) => {
+  await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/${id}/${token}`, { password });
+};
+
 export const logOut = () => {
   removeFromLocalStorage('accessToken');
   removeFromLocalStorage('refreshToken');
