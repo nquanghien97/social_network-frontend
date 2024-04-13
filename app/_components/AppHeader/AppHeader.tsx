@@ -81,9 +81,11 @@ function AppHeader() {
               unoptimized
             />
           </div>
-          <div>
+          <div className="flex items-center flex-col">
             <Link href={`/${user.id}`} scroll={false}>{user.fullName}</Link>
-            <p className="text-sm font-normal text-[#a1a1a8]">{user.job}</p>
+            {user.job && (
+              <p className="text-sm font-normal text-[#a1a1a8]">{user.job}</p>
+            )}
           </div>
         </div>
         <div className="mt-4 flex">

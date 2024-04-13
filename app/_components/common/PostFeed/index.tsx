@@ -11,6 +11,8 @@ import { createPost } from '@/services/post.services';
 import BaseButton from '../BaseButton';
 import { getUserId } from '@/services/user.services';
 import { usePost } from '@/zustand/posts.store';
+import { useAuth } from '@/zustand/auth.store';
+import { useNewFeed } from '@/zustand/newfeed.store';
 
 interface FormValues {
   title: string;
@@ -20,10 +22,12 @@ interface FormValues {
 
 function PostFeed() {
   const { getAllPosts } = usePost();
+  const { getNewFeed } = useNewFeed();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [file, setFile] = useState<File>();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { user } = useAuth();
   const onCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -41,6 +45,7 @@ function PostFeed() {
       formData.append('text', data.text!);
       await createPost(formData);
       await getAllPosts(getUserId());
+      await getNewFeed({ offset: 1, limit: 2 });
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
     } catch (err: unknown) {
@@ -54,7 +59,7 @@ function PostFeed() {
     <>
       <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[10]">
         <div className="h-12 w-12 mr-2">
-          <Image src="https://social.webestica.com/assets/images/post/1by1/02.jpg" unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
+          <Image src={user.imageUrl || '/DefaultAvatar.svg'} unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
         </div>
         <div
           aria-hidden="true"

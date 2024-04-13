@@ -15,10 +15,12 @@ export default function withAuthetication(Page: ComponentType) {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
-      if (!isAuthenticated() || isRefreshTokenExpired()) {
-        toast.warning('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại');
+      if (!isAuthenticated()) {
         logOut();
         router.push('/sign-in');
+      }
+      if (isRefreshTokenExpired()) {
+        toast.warning('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại');
       }
     }, []);
     if (!mounted) return null;

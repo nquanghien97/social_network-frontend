@@ -50,7 +50,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
     if (!e.target.files) return;
     try {
       const formData = new FormData();
-      formData.append('image', e.target.files as unknown as File);
+      formData.append('image', e.target.files[0] as unknown as File);
       await updateAvatarUser(formData);
       setFile(e.target.files[0]);
       toast.success('Cập nhật thành công', {
