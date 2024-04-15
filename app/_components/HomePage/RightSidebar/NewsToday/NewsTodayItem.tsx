@@ -1,9 +1,17 @@
-function NewsTodayItem() {
+import Link from 'next/link';
+
+interface NewsProps {
+  title: string;
+  time: Date;
+  link: string;
+}
+
+function NewsTodayItem(props: NewsProps) {
   return (
-    <div className="mb-4">
-      <h6 className="hover:text-[#326de4] duration-300 cursor-pointer font-extrabold">Title News</h6>
-      <small>Time</small>
-    </div>
+    <Link className="mb-4" href={props.link} target="_blank">
+      <h6 className="hover:text-[#326de4] duration-300 cursor-pointer font-extrabold">{props.title}</h6>
+      <small>{props.time.toString()}</small>
+    </Link>
   );
 }
 
