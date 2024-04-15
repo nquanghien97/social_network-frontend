@@ -2,6 +2,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/zustand/auth.store';
+import HomeIcon from '../../_assets/icons/HomeIcon';
+import SettingsIcon from '../../_assets/icons/SettingsIcon';
+import FriendsIcon from '../../_assets/icons/FriendsIcon';
+import NewsIcon from '../../_assets/icons/NewsIcon';
+import GroupIcon from '../../_assets/icons/GroupIcon';
+import Notifications from '../../_assets/icons/Notifications';
 
 export function LeftSidebarItem() {
   const { user } = useAuth();
@@ -25,18 +31,39 @@ export function LeftSidebarItem() {
             </div>
             <hr className="my-4" />
             <ul>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href={`/${user.id}`}>Feed</Link>
-              </li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer">
-                <Link href={`/${user.id}/friends`}>Connections</Link>
-              </li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Latest News</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Events</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Groups</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Notifications</li>
               <li>
-                <Link className="block py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" href="/settings">Settings</Link>
+                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}`}>
+                  <HomeIcon className="fill-current pr-1" />
+                  Feed
+                </Link>
+              </li>
+              <li>
+                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}/friends`}>
+                  <FriendsIcon className="fill-current pr-1" />
+                  Connections
+                </Link>
+              </li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                <NewsIcon className="fill-current pr-1" />
+                Latest News
+              </li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                <NewsIcon className="fill-current pr-1" />
+                Events
+              </li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                <GroupIcon className="fill-current pr-1" />
+                Groups
+              </li>
+              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                <Notifications className="fill-current pr-1" />
+                Notifications
+              </li>
+              <li>
+                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href="/settings">
+                  <SettingsIcon className="fill-current pr-1" />
+                  Settings
+                </Link>
               </li>
             </ul>
           </div>

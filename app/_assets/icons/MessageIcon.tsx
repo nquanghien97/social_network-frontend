@@ -1,11 +1,16 @@
-interface MessageIconProps {
-  fill:string;
+interface MessageIconProps extends React.SVGProps<SVGSVGElement> {
+  fill?:string;
   width?:number;
   height?:number;
 }
 
 function MessageIcon(props: MessageIconProps) {
-  const { fill, height = 24, width = 24 } = props;
+  const {
+    fill,
+    height = 24,
+    width = 24,
+    ...rest
+  } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,6 +20,7 @@ function MessageIcon(props: MessageIconProps) {
       enableBackground="new 0 0 496 496"
       widths={width}
       height={height}
+      {...rest}
     >
       <path
         fill={fill}

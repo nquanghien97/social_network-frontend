@@ -19,8 +19,8 @@ export const listMenuAccount = [
 export const listMenuPage = [
   {
     index: 1,
-    subTitle: 'Albums',
-    href: '/albums',
+    subTitle: 'Photos',
+    href: '/photos',
   },
   {
     index: 2,

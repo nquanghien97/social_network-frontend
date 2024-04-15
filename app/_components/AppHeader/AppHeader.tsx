@@ -23,6 +23,9 @@ import { useAuth } from '@/zustand/auth.store';
 import SettingsIcon from '../../_assets/icons/SettingsIcon';
 import PrivacyIcon from '../../_assets/icons/PrivacyIcon';
 import LogoutIcon from '../../_assets/icons/LogoutIcon';
+import ProfileIcon from '../../_assets/icons/ProfileIcon';
+import ImagesIcon from '../../_assets/icons/ImagesIcon';
+import NewsIcon from '../../_assets/icons/NewsIcon';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -182,30 +185,51 @@ function AppHeader() {
               <MenuDropdown
                 title="Page"
               >
-                <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Albums</li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Messages</li>
+                <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md lg:py-4">
+                  <li>
+                    <Link className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}/photos`}>
+                      <ImagesIcon className="fill-current pr-1" />
+                      Photos
+                    </Link>
+                  </li>
+                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                    <MessageIcon className="fill-current pr-1" />
+                    Messages
+                  </li>
                   <li
-                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
+                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center"
                     onClick={() => router.push(`/${user.id}`)}
                     aria-hidden
                   >
+                    <ProfileIcon className="fill-current pr-1" />
                     Profile
                   </li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Today News</li>
+                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                    <NewsIcon className="fill-current pr-1" />
+                    Today News
+                  </li>
                 </ul>
               </MenuDropdown>
               <MenuDropdown
                 title="Account"
               >
                 <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Settings</li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full" onClick={toastUnDeveloped} aria-hidden>Privacy & terms</li>
+                  <li>
+                    <Link className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/settings">
+                      <SettingsIcon className="fill-current pr-1" />
+                      Settings
+                    </Link>
+                  </li>
+                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
+                    <PrivacyIcon className="fill-current pr-1" />
+                    Privacy & terms
+                  </li>
                   <li
-                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full"
+                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center"
                     onClick={signOut}
                     aria-hidden
                   >
+                    <LogoutIcon className="fill-current pr-1" />
                     Sign Out
                   </li>
                 </ul>
