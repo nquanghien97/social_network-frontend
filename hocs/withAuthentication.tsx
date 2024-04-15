@@ -4,9 +4,9 @@ import { ComponentType, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { isAuthenticated } from '../utils/isAuthenticated';
 import getComponentName from '../utils/getComponentName';
-import LoadingIcon from '../app/_assets/icons/LoadingIcon';
+// import LoadingIcon from '../app/_assets/icons/LoadingIcon';
 import isRefreshTokenExpired from '../utils/isRefreshTokenExpired';
-import { logOut } from '@/services/auth.services';
+// import { logOut } from '@/services/auth.services';
 
 export default function withAuthetication(Page: ComponentType) {
   function WithAuthentication(props: AppProps['pageProps']) {
@@ -16,7 +16,6 @@ export default function withAuthetication(Page: ComponentType) {
     useEffect(() => {
       setMounted(true);
       if (!isAuthenticated()) {
-        logOut();
         router.push('/sign-in');
       }
       if (isRefreshTokenExpired()) {
@@ -24,9 +23,9 @@ export default function withAuthetication(Page: ComponentType) {
       }
     }, []);
     if (!mounted) return null;
-    if (!isAuthenticated()) {
-      return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;
-    }
+    // if (!isAuthenticated()) {
+    //   return <div className="w-screen h-screen flex items-center justify-center"><LoadingIcon /></div>;
+    // }
     return <Page {...props} />;
   }
 

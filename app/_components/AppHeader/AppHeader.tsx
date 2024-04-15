@@ -20,6 +20,9 @@ import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
 import { useNewFeed } from '@/zustand/newfeed.store';
 import { useAuth } from '@/zustand/auth.store';
+import SettingsIcon from '../../_assets/icons/SettingsIcon';
+import PrivacyIcon from '../../_assets/icons/PrivacyIcon';
+import LogoutIcon from '../../_assets/icons/LogoutIcon';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -91,10 +94,21 @@ function AppHeader() {
         <div className="mt-4 flex">
           <Link href={`/${user.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
         </div>
+        <div className="py-2 flex flex-col" aria-hidden="true">
+          <Link className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/settings">
+            <SettingsIcon className="fill-current pr-1" color="white" />
+            <span>Settings</span>
+          </Link>
+          <Link className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/">
+            <PrivacyIcon className="fill-current pr-1" color="white" />
+            <span>Privacy & Term</span>
+          </Link>
+        </div>
       </div>
-      <hr className="my-4" />
-      <div className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer text-center" onClick={signOut} aria-hidden="true">
-        Signout
+      <hr className="mb-4" />
+      <div className="p-1 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={signOut} aria-hidden="true">
+        <LogoutIcon className="fill-current pr-1" color="white" />
+        <span>Sign out</span>
       </div>
     </div>
   );

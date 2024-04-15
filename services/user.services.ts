@@ -36,3 +36,7 @@ export const updateAvatarUser = async (data: FormData) => {
   const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-avatar`, data);
   useAuth.getState().setProfile(res.data.user);
 };
+
+export const updatePassword = async ({ oldPassword, newPassword } : { oldPassword: string, newPassword: string }) => {
+  await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-password`, { oldPassword, newPassword });
+};

@@ -35,7 +35,9 @@ export function LeftSidebarItem() {
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Events</li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Groups</li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Notifications</li>
-              <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" onClick={toastUnDeveloped} aria-hidden>Settings</li>
+              <li>
+                <Link className="block py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer" href="/settings">Settings</Link>
+              </li>
             </ul>
           </div>
           <hr className="my-4" />

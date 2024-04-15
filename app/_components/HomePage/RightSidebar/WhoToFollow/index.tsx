@@ -9,8 +9,12 @@ function WhoToFollow() {
   const [listSuggestionsUser, setListSuggestionsUser] = useState<SuggestionsUserEntity[]>();
   const router = useRouter();
   const fetchSuggestionsUser = async () => {
-    const res = await getSuggestionsUser(3);
-    setListSuggestionsUser(res.suggesttionsUser);
+    try {
+      const res = await getSuggestionsUser(3);
+      setListSuggestionsUser(res.suggesttionsUser);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   useEffect(() => {
     fetchSuggestionsUser();

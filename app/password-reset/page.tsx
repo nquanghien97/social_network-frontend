@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,6 @@ import backgroundSignin from '../_assets/background-signin.svg';
 import BaseInput from '../_components/common/BaseInput';
 import BaseButton from '../_components/common/BaseButton';
 import { sendRequestPasswordResetServices } from '@/services/auth.services';
-import { isAuthenticated } from '../../utils/isAuthenticated';
 
 interface FormValues {
   email: string;
@@ -31,11 +30,6 @@ function RequestPasswordReset() {
   const [sendEmailSuccess, setSendEmailSuccess] = useState(false);
 
   const router = useRouter();
-  useEffect(() => {
-    if (isAuthenticated()) {
-      router.push('/');
-    }
-  }, []);
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });

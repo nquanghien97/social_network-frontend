@@ -16,6 +16,7 @@ import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
 import { signIn } from '@/services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
+import withAuthetication from '../../hocs/withAuthentication';
 
 interface FormValues {
   email: string;
@@ -125,4 +126,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default withAuthetication(SignIn);
