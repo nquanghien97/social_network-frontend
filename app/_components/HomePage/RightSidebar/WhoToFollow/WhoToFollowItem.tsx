@@ -7,7 +7,7 @@ import PlusIcon from '../../../../_assets/icons/PlusIcon';
 import { addFriend } from '@/services/friend.services';
 import LoadingIcon from '../../../../_assets/icons/LoadingIcon';
 import CheckIcon from '../../../../_assets/icons/CheckIcon';
-import NavLink from '../../../../../lib/nav-link';
+import NavLink from '../../../common/NavLink';
 
 interface WhoToFollowItemProps {
   imageUrl: string;

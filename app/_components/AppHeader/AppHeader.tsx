@@ -25,7 +25,7 @@ import LogoutIcon from '../../_assets/icons/LogoutIcon';
 import ProfileIcon from '../../_assets/icons/ProfileIcon';
 import ImagesIcon from '../../_assets/icons/ImagesIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
-import NavLink from '../../../lib/nav-link';
+import NavLink from '../common/NavLink';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);

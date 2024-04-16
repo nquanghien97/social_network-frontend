@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import NewsTodayItem from './NewsTodayItem';
 import GetNewsData from '@/services/new.services';
 import LoadingIcon from '../../../../_assets/icons/LoadingIcon';
-import NavLink from '../../../../../lib/nav-link';
+import NavLink from '../../../common/NavLink';
 
 interface NewsData {
   title: string;

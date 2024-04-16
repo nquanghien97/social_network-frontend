@@ -16,7 +16,7 @@ import BaseButton from '../_components/common/BaseButton';
 import { signIn } from '@/services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 import withAuthetication from '../../hocs/withAuthentication';
-import NavLink from '../../lib/nav-link';
+import NavLink from '../_components/common/NavLink';
 
 interface FormValues {
   email: string;

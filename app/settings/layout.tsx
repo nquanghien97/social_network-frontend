@@ -10,7 +10,7 @@ import SecurityIcon from '../_assets/icons/SecurityIcon';
 import ProfileIcon from '../_assets/icons/ProfileIcon';
 import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
 import { updateAvatarUser } from '@/services/user.services';
-import NavLink from '../../lib/nav-link';
+import NavLink from '../_components/common/NavLink';
 
 const pathname = [
   {

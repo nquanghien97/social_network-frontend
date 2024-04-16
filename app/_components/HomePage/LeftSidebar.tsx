@@ -7,7 +7,7 @@ import FriendsIcon from '../../_assets/icons/FriendsIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
 import GroupIcon from '../../_assets/icons/GroupIcon';
 import Notifications from '../../_assets/icons/Notifications';
-import NavLink from '../../../lib/nav-link';
+import NavLink from '../common/NavLink';
 
 export function LeftSidebarItem() {
   const { user } = useAuth();

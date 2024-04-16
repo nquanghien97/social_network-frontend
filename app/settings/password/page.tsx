@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import BaseInput from '../../_components/common/BaseInput';
 import BaseButton from '../../_components/common/BaseButton';
 import { updatePassword } from '@/services/user.services';
-import NavLink from '../../../lib/nav-link';
+import NavLink from '../../_components/common/NavLink';
 
 const schema = yup
   .object({

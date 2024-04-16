@@ -15,7 +15,7 @@ import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
 import { signUp } from '../../services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
-import NavLink from '../../lib/nav-link';
+import NavLink from '../_components/common/NavLink';
 
 interface FormValues {
   fullName: string;

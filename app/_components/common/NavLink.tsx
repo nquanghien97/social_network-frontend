@@ -1,4 +1,4 @@
-import { Link } from './router-event';
+import { Link } from '../../../lib/router-event';
 
 interface NavLinkProps extends React.PropsWithChildren, React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string,
