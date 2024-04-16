@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import backgroundSignup from '../_assets/background-signup.jpg';
-import signinImage from '../_assets/signin-image.svg';
 import BaseInput from '../_components/common/BaseInput';
 import HidePassword from '../_assets/icons/HidePassword';
 import ShowPassword from '../_assets/icons/ShowPassword';
@@ -79,7 +78,7 @@ function SignIn() {
   };
 
   return (
-    <div className="h-screen relative z-0">
+    <div className="h-screen relative z-0 flex">
       <Image
         className="h-screen object-cover opacity-10"
         layout="fill"
@@ -87,15 +86,10 @@ function SignIn() {
         alt=""
         unoptimized
       />
-      <div className="flex justify-center items-center flex-col max-lg:h-full">
-        <div className="w-full">
-          <div className="w-full relative z-10 flex justify-center items-center mt-16">
-            <Image className="" src={signinImage} alt="" unoptimized />
-          </div>
-        </div>
-        <div className="w-full flex justify-center items-center relative max-lg:h-full">
+      <div className="flex justify-center items-center flex-col h-full w-full">
+        <div className="w-full flex justify-center items-center relative h-full">
           <form
-            className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md max-lg:h-full"
+            className="lg:w-1/2 w-full p-12 bg-[#0f0f10] rounded-md"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h2 className="mb-6 text-center text-4xl font-bold">Sign up</h2>
