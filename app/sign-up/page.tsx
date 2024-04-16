@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -16,6 +15,7 @@ import ShowPassword from '../_assets/icons/ShowPassword';
 import BaseButton from '../_components/common/BaseButton';
 import { signUp } from '../../services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
+import NavLink from '../../lib/nav-link';
 
 interface FormValues {
   fullName: string;
@@ -101,7 +101,7 @@ function SignIn() {
             <h2 className="mb-6 text-center text-4xl font-bold">Sign up</h2>
             <div className="mb-4 text-center">
               <span>Already have an account?</span>
-              <Link scroll={false} href="/sign-in" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</Link>
+              <NavLink href="/sign-in" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Sign in here</NavLink>
             </div>
             <div>
               <div className="mb-4">
