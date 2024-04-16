@@ -33,7 +33,7 @@ function NewsToday() {
     <div className="lg:mt-4">
       <div>
         <h5 className="text-xl px-5 pt-5 font-extrabold">Today News</h5>
-        <div className="p-5">
+        <div className="px-5">
           {loading ? (
             <div className="flex justify-center items-center">
               <LoadingIcon />
