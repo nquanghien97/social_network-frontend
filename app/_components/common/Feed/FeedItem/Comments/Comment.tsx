@@ -66,18 +66,18 @@ function Comment(props: CommentProps) {
   };
   return (
     <li key={comment.id} className="pl-6 w-full py-1">
-      <div className="flex">
-        <div className="w-10 h-10">
+      <div className="flex gap-2">
+        <div className="w-12 h-12 mt-4">
           <Image
             src={comment.author.imageUrl || '/DefaultAvatar.svg'}
             alt="avatar"
-            width={100}
-            height={100}
+            width={48}
+            height={48}
             onClick={onGoToProfile}
-            className="rounded-full cursor-pointer"
+            className="rounded-full cursor-pointer w-full h-full"
           />
         </div>
-        <div className="flex flex-col w-full ml-2">
+        <div className="flex flex-col flex-1 gap-2">
           <div className="bg-[#202227] flex justify-between w-full rounded-md px-4 py-2">
             <div>
               <h5 className="font-bold cursor-pointer" onClick={onGoToProfile} aria-hidden>{comment.author.fullName}</h5>
@@ -131,16 +131,16 @@ function Comment(props: CommentProps) {
       </div>
       {showReplyBox && (
         <div className="w-full flex pl-6">
-          <div className="h-10 w-10">
+          <div className="h-12 w-12">
             <Image
               src={user.imageUrl || '/DefaultAvatar.svg'}
               alt="avatar"
-              width={100}
-              height={100}
-              className="rounded-full"
+              width={48}
+              height={48}
+              className="rounded-full w-full h-full"
             />
           </div>
-          <form className="ml-2 w-full relative mb-4" onSubmit={handleSubmit(onSendComment)}>
+          <form className="gap-2 w-full relative mb-4" onSubmit={handleSubmit(onSendComment)}>
             <BaseInput
               {...register('comment')}
               type="text"

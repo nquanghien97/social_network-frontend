@@ -57,7 +57,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
   };
 
   return (
-    <div className="flex flex-1 flex-col w-full mt-6 py-6 bg-[#0f0f10] rounded-md min-w-[400px]">
+    <div className="flex flex-1 flex-col w-full mt-6 py-6 bg-[#0f0f10] border rounded-md min-w-[400px]">
       <div className="rounder-md">
         <div className="flex items-center">
           <form className="w-full p-6 bg-[#0f0f10] rounded-md max-lg:h-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +95,7 @@ function EditProfile({ onClose } : { onClose: () => void }) {
                 placeholder="Enter your description"
                 message={errors.description?.message}
                 defaultValue={user.description || ''}
-                rows={5}
+                rows={3}
                 {...register('description')}
               />
             </div>

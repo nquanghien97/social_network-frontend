@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,6 +10,7 @@ import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
 import SendIcon from '../../../../../_assets/icons/SendIcon';
 import { useAuth } from '@/zustand/auth.store';
+import NavLink from '../../../NavLink';
 
 interface CommentsProps {
   // imageUrl?: string;
@@ -31,7 +31,6 @@ const schema = yup
   });
 
 function Comments(props: CommentsProps) {
-  const router = useRouter();
   const { postId, comments, hasFirstComment } = props;
   const [listComments, setListComments] = useState(comments);
   const { user } = useAuth();
@@ -86,26 +85,25 @@ function Comments(props: CommentsProps) {
         ))}
       </ul>
       <div className="flex w-full items-center">
-        <div className="h-10 w-10">
+        <div className="h-12 w-12">
           <Image
             src={user.imageUrl || '/DefaultAvatar.svg'}
             alt="avatar"
-            width={100}
-            height={100}
-            className="rounded-full"
+            width={48}
+            height={48}
+            className="rounded-full w-full h-full"
           />
         </div>
         {!hasFirstComment ? (
-          <div
-            aria-hidden="true"
+          <NavLink
             className="w-full flex items-center bg-[#26262b] my-2 py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"
-            onClick={() => router.push(`/posts/${postId}`)}
+            href={`/posts/${postId}`}
           >
             <span className="text-[#b1adb0]">Xem và để lại bình luận</span>
-          </div>
+          </NavLink>
         ) : (
           <form
-            className="ml-2 mb-4 w-full relative [&>div]:mb-0"
+            className="ml-2 relative [&>div]:mb-0 flex-1"
             onSubmit={handleSubmit(onSendComment)}
           >
             <BaseInput

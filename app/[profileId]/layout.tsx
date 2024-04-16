@@ -234,8 +234,8 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
         <div className="flex flex-col lg:flex-row">
           <div className="flex flex-1 flex-col w-full gap-4 lg:w-2/3 mt-6">
             <div className="flex flex-col w-full bg-[#0f0f10] rounded-md">
-              <div className="rounder-md mb-4 p-6">
-                <div className="flex items-center max-md:flex-col">
+              <div className="rounder-md sm:p-6 py-2">
+                <div className="flex items-center max-sm:flex-col">
                   <div className="w-[100px] h-[100px] relative">
                     <div className="absolute right-1 z-10 w-full h-full">
                       { currentUserId && (
@@ -260,13 +260,13 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                       />
                     )}
                   </div>
-                  <div className="flex justify-center items-center flex-1">
-                    <div className="px-4 pt-3">
+                  <div className="flex justify-center items-center flex-1 flex-col sm:flex-row">
+                    <div className="px-4 py-3 text-center sm:text-left">
                       <h1 className="font-bold text-xl">{user.fullName}</h1>
                       <p className="text-[#a1a1a8]">{`${user.friendQuantity || 0} bạn bè`}</p>
                     </div>
                     {currentUserId ? (
-                      <div className="md:ml-auto">
+                      <div className="sm:ml-auto">
                         <BaseButton className="text-[red] hover:bg-[#39435b]" onClick={() => setOpen(true)}>
                           <PencilEdit color="red" />
                           Edit Profile
@@ -276,7 +276,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center text-[#a1a1a8] px-6">
+              <div className="flex items-center text-[#a1a1a8] px-6 flex-col sm:flex-row">
                 {user.job && (
                   <div className="flex items-center mr-4">
                     <div className="mr-1">

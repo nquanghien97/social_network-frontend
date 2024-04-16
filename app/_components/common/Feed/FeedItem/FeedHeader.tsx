@@ -6,6 +6,7 @@ import { timeSince } from '../../../../../utils/date';
 import PostOptions from './PostOptions';
 import { useOutsideClick } from '../../../../../hooks/useOutsideClick';
 import NavLink from '../../NavLink';
+import EarthIcon from '../../../../_assets/icons/EarthIcon';
 
 interface FeedHeaderProps {
   fullName?: string;
@@ -34,16 +35,17 @@ function FeedHeader(props: FeedHeaderProps) {
         <Image src={imageUrl || '/DefaultAvatar.svg'} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
       </div>
       <div>
-        <div className="flex">
+        <div className="flex max-sm:flex-col">
           <NavLink href={`/${authorId}`} className="cursor-pointer">{fullName}</NavLink>
           <div
-            className="flex items-center justify-center text-xs font-normal opacity-80 before:content-['•'] before:color-[red] before:px-2"
+            className="flex items-center sm:justify-center text-xs font-normal opacity-80 sm:before:content-['•'] sm:before:color-[red] sm:before:px-2"
             onClick={() => router.push(`/posts/${postId}`)}
             aria-hidden
           >
             <span className="hover:underline cursor-pointer">
               {timeSince(new Date(updatedAt!)) || ''}
             </span>
+            <EarthIcon color="white" width={16} height={16} className="ml-1" />
           </div>
         </div>
         <p className="text-xs font-normal opacity-80">{job}</p>

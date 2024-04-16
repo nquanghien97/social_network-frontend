@@ -49,7 +49,11 @@ function CenterSidebar() {
       <div className="flex justify-center items-center flex-col gap-y-2">
         <Story />
         <PostFeed />
-        <Feed posts={listPostsUnique} loading={loading} measureRef={measureRef} />
+        {listPostsUnique.length > 0 ? (
+          <Feed posts={listPostsUnique} loading={loading} measureRef={measureRef} />
+        ) : (
+          <h2 className="text-2xl">Chưa có bài viết nào được hiển thị</h2>
+        )}
       </div>
     </div>
   );
