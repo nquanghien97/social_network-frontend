@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import MoreHorizIcon from '../../../../_assets/icons/MoreHorizIcon';
 import { timeSince } from '../../../../../utils/date';
 import PostOptions from './PostOptions';
 import { useOutsideClick } from '../../../../../hooks/useOutsideClick';
+import NavLink from '../../../../../lib/nav-link';
 
 interface FeedHeaderProps {
   fullName?: string;
@@ -35,7 +35,7 @@ function FeedHeader(props: FeedHeaderProps) {
       </div>
       <div>
         <div className="flex">
-          <Link scroll={false} href={`/${authorId}`} className="cursor-pointer">{fullName}</Link>
+          <NavLink href={`/${authorId}`} className="cursor-pointer">{fullName}</NavLink>
           <div
             className="flex items-center justify-center text-xs font-normal opacity-80 before:content-['•'] before:color-[red] before:px-2"
             onClick={() => router.push(`/posts/${postId}`)}

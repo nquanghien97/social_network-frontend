@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -26,6 +25,7 @@ import LogoutIcon from '../../_assets/icons/LogoutIcon';
 import ProfileIcon from '../../_assets/icons/ProfileIcon';
 import ImagesIcon from '../../_assets/icons/ImagesIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
+import NavLink from '../../../lib/nav-link';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -51,7 +51,6 @@ function AppHeader() {
   });
 
   const onClickLogo = async () => {
-    router.push('/');
     await getNewFeed({ offset: 1, limit: 2 });
   };
 
@@ -61,7 +60,6 @@ function AppHeader() {
 
   const signOut = () => {
     logOut();
-    router.push('/sign-in');
   };
 
   useEffect(() => {
@@ -88,30 +86,32 @@ function AppHeader() {
             />
           </div>
           <div className="flex items-center flex-col">
-            <Link href={`/${user.id}`} scroll={false}>{user.fullName}</Link>
+            <NavLink href={`/${user.id}`}>{user.fullName}</NavLink>
             {user.job && (
               <p className="text-sm font-normal text-[#a1a1a8]">{user.job}</p>
             )}
           </div>
         </div>
         <div className="mt-4 flex">
-          <Link href={`/${user.id}`} scroll={false} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</Link>
+          <NavLink href={`/${user.id}`} className="text-center px-3 py-2 rounded bg-[#0f6fec1a] hover:bg-[#326de4] duration-300 w-full">View Profile</NavLink>
         </div>
         <div className="py-2 flex flex-col" aria-hidden="true">
-          <Link className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/settings">
+          <NavLink className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/settings">
             <SettingsIcon className="fill-current pr-1" color="white" />
             <span>Settings</span>
-          </Link>
-          <Link className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/">
+          </NavLink>
+          <div className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" onClick={toastUnDeveloped} aria-hidden>
             <PrivacyIcon className="fill-current pr-1" color="white" />
             <span>Privacy & Term</span>
-          </Link>
+          </div>
         </div>
       </div>
       <hr className="mb-4" />
-      <div className="p-1 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={signOut} aria-hidden="true">
-        <LogoutIcon className="fill-current pr-1" color="white" />
-        <span>Sign out</span>
+      <div onClick={signOut} aria-hidden="true">
+        <NavLink className="hover:text-[#0f6fec] duration-300 cursor-pointer p-1 flex items-center" href="/sign-in">
+          <LogoutIcon className="fill-current pr-1" color="white" />
+          <span>Sign out</span>
+        </NavLink>
       </div>
     </div>
   );
@@ -121,19 +121,19 @@ function AppHeader() {
       <div />
       <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[20] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
         <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-          <div aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
+          <NavLink href="/" aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
             <Image src={logo} alt="logo" width={60} height={60} unoptimized />
-          </div>
+          </NavLink>
           <div className="lg:hidden relative flex gap-x-2 ml-auto">
             <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] text-[#0f6fec] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
               {isOpenMenu ? <CloseIcon color="#0f6fec" /> : <MenuIcon fill="#0f6fec" />}
             </div>
-            <Link
+            <NavLink
               className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]"
               href="/bookmarks"
             >
               <BookMarks fill="#0f6fec" />
-            </Link>
+            </NavLink>
             <div className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]">
               <MessageIcon
                 fill="#0f6fec"
@@ -187,22 +187,20 @@ function AppHeader() {
               >
                 <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md lg:py-4">
                   <li>
-                    <Link className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}/photos`}>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}/photos`}>
                       <ImagesIcon className="fill-current pr-1" />
                       Photos
-                    </Link>
+                    </NavLink>
                   </li>
                   <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
                     <MessageIcon className="fill-current pr-1" />
                     Messages
                   </li>
-                  <li
-                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center"
-                    onClick={() => router.push(`/${user.id}`)}
-                    aria-hidden
-                  >
-                    <ProfileIcon className="fill-current pr-1" />
-                    Profile
+                  <li>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}`}>
+                      <ProfileIcon className="fill-current pr-1" />
+                      Profile
+                    </NavLink>
                   </li>
                   <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
                     <NewsIcon className="fill-current pr-1" />
@@ -215,22 +213,20 @@ function AppHeader() {
               >
                 <ul className="bg-[#0f0f10] flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
                   <li>
-                    <Link className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/settings">
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/settings">
                       <SettingsIcon className="fill-current pr-1" />
                       Settings
-                    </Link>
+                    </NavLink>
                   </li>
                   <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
                     <PrivacyIcon className="fill-current pr-1" />
                     Privacy & terms
                   </li>
-                  <li
-                    className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center"
-                    onClick={signOut}
-                    aria-hidden
-                  >
-                    <LogoutIcon className="fill-current pr-1" />
-                    Sign Out
+                  <li onClick={signOut} aria-hidden>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/sign-in">
+                      <LogoutIcon className="fill-current pr-1" />
+                      Sign Out
+                    </NavLink>
                   </li>
                 </ul>
               </MenuDropdown>

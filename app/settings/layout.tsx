@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -11,6 +10,7 @@ import SecurityIcon from '../_assets/icons/SecurityIcon';
 import ProfileIcon from '../_assets/icons/ProfileIcon';
 import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
 import { updateAvatarUser } from '@/services/user.services';
+import NavLink from '../../lib/nav-link';
 
 const pathname = [
   {
@@ -91,13 +91,13 @@ export default function RootLayout({
                   <li
                     key={path.path}
                   >
-                    <Link
+                    <NavLink
                       className={`py-2 pl-2 flex items-center hover:text-[#0f6fec] duration-300 cursor-pointer rounded-md ${pathnameActive === path.path ? 'bg-[#1b1f23] text-[#0f6fec]' : ''}`}
                       href={path.path}
                     >
                       {path.icon}
                       {path.title}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>

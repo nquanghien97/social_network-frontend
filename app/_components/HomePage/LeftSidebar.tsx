@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/zustand/auth.store';
@@ -8,6 +7,7 @@ import FriendsIcon from '../../_assets/icons/FriendsIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
 import GroupIcon from '../../_assets/icons/GroupIcon';
 import Notifications from '../../_assets/icons/Notifications';
+import NavLink from '../../../lib/nav-link';
 
 export function LeftSidebarItem() {
   const { user } = useAuth();
@@ -27,21 +27,20 @@ export function LeftSidebarItem() {
               <h5 className="text-xl">{user.fullName}</h5>
               <small className="text-sm text-[#ccc]">{user.job}</small>
               <p className="my-4 text-[#ccc] text-sm">{user.description}</p>
-              {/* <div>Thông số</div> */}
             </div>
             <hr className="my-4" />
             <ul>
               <li>
-                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}`}>
+                <NavLink className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}`}>
                   <HomeIcon className="fill-current pr-1" />
                   Feed
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}/friends`}>
+                <NavLink className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href={`/${user.id}/friends`}>
                   <FriendsIcon className="fill-current pr-1" />
                   Connections
-                </Link>
+                </NavLink>
               </li>
               <li className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" onClick={toastUnDeveloped} aria-hidden>
                 <NewsIcon className="fill-current pr-1" />
@@ -60,18 +59,18 @@ export function LeftSidebarItem() {
                 Notifications
               </li>
               <li>
-                <Link className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href="/settings">
+                <NavLink className="py-1.5 hover:text-[#0f6fec] duration-300 cursor-pointer flex items-center" href="/settings">
                   <SettingsIcon className="fill-current pr-1" />
                   Settings
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>
           <hr className="my-4" />
           <div className="flex justify-center">
-            <Link scroll={false} aria-hidden="true" href={`/${user.id}`} className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
+            <NavLink href={`/${user.id}`} className="py-2 px-5 text-center text-[#0f6fec] hover:text-[#0c59bd] cursor-pointer">
               View Profile
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>

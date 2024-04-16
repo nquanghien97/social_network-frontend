@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -17,6 +16,7 @@ import BaseButton from '../_components/common/BaseButton';
 import { signIn } from '@/services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 import withAuthetication from '../../hocs/withAuthentication';
+import NavLink from '../../lib/nav-link';
 
 interface FormValues {
   email: string;
@@ -84,7 +84,7 @@ function SignIn() {
             <h2 className="mb-6 text-center text-4xl font-bold">Sign in</h2>
             <div className="mb-4 text-center">
               <span>Don&apos;t have an account?</span>
-              <Link scroll={false} href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</Link>
+              <NavLink href="/sign-up" className="text-[#0f6fec] hover:text-[#0c59bd] duration-300 px-2">Click here to sign up</NavLink>
             </div>
             <div>
               <div className="mb-4">
@@ -117,7 +117,7 @@ function SignIn() {
               </BaseButton>
             </div>
             <div className="py-4 text-center text-[#0f6fec] hover:text-[#0c59bd]">
-              <Link href="/password-reset">Quên mật khẩu</Link>
+              <NavLink href="/password-reset">Quên mật khẩu</NavLink>
             </div>
           </form>
         </div>

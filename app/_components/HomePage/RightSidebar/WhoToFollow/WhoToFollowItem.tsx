@@ -2,12 +2,12 @@ import { useState, MouseEvent } from 'react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import DefaultAvatar from '../../../../_assets/DefaultAvatar.svg';
 import PlusIcon from '../../../../_assets/icons/PlusIcon';
 import { addFriend } from '@/services/friend.services';
 import LoadingIcon from '../../../../_assets/icons/LoadingIcon';
 import CheckIcon from '../../../../_assets/icons/CheckIcon';
+import NavLink from '../../../../../lib/nav-link';
 
 interface WhoToFollowItemProps {
   imageUrl: string;
@@ -73,7 +73,7 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
         <Image src={imageUrl || DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" unoptimized width={48} height={48} />
       </div>
       <div className="w-full">
-        <Link scroll={false} href="/" className="cursor-pointer">{fullName}</Link>
+        <NavLink href="/" className="cursor-pointer">{fullName}</NavLink>
         <p>{job}</p>
       </div>
       <div

@@ -10,6 +10,8 @@ import { getUser } from '@/services/user.services';
 import { isAuthenticated } from '../utils/isAuthenticated';
 import { useAuth } from '@/zustand/auth.store';
 import 'react-toastify/dist/ReactToastify.css';
+import 'nprogress/nprogress.css';
+import { HandleOnComplete } from '../lib/router-event';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +37,7 @@ function RootLayout({
       <body className={inter.className}>
         {children}
         <ToastContainer autoClose={2000} />
+        <HandleOnComplete />
       </body>
     </html>
   );

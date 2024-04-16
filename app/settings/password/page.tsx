@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -9,6 +8,7 @@ import { toast } from 'react-toastify';
 import BaseInput from '../../_components/common/BaseInput';
 import BaseButton from '../../_components/common/BaseButton';
 import { updatePassword } from '@/services/user.services';
+import NavLink from '../../../lib/nav-link';
 
 const schema = yup
   .object({
@@ -105,7 +105,7 @@ function Password() {
             <BaseButton type="submit" className="py-4" loading={loading}>Update Password</BaseButton>
           </div>
           <div className="py-4 text-center text-[#0f6fec] hover:text-[#0c59bd]">
-            <Link href="/password-reset">Quên mật khẩu</Link>
+            <NavLink href="/password-reset">Quên mật khẩu</NavLink>
           </div>
         </form>
       </div>
