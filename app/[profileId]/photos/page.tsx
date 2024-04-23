@@ -12,12 +12,13 @@ interface ListPhotos {
 
 function Photos() {
   const [listPhotos, setListPhotos] = useState<ListPhotos[]>([]);
-  const { profileId } = useParams();
+  const params = useParams();
+  const profileId = params.profileId as string;
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      const res = await getImagePosts(+profileId);
+      const res = await getImagePosts(profileId);
       setListPhotos(res.data.imagesUser);
     })();
   }, []);
@@ -27,7 +28,9 @@ function Photos() {
   };
 
   if (listPhotos.length === 0) {
-    return <p>Chưa có ảnh nào</p>;
+    return (
+      <p className="text-center text-xl">Chưa có ảnh nào!</p>
+    );
   }
 
   return (

@@ -20,7 +20,7 @@ import { addFriend, findFriend, removeFriend } from '@/services/friend.services'
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
 import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
-import { useAuth } from '@/zustand/auth.store';
+import { useUser } from '@/zustand/user.store';
 
 function RootLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
@@ -36,7 +36,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const [file, setFile] = useState<File>();
   const currentUserId = getUserId() === profileId;
 
-  const { user, getUser } = useAuth();
+  const { user, getUser } = useUser();
 
   const handleClickTab = (path: string) => {
     router.push(path);

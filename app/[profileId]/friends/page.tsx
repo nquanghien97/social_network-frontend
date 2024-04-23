@@ -1,25 +1,33 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getAllFriends, removeFriend } from '@/services/friend.services';
+import { getAllFriends, getFriendsOfUser, removeFriend } from '@/services/friend.services';
 import ListFriends from './ListFriends';
 import LoadingIcon from '../../_assets/icons/LoadingIcon';
+import { getUserId } from '@/services/user.services';
 
 function Friend() {
   const [listFriends, setListFriends] = useState([]);
   const [loading, setLoading] = useState(false);
-  const param = usePathname();
-  const userId = param.slice(1, 2);
+  const param = useParams();
+  const profileId = param.profileId as string;
+  const userId = getUserId();
   useEffect(() => {
     setLoading(true);
     setLoading(true);
     (async () => {
       try {
-        const res = await getAllFriends(userId);
-        setListFriends(res.listFriends);
-        setLoading(false);
+        if (userId === profileId) {
+          const res = await getAllFriends(userId);
+          setListFriends(res.listFriends);
+          setLoading(false);
+        } else {
+          const res = await getFriendsOfUser(profileId);
+          setListFriends(res.listFriends);
+          setLoading(false);
+        }
       } catch (err) {
         console.log(err.message);
         setLoading(false);
