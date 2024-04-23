@@ -13,7 +13,7 @@ interface WhoToFollowItemProps {
   imageUrl: string;
   fullName: string;
   job: string;
-  friendId: number;
+  friendId: string;
 }
 
 function WhoToFollowItem(props: WhoToFollowItemProps) {

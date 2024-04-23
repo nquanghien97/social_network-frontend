@@ -1,7 +1,7 @@
 import UserDTO from '../dto/User.dto';
 
 export default interface UserEntity {
-  id: number;
+  id: string;
   email: string;
   fullName?: string;
   location?: string;
@@ -33,7 +33,7 @@ export const createUserFromUserResponse = (
 };
 
 export interface SuggestionsUserEntity {
-  id: number,
+  id: string,
   email: string,
   fullName: string,
   location: string,

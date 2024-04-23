@@ -5,7 +5,7 @@ import BaseButton from '../../_components/common/BaseButton';
 import Modal from '../../_components/common/Modal';
 
 interface Friend {
-  id: number;
+  id: string;
   fullName: string;
   email: string;
   imageUrl: string;
@@ -13,14 +13,14 @@ interface Friend {
 
 interface ListFriendsProps {
   listFriends: Friend[];
-  onRemoveFriend: (idFriend: number) => Promise<void>;
+  onRemoveFriend: (idFriend: string) => Promise<void>;
 }
 
 function ListFriends(props: ListFriendsProps) {
   const { listFriends, onRemoveFriend } = props;
   const router = useRouter();
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
-  const [idFriend, setIdFriend] = useState(-1);
+  const [idFriend, setIdFriend] = useState('');
 
   const modalConfirmRemoveFriend = () => (
     <Modal
@@ -48,7 +48,7 @@ function ListFriends(props: ListFriendsProps) {
       </div>
     </Modal>
   );
-  const onNavigateProfileClick = (friendId: number) => {
+  const onNavigateProfileClick = (friendId: string) => {
     router.push(`/${friendId}`);
   };
   return (

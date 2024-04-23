@@ -14,7 +14,7 @@ interface FeedHeaderProps {
   updatedAt?: Date;
   imageUrl?: string;
   postId: string;
-  authorId: number;
+  authorId: string;
 }
 
 function FeedHeader(props: FeedHeaderProps) {

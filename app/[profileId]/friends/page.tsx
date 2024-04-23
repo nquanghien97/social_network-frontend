@@ -11,7 +11,7 @@ function Friend() {
   const [listFriends, setListFriends] = useState([]);
   const [loading, setLoading] = useState(false);
   const param = usePathname();
-  const userId = Number(param.slice(1, 2));
+  const userId = param.slice(1, 2);
   useEffect(() => {
     setLoading(true);
     setLoading(true);
@@ -27,7 +27,7 @@ function Friend() {
     })();
   }, []);
 
-  const onRemoveFriend = async (idFriend: number) => {
+  const onRemoveFriend = async (idFriend: string) => {
     try {
       await removeFriend(idFriend);
       toast.success('Xóa bạn thành công');

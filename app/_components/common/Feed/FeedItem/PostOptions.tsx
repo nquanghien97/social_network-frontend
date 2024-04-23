@@ -16,7 +16,7 @@ interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
   setOpenFeedOptions: Dispatch<SetStateAction<boolean>>
   postId: string;
-  authorId: number
+  authorId: string;
 }
 
 function PostOptions(props: PostOptionsProps) {

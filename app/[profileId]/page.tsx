@@ -10,7 +10,7 @@ import { usePost } from '@/zustand/posts.store';
 function Profile() {
   const param = usePathname();
   const userId = param.slice(1, 2);
-  const currentUserId = getUserId() === Number(userId);
+  const currentUserId = getUserId() === userId;
 
   const { posts, loading, getAllPosts } = usePost();
 
