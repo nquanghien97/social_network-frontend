@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import BaseInput from '../../../_components/common/BaseInput';
 import BaseButton from '../../../_components/common/BaseButton';
 import { passwordResetServices } from '@/services/auth.services';
 import CheckIcon from '../../../_assets/icons/CheckIcon';
+import NavLink from '../../../_components/common/NavLink';
 
 interface FormValues {
   password: string;
@@ -26,7 +27,6 @@ const schema = yup
 
 function PasswordReset() {
   const { id, token } = useParams();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
 
@@ -93,12 +93,13 @@ function PasswordReset() {
                   <p className="pb-8 pr-2">Password reset successfully.</p>
                   <span><CheckIcon fill="green" /></span>
                 </div>
-                <BaseButton
-                  className="py-4"
-                  onClick={() => router.push('/sign-in')}
-                >
-                  Return to sign in
-                </BaseButton>
+                <NavLink href="/sign-in">
+                  <BaseButton
+                    className="py-4"
+                  >
+                    Return to sign in
+                  </BaseButton>
+                </NavLink>
               </div>
             )}
           </form>

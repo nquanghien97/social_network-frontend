@@ -27,7 +27,6 @@ function SearchResult(props: SearchResultProps) {
       }
     })();
   }, [searchText]);
-  console.log(loadingResultSearch);
   return (
     <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
       {loadingResultSearch ? (
@@ -35,15 +34,16 @@ function SearchResult(props: SearchResultProps) {
           <LoadingIcon />
         </div>
       ) : (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-          (
           {resultSearch.length > 0 ? resultSearch.map((item) => (
             <li
               key={item.id}
-              aria-hidden
-              className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
             >
-              <NavLink href={`/${item.id}`}>
+              <NavLink
+                href={`/${item.id}`}
+                className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
+              >
                 <Image
                   width={40}
                   height={40}
@@ -51,13 +51,12 @@ function SearchResult(props: SearchResultProps) {
                   alt={item.fullName || ''}
                   className="rounded"
                 />
+                <p>{item.fullName}</p>
               </NavLink>
-              <p>{item.fullName}</p>
             </li>
           )) : (
             <p className="px-4 py-2">Không có người dùng phù hợp</p>
           )}
-          )
         </>
       )}
     </ul>

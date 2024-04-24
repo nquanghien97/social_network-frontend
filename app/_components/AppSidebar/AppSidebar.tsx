@@ -14,9 +14,9 @@ interface AppSidebarProps extends PropsWithChildren {
 
 export default function AppSidebar(props: AppSidebarProps) {
   const {
-    children, open, setOpen, start = '-24rem', end = 0, exit = '-24rem',
+    children, open, setOpen, start = '-25rem', end = 0, exit = '-25rem',
   } = props;
-  const backdropClass = clsx('h-screen', 'w-screen', 'fixed', 'top-0', 'left-0', 'z-[100]');
+  const backdropClass = clsx('h-screen', 'w-full', 'fixed', 'top-0', 'left-0', 'z-[100]');
   const menuClass = clsx('bg-[#191a1f]', 'w-full', 'sm:w-96', 'max-lg:w-96', 'h-full', 'flex', 'flex-col border-r-2 border-[#0000001a]');
   const backdropRef = useRef<HTMLDivElement>(null);
   const clickHandler: MouseEventHandler<HTMLDivElement> = (event) => {

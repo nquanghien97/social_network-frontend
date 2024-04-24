@@ -1,7 +1,6 @@
 import { useState, MouseEvent } from 'react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import DefaultAvatar from '../../../../_assets/DefaultAvatar.svg';
 import PlusIcon from '../../../../_assets/icons/PlusIcon';
 import { addFriend } from '@/services/friend.services';
@@ -20,7 +19,6 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
   const {
     imageUrl, fullName, job, friendId,
   } = props;
-  const router = useRouter();
   const [loading, setLoading] = useState({
     loading: false,
     addedFriend: false,
@@ -63,17 +61,13 @@ function WhoToFollowItem(props: WhoToFollowItemProps) {
     );
   };
 
-  const onNavigateProfileClick = () => {
-    router.push(`/${friendId}`);
-  };
-
   return (
-    <div className="flex gap-x-2 mb-4 items-center text-sm" onClick={onNavigateProfileClick} aria-hidden>
-      <div className="w-10 h-10 shrink-0">
+    <div className="flex gap-x-2 mb-4 items-center text-sm">
+      <NavLink href={`/${friendId}`} className="w-10 h-10 shrink-0">
         <Image src={imageUrl || DefaultAvatar} alt="" className="w-full h-full rounded-full cursor-pointer" unoptimized width={48} height={48} />
-      </div>
+      </NavLink>
       <div className="w-full">
-        <NavLink href="/" className="cursor-pointer">{fullName}</NavLink>
+        <NavLink href={`/${friendId}`} className="cursor-pointer">{fullName}</NavLink>
         <p>{job}</p>
       </div>
       <div

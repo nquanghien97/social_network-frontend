@@ -1,9 +1,10 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getImagePosts } from '@/services/post.services';
+import NavLink from '../../_components/common/NavLink';
 
 interface ListPhotos {
   imageUrl: string;
@@ -14,7 +15,6 @@ function Photos() {
   const [listPhotos, setListPhotos] = useState<ListPhotos[]>([]);
   const params = useParams();
   const profileId = params.profileId as string;
-  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -22,10 +22,6 @@ function Photos() {
       setListPhotos(res.data.imagesUser);
     })();
   }, []);
-
-  const onImagesClick = (postId: number) => {
-    router.push(`/posts/${postId}`);
-  };
 
   if (listPhotos.length === 0) {
     return (
@@ -38,14 +34,13 @@ function Photos() {
       <p className="py-4 text-3xl font-bold">Photos</p>
       <div className="flex gap-2">
         {listPhotos.map((photo) => (
-          <div
+          <NavLink
             className="w-[150px] h-[150px]"
-            onClick={() => onImagesClick(photo.id)}
-            aria-hidden
+            href={`/posts/${photo.id}`}
             key={photo.id}
           >
             <Image className="w-full h-full rounded-md cursor-pointer" src={photo.imageUrl} alt={photo.imageUrl} width={150} height={150} />
-          </div>
+          </NavLink>
         ))}
       </div>
     </div>

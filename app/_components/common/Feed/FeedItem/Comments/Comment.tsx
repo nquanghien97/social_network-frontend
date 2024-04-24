@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { CommentEntity } from '@/entities/Comment.entities';
 import BaseInput from '../../../BaseInput';
 import SendIcon from '../../../../../_assets/icons/SendIcon';
@@ -13,6 +12,7 @@ import CommentOptions from './CommentOptions';
 import MoreHorizIcon from '../../../../../_assets/icons/MoreHorizIcon';
 import { useOutsideClick } from '../../../../../../hooks/useOutsideClick';
 import { useAuth } from '@/zustand/auth.store';
+import NavLink from '../../../NavLink';
 
 interface CommentProps {
   comment: CommentEntity
@@ -39,7 +39,6 @@ function Comment(props: CommentProps) {
     onDeleteComment,
     hasFirstComment,
   } = props;
-  const router = useRouter();
   const [showReplyBox, setShowReplyBox] = useState(false);
   const { user } = useAuth();
   const [openCommentOptions, setOpenCommentOptions] = useState(false);
@@ -55,10 +54,6 @@ function Comment(props: CommentProps) {
     resolver: yupResolver(schema),
   });
 
-  const onGoToProfile = () => {
-    router.push(`/${comment.author.id}`);
-  };
-
   const onSendComment: SubmitHandler<CommentFormState> = async (data) => {
     await addReply({ parentId: comment.id, content: data.comment });
     setShowReplyBox(false);
@@ -67,20 +62,19 @@ function Comment(props: CommentProps) {
   return (
     <li key={comment.id} className="pl-6 w-full py-1">
       <div className="flex gap-2">
-        <div className="w-12 h-12 mt-4">
+        <NavLink className="w-12 h-12 mt-4" href={`/${comment.author.id}`}>
           <Image
             src={comment.author.imageUrl || '/DefaultAvatar.svg'}
             alt="avatar"
             width={48}
             height={48}
-            onClick={onGoToProfile}
             className="rounded-full cursor-pointer w-full h-full"
           />
-        </div>
+        </NavLink>
         <div className="flex flex-col flex-1 gap-2">
           <div className="bg-[#202227] flex justify-between w-full rounded-md px-4 py-2">
             <div>
-              <h5 className="font-bold cursor-pointer" onClick={onGoToProfile} aria-hidden>{comment.author.fullName}</h5>
+              <NavLink className="font-bold cursor-pointer" href={`/${comment.author.id}`}>{comment.author.fullName}</NavLink>
               <p className="text-sm py-1">{comment.content}</p>
             </div>
             { hasFirstComment && (

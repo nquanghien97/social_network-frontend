@@ -6,6 +6,7 @@ import HomePage from './_components/HomePage';
 import AppHeader from './_components/AppHeader/AppHeader';
 import MessageIcon from './_assets/icons/MessageIcon';
 import withAuthetication from '../hocs/withAuthentication';
+import MessageSidebarItem from './_components/common/MessageSidebarItem';
 
 function Home() {
   const [openMessage, setOpenMessage] = useState(false);
@@ -26,10 +27,10 @@ function Home() {
         open={openMessage}
         setOpen={setOpenMessage}
         start="100vw"
-        end="calc(100vw - 24rem)"
+        end="calc(100vw - 25rem)"
         exit="100vw"
       >
-        <h3>Message</h3>
+        <MessageSidebarItem setOpen={setOpenMessage} />
       </AppSidebar>
     </div>
   );
