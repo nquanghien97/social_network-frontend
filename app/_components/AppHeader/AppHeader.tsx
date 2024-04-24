@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -14,8 +13,6 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { searchUsers } from '@/services/user.services';
-import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
 import { useNewFeed } from '@/zustand/newfeed.store';
 import { useAuth } from '@/zustand/auth.store';
@@ -26,15 +23,16 @@ import ProfileIcon from '../../_assets/icons/ProfileIcon';
 import ImagesIcon from '../../_assets/icons/ImagesIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
 import NavLink from '../common/NavLink';
+import useDebounce from '../../../hooks/useDebounce';
+import ResultSearch from '../common/SearchResult';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
+  const debounceSearchText = useDebounce(searchText, 500);
   const { user } = useAuth();
   const { getNewFeed } = useNewFeed();
-  const router = useRouter();
 
   const toggleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -61,15 +59,6 @@ function AppHeader() {
   const signOut = () => {
     logOut();
   };
-
-  useEffect(() => {
-    (async () => {
-      if (searchText) {
-        const res = await searchUsers(searchText);
-        setResultSearch(res.users);
-      }
-    })();
-  }, [searchText]);
 
   const modalProfile = () => (
     <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[280px]">
@@ -157,27 +146,7 @@ function AppHeader() {
                     : null}
                 />
                 {searchText ? (
-                  <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                    {resultSearch.length > 0 ? resultSearch.map((item) => (
-                      <li
-                        key={item.id}
-                        aria-hidden
-                        onClick={() => router.push(`/${item.id}`)}
-                        className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
-                      >
-                        <Image
-                          width={40}
-                          height={40}
-                          src={item.imageUrl || '/DefaultAvatar.svg'}
-                          alt={item.fullName || ''}
-                          className="rounded"
-                        />
-                        <p>{item.fullName}</p>
-                      </li>
-                    )) : (
-                      <p className="px-4 py-2">Không có người dùng phù hợp</p>
-                    )}
-                  </ul>
+                  <ResultSearch searchText={debounceSearchText} />
                 ) : null}
               </div>
             </div>
