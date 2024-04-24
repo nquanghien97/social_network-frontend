@@ -55,6 +55,7 @@ function PostFeed() {
     }
     reset();
   };
+
   return (
     <>
       <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[10]">

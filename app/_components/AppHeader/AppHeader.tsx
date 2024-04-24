@@ -123,11 +123,14 @@ function AppHeader() {
             >
               <BookMarks fill="#0f6fec" />
             </NavLink>
-            <div className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]">
+            <NavLink
+              className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]"
+              href="/message"
+            >
               <MessageIcon
                 fill="#0f6fec"
               />
-            </div>
+            </NavLink>
           </div>
           <div className={menuClass}>
             <div className="w-full">
@@ -161,9 +164,11 @@ function AppHeader() {
                       Photos
                     </NavLink>
                   </li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
-                    <MessageIcon className="fill-current pr-1" />
-                    Messages
+                  <li>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/message">
+                      <MessageIcon className="fill-current pr-1" />
+                      Messages
+                    </NavLink>
                   </li>
                   <li>
                     <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}`}>

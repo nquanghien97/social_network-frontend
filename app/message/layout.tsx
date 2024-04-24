@@ -50,7 +50,7 @@ export default function RootLayout({
               </ul>
             </div>
           </div>
-          <div className="lg:py-5 px-5 w-full h-full flex items-center">
+          <div className="lg:py-5 px-5 w-full h-full flex items-center justify-center">
             {children}
           </div>
         </div>
