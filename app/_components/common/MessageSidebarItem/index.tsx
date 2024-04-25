@@ -10,7 +10,7 @@ function MessageSidebarItem(props: MessageSidebarItemProps) {
   return (
     <div className="p-5">
       <div className="flex justify-between items-center">
-        <h2>Messaging</h2>
+        <h2>Message</h2>
         <div>
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center bg-[#0f6fec1a] hover:bg-[#a1a1a7] hover:text-[#0f6fec] duration-300 cursor-pointer"

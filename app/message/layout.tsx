@@ -1,54 +1,64 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { AppHeader } from '../_components/AppHeader';
-import ProfileIcon from '../_assets/icons/ProfileIcon';
-import SecurityIcon from '../_assets/icons/SecurityIcon';
-import NavLink from '../_components/common/NavLink';
-
-const pathname = [
-  {
-    path: '/message/user1',
-    title: 'User 1',
-    icon: <ProfileIcon className="fill-current pr-1" />,
-  },
-  {
-    path: '/message/user2',
-    title: 'User 2',
-    icon: <SecurityIcon className="fill-current pr-1" />,
-  },
-];
+import { getUserId } from '@/services/user.services';
+import UserEntity from '@/entities/User.entities';
+import { getAllFriends } from '@/services/friend.services';
+import MessageIcon from '../_assets/icons/MessageIcon';
+import { AppSidebar } from '../_components/AppSidebar';
+import ListFriendsMessage from '../_components/common/MessageSidebarItem/ListFriendsMessage';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const pathnameActive = usePathname();
+  const userId = getUserId();
+  const [listFriends, setListFriends] = useState<UserEntity[]>([]);
+  const [loadingFriends, setLoadingFriends] = useState(false);
+  const [openMessage, setOpenMessage] = useState(false);
+  useEffect(() => {
+    setLoadingFriends(true);
+    (async () => {
+      try {
+        const res = await getAllFriends(userId);
+        setListFriends(res.listFriends);
+        setLoadingFriends(false);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <>
       <AppHeader />
       <div className="pt-20 pb-6 px-6 h-screen">
+        <div className="flex items-center gap-2 lg:hidden cursor-pointer mb-2" onClick={() => setOpenMessage(true)} aria-hidden="true">
+          <MessageIcon
+            fill="#0f6fec"
+            width={40}
+            height={40}
+          />
+          <p>Chat</p>
+        </div>
         <div className="bg-[#0f0f10] border border-[#0f0f10] rounded-md flex flex-col lg:flex-row h-full">
-          <div className="p-5 min-w-[200px] border-0 border-r-2 border-[#202227]">
-            <div>
-              <ul>
-                {pathname.map((path) => (
-                  <li
-                    key={path.path}
-                  >
-                    <NavLink
-                      className={`py-2 pl-2 flex items-center hover:text-[#0f6fec] duration-300 cursor-pointer rounded-md ${pathnameActive === path.path ? 'bg-[#1b1f23] text-[#0f6fec]' : ''}`}
-                      href={path.path}
-                    >
-                      {path.icon}
-                      {path.title}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="lg:hidden block">
+            <AppSidebar
+              open={openMessage}
+              setOpen={setOpenMessage}
+              start="-24rem"
+              end="0"
+              exit="-24rem"
+            >
+              <div className="p-5 min-w-[300px] border-0 border-r-2 border-[#202227] block lg:hidden">
+                <ListFriendsMessage listFriends={listFriends} loadingFriends={loadingFriends} />
+              </div>
+            </AppSidebar>
+          </div>
+          <div className="p-5 min-w-[300px] border-0 border-r-2 border-[#202227] hidden lg:block">
+            <ListFriendsMessage listFriends={listFriends} loadingFriends={loadingFriends} />
           </div>
           <div className="lg:py-5 px-5 w-full h-full flex items-center justify-center">
             {children}
