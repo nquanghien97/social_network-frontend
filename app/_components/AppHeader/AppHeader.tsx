@@ -192,9 +192,11 @@ function AppHeader() {
                       Settings
                     </NavLink>
                   </li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
-                    <PrivacyIcon className="fill-current pr-1" />
-                    Privacy & terms
+                  <li>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/privacy-terms">
+                      <PrivacyIcon className="fill-current pr-1" />
+                      Privacy & terms
+                    </NavLink>
                   </li>
                   <li onClick={signOut} aria-hidden>
                     <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/sign-in">
