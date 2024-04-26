@@ -25,7 +25,12 @@ function Photos() {
 
   if (listPhotos.length === 0) {
     return (
-      <p className="text-center text-xl">Chưa có ảnh nào!</p>
+      <div className="flex flex-col w-full bg-[#0f0f10] rounded-md p-6">
+        <p className="py-4 text-3xl font-bold">Photos</p>
+        <div className="flex gap-2">
+          <p className="text-center text-xl w-full">Chưa có ảnh nào!</p>
+        </div>
+      </div>
     );
   }
 
@@ -34,13 +39,23 @@ function Photos() {
       <p className="py-4 text-3xl font-bold">Photos</p>
       <div className="flex gap-2">
         {listPhotos.map((photo) => (
-          <NavLink
-            className="w-[150px] h-[150px]"
-            href={`/posts/${photo.id}`}
-            key={photo.id}
-          >
-            <Image className="w-full h-full rounded-md cursor-pointer" src={photo.imageUrl} alt={photo.imageUrl} width={150} height={150} />
-          </NavLink>
+          (photo.imageUrl) ? (
+            <NavLink
+              className="w-[150px] h-[150px]"
+              href={`/posts/${photo.id}`}
+              key={photo.id}
+            >
+              <Image
+                className="w-full h-full rounded-md cursor-pointer"
+                src={photo.imageUrl}
+                alt={photo.imageUrl}
+                width={150}
+                height={150}
+              />
+            </NavLink>
+          ) : (
+            <p className="text-center text-xl w-full">Chưa có ảnh nào!</p>
+          )
         ))}
       </div>
     </div>
