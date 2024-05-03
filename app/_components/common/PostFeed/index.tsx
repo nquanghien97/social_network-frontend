@@ -60,7 +60,7 @@ function PostFeed() {
     <>
       <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[10]">
         <div className="h-12 w-12 mr-2 flex items-center">
-          <Image src={user.imageUrl || '/DefaultAvatar.svg'} unoptimized priority width={48} height={48} alt="" className="h-auto rounded-full cursor-pointer" />
+          <Image src={user.imageUrl || '/DefaultAvatar.svg'} unoptimized priority width={48} height={48} alt="" className="h-auto w-full rounded-full cursor-pointer" />
         </div>
         <div
           aria-hidden="true"

@@ -62,7 +62,7 @@ function Comment(props: CommentProps) {
   return (
     <li key={comment.id} className="pl-6 w-full py-1">
       <div className="flex gap-2">
-        <NavLink className="w-12 h-12 mt-4" href={`/${comment.author.id}`}>
+        <NavLink className="w-12 h-12" href={`/${comment.author.id}`}>
           <Image
             src={comment.author.imageUrl || '/DefaultAvatar.svg'}
             alt="avatar"
@@ -124,7 +124,7 @@ function Comment(props: CommentProps) {
         </div>
       </div>
       {showReplyBox && (
-        <div className="w-full flex pl-6">
+        <div className="w-full flex pl-6 gap-2">
           <div className="h-12 w-12">
             <Image
               src={user.imageUrl || '/DefaultAvatar.svg'}

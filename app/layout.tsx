@@ -1,34 +1,23 @@
-'use client';
-
 import './globals.css';
-// import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
-import { useEffect } from 'react';
 import Head from 'next/head';
-import { getUser } from '@/services/user.services';
-import { isAuthenticated } from '../utils/isAuthenticated';
-import { useAuth } from '@/zustand/auth.store';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
 import { HandleOnComplete } from '../lib/router-event';
 
 const inter = Inter({ subsets: ['latin'] });
+export const metadata: Metadata = {
+  title: 'Social Network',
+  description: 'A Website about social network',
+};
 
 function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { setProfile } = useAuth();
-  useEffect(() => {
-    (async () => {
-      if (isAuthenticated()) {
-        const res = await getUser();
-        setProfile(res);
-      }
-    })();
-  }, []);
   return (
     <html lang="en">
       <Head>

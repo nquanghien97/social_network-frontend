@@ -1,15 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AppSidebar from './_components/AppSidebar/AppSidebar';
 import HomePage from './_components/HomePage';
 import AppHeader from './_components/AppHeader/AppHeader';
 import MessageIcon from './_assets/icons/MessageIcon';
 import withAuthetication from '../hocs/withAuthentication';
-import MessageSidebarItem from './_components/common/MessageSidebarItem';
+import MessageSidebarItem from './_components/common/Message/MessageSidebarItem';
+import { getUser, getUserId } from '@/services/user.services';
+import { useFriends } from '@/zustand/friends.store';
+import { useAuth } from '@/zustand/auth.store';
+import { isAuthenticated } from '../utils/isAuthenticated';
 
 function Home() {
+  const userId = getUserId();
+  const { getListFriends, listFriends, loadingFriends } = useFriends();
   const [openMessage, setOpenMessage] = useState(false);
+  const { setProfile } = useAuth();
+  useEffect(() => {
+    getListFriends(userId);
+    (async () => {
+      if (isAuthenticated()) {
+        const res = await getUser();
+        setProfile(res);
+      }
+    })();
+  }, []);
   return (
     <div className="scroll-smooth">
       <AppHeader />
@@ -30,7 +46,7 @@ function Home() {
         end="calc(100vw - 25rem)"
         exit="100vw"
       >
-        <MessageSidebarItem setOpen={setOpenMessage} />
+        <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} />
       </AppSidebar>
     </div>
   );

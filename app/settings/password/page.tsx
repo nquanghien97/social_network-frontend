@@ -41,6 +41,7 @@ function Password() {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+  console.log(errors);
 
   const onSubmit = async (data: FormValues) => {
     setLoading(true);

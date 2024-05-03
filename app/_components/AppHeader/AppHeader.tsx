@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
@@ -25,6 +25,8 @@ import NewsIcon from '../../_assets/icons/NewsIcon';
 import NavLink from '../common/NavLink';
 import useDebounce from '../../../hooks/useDebounce';
 import ResultSearch from '../common/SearchResult';
+import { isAuthenticated } from '../../../utils/isAuthenticated';
+import { getUser } from '@/services/user.services';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -55,6 +57,16 @@ function AppHeader() {
   const toastUnDeveloped = () => {
     toast.info('Tính năng chưa được phát triển');
   };
+
+  const { setProfile } = useAuth();
+  useEffect(() => {
+    (async () => {
+      if (isAuthenticated()) {
+        const res = await getUser();
+        setProfile(res);
+      }
+    })();
+  }, []);
 
   const signOut = () => {
     logOut();
@@ -110,8 +122,8 @@ function AppHeader() {
       <div />
       <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[20] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
         <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-          <NavLink href="/" aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
-            <Image src={logo} alt="logo" width={60} height={60} unoptimized />
+          <NavLink href="/" onClick={onClickLogo} className="cursor-pointer w-[60px] h-[40px]">
+            <Image src={logo} alt="logo" width={60} height={60} unoptimized className="" />
           </NavLink>
           <div className="lg:hidden relative flex gap-x-2 ml-auto">
             <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] text-[#0f6fec] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
