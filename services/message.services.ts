@@ -7,3 +7,7 @@ export function getMessages({ conversationId, limit, offset } : { conversationId
 export function conversationServices({ senderId, receiverId } : { senderId: string, receiverId: string }) {
   return api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/conversation`, { senderId, receiverId });
 }
+
+export function sendMessage(conversationId: string, text: string) {
+  return api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/send-messages`, { conversationId, text });
+}
