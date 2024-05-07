@@ -73,3 +73,9 @@ body {
   }
 }
 
+.scrollbar-message {
+  scrollbar-width: thin;
+}
+
+
+

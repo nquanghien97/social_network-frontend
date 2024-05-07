@@ -18,7 +18,7 @@ export default function RootLayout({
       <div className="pt-20 pb-6 px-6 h-screen">
         <div className="flex flex-col lg:flex-row h-full">
           <Layout />
-          <div className="py-5 px-5 w-full h-full flex items-center justify-center bg-[#0f0f10] border border-[#0f0f10] rounded-md">
+          <div className="py-5 w-full h-full flex items-center justify-center bg-[#0f0f10] border border-[#0f0f10] rounded-md">
             {children}
           </div>
         </div>

@@ -1,14 +1,11 @@
-'use client';
-
-import { useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { ReactNode, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/zustand/auth.store';
-import MessageItem from '../../_components/common/Message/MessageItem';
-import { useSocketStore } from '@/zustand/socket.store';
-import { useMessageStore } from '@/zustand/message.store';
+import { useMessageStore } from '../../../../zustand/message.store';
+import { useSocketStore } from '../../../../zustand/socket.store';
 
-function MessagePage() {
+export function SocketProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const pathname = usePathname();
   const { setSocket, setOnlineUserIds } = useSocketStore();
@@ -22,7 +19,9 @@ function MessagePage() {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io(process.env.NEXT_PUBLIC_API_URL as string);
+      const newSocket = io(process.env.NEXT_PUBLIC_API_URL as string, {
+        query: { id: user.id.toString() },
+      });
       setSocket(newSocket);
 
       return () => {
@@ -52,7 +51,6 @@ function MessagePage() {
         conversationId,
         message,
       } = receivedMessage;
-      console.log(message);
 
       // Add message to messages store
       addMessage(message);
@@ -69,9 +67,6 @@ function MessagePage() {
       socket?.off('user-disconnected');
     };
   }, [setOnlineUserIds, addMessage, setConversationRead]);
-  return (
-    <MessageItem />
-  );
-}
 
-export default MessagePage;
+  return { children };
+}

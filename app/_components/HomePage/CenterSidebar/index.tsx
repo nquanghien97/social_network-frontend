@@ -15,8 +15,8 @@ function CenterSidebar() {
     allFeeds,
   } = useNewFeed();
   const [canLoadMore, setCanLoadMore] = useState(false);
-  const [listPosts, setListPosts] = useState<PostEntity[]>(feeds);
   const [page, setPage] = useState(1);
+  const [listPosts, setListPosts] = useState<PostEntity[]>(feeds);
   const {
     measureRef,
     isIntersecting,
