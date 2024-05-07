@@ -32,6 +32,7 @@ export const useGetMessages = (conversationId: number) => {
 export const useSendMessage = (
   conversationId: string,
   text: string,
+  receiverId: string,
 ) => {
   const { socket } = useSocketStore();
   const pathname = usePathname();
@@ -56,6 +57,7 @@ export const useSendMessage = (
           id: data.id,
           authorId: data.authorId,
           conversationId,
+          receiverId,
           text: data.text,
           timeSent: data.createdAt,
         });

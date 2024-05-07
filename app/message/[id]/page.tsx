@@ -12,7 +12,7 @@ function MessagePage() {
   const { user } = useAuth();
   const pathname = usePathname();
   const { setSocket, setOnlineUserIds } = useSocketStore();
-  const { addMessage, setConversationRead } = useMessageStore();
+  const { addMessage, setConversationRead, setMessage } = useMessageStore();
 
   const pathnameRef = useRef<string>(pathname);
 
@@ -22,7 +22,9 @@ function MessagePage() {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io(process.env.NEXT_PUBLIC_API_URL as string);
+      const newSocket = io(process.env.NEXT_PUBLIC_API_URL as string, {
+        query: { id: user.id.toString() },
+      });
       setSocket(newSocket);
 
       return () => {
@@ -67,6 +69,7 @@ function MessagePage() {
     return () => {
       socket?.off('user-connected');
       socket?.off('user-disconnected');
+      setMessage([]);
     };
   }, [setOnlineUserIds, addMessage, setConversationRead]);
   return (

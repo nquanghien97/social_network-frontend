@@ -20,6 +20,7 @@ type MessageStore = {
   conversations: Record<string, Conversation>; // Map conversationId to conversation details
   addMessage: (message: MessageEntity) => void;
   getMessage: (message: MessageEntity[]) => void;
+  setMessage: (message: MessageEntity[]) => void;
   setConversationRead: (conversationId: string, isRead: boolean) => void;
 };
 
@@ -37,6 +38,9 @@ export const useMessageStore = create<MessageStore>((set) => ({
       ...state.messages,
       message,
     ],
+  })),
+  setMessage: (message: MessageEntity[]) => set(() => ({
+    messages: message,
   })),
   setConversationRead: (conversationId, isRead) => set((state) => ({
     conversations: {

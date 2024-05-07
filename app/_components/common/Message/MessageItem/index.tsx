@@ -44,6 +44,7 @@ function MessageItem() {
   const { sendMessage } = useSendMessage(
     params.id as string,
     watch('message'),
+    'a',
   );
   const onSubmitSendMessage = async () => {
     try {
