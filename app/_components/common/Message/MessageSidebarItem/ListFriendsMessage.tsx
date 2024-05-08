@@ -9,16 +9,19 @@ import { getUserId } from '@/services/user.services';
 interface ListFriendsMessageProps {
   loadingFriends: boolean;
   listFriends: UserEntity[];
-  setOpenMessage: Dispatch<SetStateAction<boolean>>
+  setOpenMessage: Dispatch<SetStateAction<boolean>>;
+  receiverId: string;
 }
 
 function ListFriendsMessage(props: ListFriendsMessageProps) {
-  const { loadingFriends, listFriends, setOpenMessage } = props;
+  const {
+    loadingFriends, listFriends, setOpenMessage, receiverId,
+  } = props;
   const router = useRouter();
   const userId = getUserId();
 
-  const onClickUser = async (receiverId: string) => {
-    const res = await conversationServices({ senderId: userId, receiverId });
+  const onClickUser = async (id: string) => {
+    const res = await conversationServices({ senderId: userId, receiverId: id });
     router.push(`/message/${res.data.conversation.id}`);
     setOpenMessage(false);
   };
@@ -33,7 +36,7 @@ function ListFriendsMessage(props: ListFriendsMessageProps) {
               key={user.id}
               onClick={() => onClickUser(user.id)}
               aria-hidden
-              className="flex gap-2 items-center p-2 my-2 cursor-pointer hover:bg-[#ccc] duration-300 rounded-md"
+              className={`flex gap-2 items-center p-2 my-2 cursor-pointer hover:bg-[#0f6fec] duration-300 rounded-md ${user.id === receiverId ? 'bg-[#0f6fec]' : ''}`}
             >
               <div className="h-12 w-12 shrink-0">
                 <Image

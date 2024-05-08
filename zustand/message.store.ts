@@ -22,11 +22,14 @@ type MessageStore = {
   getMessage: (message: MessageEntity[]) => void;
   setMessage: (message: MessageEntity[]) => void;
   setConversationRead: (conversationId: string, isRead: boolean) => void;
+  receiverId: string;
+  setReceiverId: (receiverId: string) => void;
 };
 
 export const useMessageStore = create<MessageStore>((set) => ({
   messages: [],
   conversations: {},
+  receiverId: '',
   getMessage: (message) => set((state) => ({
     messages: [
       ...state.messages,
@@ -51,4 +54,7 @@ export const useMessageStore = create<MessageStore>((set) => ({
       },
     },
   })),
+  setReceiverId: (receiverId) => {
+    set({ receiverId });
+  },
 }));

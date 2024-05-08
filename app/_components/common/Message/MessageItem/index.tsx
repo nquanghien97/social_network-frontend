@@ -25,6 +25,7 @@ function MessageItem() {
     watch,
   } = useForm<FormValues>();
 
+  const { receiverId } = useMessageStore();
   const { getMessage, messages } = useMessageStore();
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -40,11 +41,10 @@ function MessageItem() {
       getMessage(res.data.message.messages);
     })();
   }, []);
-
   const { sendMessage } = useSendMessage(
     params.id as string,
     watch('message'),
-    'a',
+    receiverId,
   );
   const onSubmitSendMessage = async () => {
     try {

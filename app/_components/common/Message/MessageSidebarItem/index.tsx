@@ -9,6 +9,7 @@ interface MessageSidebarItemProps {
   loadingFriends: boolean;
   listFriends: UserEntity[];
   closeMessageIcon?: boolean;
+  receiverId: string;
 }
 
 function MessageSidebarItem(props: MessageSidebarItemProps) {
@@ -17,6 +18,7 @@ function MessageSidebarItem(props: MessageSidebarItemProps) {
     loadingFriends,
     listFriends,
     closeMessageIcon = true,
+    receiverId,
   } = props;
   return (
     <div>
@@ -39,7 +41,7 @@ function MessageSidebarItem(props: MessageSidebarItemProps) {
           <BaseInput placeholder="Search.." />
         </div>
         <div>
-          <ListFriendsMessage loadingFriends={loadingFriends} listFriends={listFriends} setOpenMessage={setOpen} />
+          <ListFriendsMessage loadingFriends={loadingFriends} listFriends={listFriends} setOpenMessage={setOpen} receiverId={receiverId} />
         </div>
       </div>
     </div>

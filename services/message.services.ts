@@ -11,3 +11,7 @@ export function conversationServices({ senderId, receiverId } : { senderId: stri
 export function sendMessage(conversationId: string, text: string) {
   return api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/send-messages`, { conversationId, text });
 }
+
+export function listUserIdOfConversation(conversationId: string) {
+  return api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/messages-userId`, { conversationId });
+}
