@@ -21,10 +21,12 @@ export default function Layout() {
     getListFriends(userId);
   }, []);
   useEffect(() => {
-    (async () => {
-      const res = await listUserIdOfConversation(id as string);
-      setReceiverId(res.data[0].userId);
-    })();
+    if (id) {
+      (async () => {
+        const res = await listUserIdOfConversation(id as string);
+        setReceiverId(res.data[0].userId);
+      })();
+    }
   }, [id]);
 
   return (

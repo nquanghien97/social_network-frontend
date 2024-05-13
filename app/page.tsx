@@ -46,7 +46,7 @@ function Home() {
         end="calc(100vw - 25rem)"
         exit="100vw"
       >
-        <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} receiverId="1234" />
+        <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} />
       </AppSidebar>
     </div>
   );

@@ -10,7 +10,7 @@ interface ListFriendsMessageProps {
   loadingFriends: boolean;
   listFriends: UserEntity[];
   setOpenMessage: Dispatch<SetStateAction<boolean>>;
-  receiverId: string;
+  receiverId?: string;
 }
 
 function ListFriendsMessage(props: ListFriendsMessageProps) {

@@ -9,7 +9,7 @@ interface MessageSidebarItemProps {
   loadingFriends: boolean;
   listFriends: UserEntity[];
   closeMessageIcon?: boolean;
-  receiverId: string;
+  receiverId?: string;
 }
 
 function MessageSidebarItem(props: MessageSidebarItemProps) {
