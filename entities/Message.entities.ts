@@ -3,9 +3,6 @@ export interface MessageEntity {
   receiverId: string;
   authorId: string;
   text: string;
-  receiver: {
-    imageUrl: string;
-  },
   author: {
     imageUrl: string;
   }

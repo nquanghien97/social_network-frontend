@@ -87,7 +87,7 @@ function MessageItem() {
                   key={message.id}
                   className="flex my-2 items-center gap-2"
                 >
-                  <Image className="rounded-full w-10 h-10" src={message.author.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
+                  <Image className="rounded-full w-10 h-10" src={message.author?.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
                   <div className="py-2 px-3 rounded-2xl bg-[#303030]">
                     <span>
                       {`${message.text}`}

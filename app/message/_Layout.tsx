@@ -27,6 +27,9 @@ export default function Layout() {
         setReceiverId(res.data[0].userId);
       })();
     }
+    return () => {
+      setReceiverId('');
+    };
   }, [id]);
 
   return (

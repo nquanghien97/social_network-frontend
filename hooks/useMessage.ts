@@ -59,6 +59,10 @@ export const useSendMessage = (
           conversationId,
           receiverId,
           text: data.text,
+          author: {
+            imageUrl: data.author.imageUrl,
+            id: data.author.id,
+          },
           timeSent: data.createdAt,
         });
         addMessage(data);
