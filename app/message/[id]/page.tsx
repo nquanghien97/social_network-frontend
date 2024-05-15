@@ -7,7 +7,6 @@ import { useAuth } from '@/zustand/auth.store';
 import MessageItem from '../../_components/common/Message/MessageItem';
 import { useSocketStore } from '@/zustand/socket.store';
 import { useMessageStore } from '@/zustand/message.store';
-import { listUserIdOfConversation } from '@/services/message.services';
 
 function MessagePage() {
   const { user } = useAuth();
@@ -25,7 +24,7 @@ function MessagePage() {
   useEffect(() => {
     if (user) {
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL as string, {
-        query: { id: user.id },
+        query: { id: currentConversationId },
       });
       setSocket(newSocket);
       return () => {
@@ -57,23 +56,16 @@ function MessagePage() {
         conversationId,
         author,
       } = receivedMessage;
-      console.log({
+      // Add message to messages store
+      addMessage({
+        id,
         receiverId,
         authorId,
+        text,
+        author: {
+          imageUrl: author.imageUrl,
+        },
       });
-      // Add message to messages store
-      const res = await listUserIdOfConversation(currentConversationId as string);
-      if (authorId === res.data[0].userId) {
-        addMessage({
-          id,
-          receiverId,
-          authorId,
-          text,
-          author: {
-            imageUrl: author.imageUrl,
-          },
-        });
-      }
 
       // Mark conversation as unread if not viewing
       const isViewingConversation = pathnameRef.current === `/${conversationId}`;
