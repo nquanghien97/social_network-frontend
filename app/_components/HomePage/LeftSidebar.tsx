@@ -75,12 +75,24 @@ export function LeftSidebarItem() {
         </div>
       </div>
       <ul className="mt-6 flex flex-wrap justify-center">
-        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">About</li>
-        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">Settings</li>
+        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">
+          <NavLink href={`/${user.id}/about`}>
+            About
+          </NavLink>
+        </li>
+        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">
+          <NavLink href="/settings">
+            Settings
+          </NavLink>
+        </li>
         <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">Support</li>
         <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">Docs</li>
         <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">Help</li>
-        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">Privacy & terms</li>
+        <li className="py-1 px-3 hover:text-[#0f6fec] cursor-pointer">
+          <NavLink href="/privacy-terms">
+            Privacy & terms
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

@@ -16,11 +16,11 @@ interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
   setOpenFeedOptions: Dispatch<SetStateAction<boolean>>
   postId: string;
-  authorId: number
+  authorId: string;
 }
 
 function PostOptions(props: PostOptionsProps) {
-  const { getNewFeed } = useNewFeed();
+  const { allFeeds, setAllFeeds } = useNewFeed();
   const {
     PostOptionsRef, setOpenFeedOptions, postId, authorId,
   } = props;
@@ -36,7 +36,8 @@ function PostOptions(props: PostOptionsProps) {
       await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
       await getAllPosts(user.id);
-      await getNewFeed({ limit: 2, offset: 1 });
+      const newFeedsRemaining = allFeeds.filter((item) => item.id !== postId);
+      setAllFeeds(newFeedsRemaining);
     } catch (err) {
       console.log(err.message);
     } finally {

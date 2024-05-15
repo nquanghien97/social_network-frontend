@@ -9,5 +9,4 @@ export default function isRefreshTokenExpired() {
   const isExpired = expirationTime < Date.now();
 
   return isExpired;
-  return null;
 }

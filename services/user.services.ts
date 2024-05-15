@@ -4,9 +4,9 @@ import { parseJwt } from '../utils/parseJwt';
 import { UpdateUserDTO } from '@/dto/User.dto';
 import { useAuth } from '@/zustand/auth.store';
 
-export const getUserId = () => {
+export const getUserId = (): string => {
   const token = getFromLocalStorage('accessToken');
-  if (!token) return null;
+  if (!token) return '';
   const data = parseJwt(token);
 
   return data.userId;

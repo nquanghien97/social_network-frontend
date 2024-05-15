@@ -33,7 +33,7 @@ export const sendRequestPasswordResetServices = async (email: string) => {
 };
 
 export const passwordResetServices = async (password: string, id: string, token: string) => {
-  await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/${id}/${token}`, { password });
+  await api.post(`${process.env.NEXT_PUBLIC_API_URL}/api/password/${id}/${token}`, { password });
 };
 
 export const logOut = () => {

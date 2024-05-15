@@ -2,7 +2,7 @@ import { CommentEntity } from './Comment.entities';
 
 export interface LikeEntity {
   id: string;
-  userId: number;
+  userId: string;
   postId: string;
   createdAt: Date;
 }
@@ -13,7 +13,7 @@ export interface PostEntity {
   text?: string;
   imageUrl: string;
   author: {
-    id: number;
+    id: string;
     fullName: string;
     job: string;
     imageUrl: string;

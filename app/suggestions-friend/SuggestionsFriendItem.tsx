@@ -11,7 +11,7 @@ interface SuggestionsFriendItemProps {
   imageUrl: string;
   fullName: string;
   measureRef: (node: HTMLDivElement) => void;
-  friendId: number;
+  friendId: string;
 }
 
 function SuggestionsFriendItem(props: SuggestionsFriendItemProps) {

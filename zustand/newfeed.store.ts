@@ -8,12 +8,15 @@ interface Auth {
   getNewFeed: ({ limit, offset }: { limit: number, offset: number }) => Promise<void>;
   loading: boolean;
   feeds: PostEntity[],
-  setFeeds: (post: PostEntity[]) => void
+  setFeeds: (post: PostEntity[]) => void,
+  allFeeds: PostEntity[],
+  setAllFeeds: (post: PostEntity[]) => void
 }
 
 export const useNewFeed = create<Auth>()((set) => ({
   loading: false,
   feeds: [],
+  allFeeds: [],
   getNewFeed: async ({ limit, offset }: { limit: number, offset: number }) => {
     set(() => ({ loading: true }));
     try {
@@ -30,5 +33,8 @@ export const useNewFeed = create<Auth>()((set) => ({
   },
   setFeeds: (feeds: PostEntity[]) => {
     set({ feeds });
+  },
+  setAllFeeds: (allFeeds: PostEntity[]) => {
+    set({ allFeeds });
   },
 }));

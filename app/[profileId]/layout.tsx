@@ -20,11 +20,12 @@ import { addFriend, findFriend, removeFriend } from '@/services/friend.services'
 import CheckIcon from '../_assets/icons/CheckIcon';
 import PlusIcon from '../_assets/icons/PlusIcon';
 import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
-import { useAuth } from '@/zustand/auth.store';
+import { useUser } from '@/zustand/user.store';
 
 function RootLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
-  const { profileId } = useParams();
+  const params = useParams();
+  const profileId = params.profileId as string;
   const [open, setOpen] = useState(false);
   const [statusAddFriend, setStatusAddFriend] = useState({
     loading: false,
@@ -33,10 +34,9 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const [loadingRemoveFriend, setLoadingRemoveFriend] = useState(false);
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
   const [file, setFile] = useState<File>();
-  const userId = Number(profileId);
-  const currentUserId = getUserId() === userId;
+  const currentUserId = getUserId() === profileId;
 
-  const { user, getUser } = useAuth();
+  const { user, getUser } = useUser();
 
   const handleClickTab = (path: string) => {
     router.push(path);
@@ -66,23 +66,23 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const handleChangeTab = (value: number) => {
     switch (value) {
       case 0: {
-        handleClickTab(`/${userId}`);
+        handleClickTab(`/${profileId}`);
         break;
       }
       case 1: {
-        handleClickTab(`/${userId}/about`);
+        handleClickTab(`/${profileId}/about`);
         break;
       }
       case 2: {
-        handleClickTab(`/${userId}/friends`);
+        handleClickTab(`/${profileId}/friends`);
         break;
       }
       case 3: {
-        handleClickTab(`/${userId}/photos`);
+        handleClickTab(`/${profileId}/photos`);
         break;
       }
       default: {
-        handleClickTab(`/${userId}`);
+        handleClickTab(`/${profileId}`);
       }
     }
   };
@@ -92,7 +92,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
     (async () => {
       try {
         if (!currentUserId) {
-          const res = await findFriend(userId);
+          const res = await findFriend(profileId as string);
           if (res) {
             setStatusAddFriend({
               loading: false,
@@ -116,7 +116,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
       addedFriend: false,
     });
     try {
-      await addFriend(userId);
+      await addFriend(profileId);
       toast.success('Thêm bạn thành công');
     } catch (err) {
       toast.error('Có lỗi xảy ra, vui lòng thử lại');
@@ -132,7 +132,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
   const onRemoveFriend = async () => {
     setLoadingRemoveFriend(true);
     try {
-      await removeFriend(userId);
+      await removeFriend(profileId);
       setStatusAddFriend({
         loading: false,
         addedFriend: false,
@@ -220,7 +220,7 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
 
   useEffect(() => {
     (async () => {
-      await getUser(userId);
+      await getUser(profileId);
     })();
   }, []);
 
@@ -302,10 +302,10 @@ function RootLayout({ children }: { children?: React.ReactNode }) {
               </div>
               <div className="border-t-[1px] mt-4 border-[#202227]">
                 <TabList handleTabClick={handleChangeTab}>
-                  <TabItem label="Post" path={`/${userId}`} />
-                  <TabItem label="About" path={`/${userId}/about`} />
-                  <TabItem label="Friends" path={`/${userId}/friends`} />
-                  <TabItem label="Photos" path={`/${userId}/photos`} />
+                  <TabItem label="Post" path={`/${profileId}`} />
+                  <TabItem label="About" path={`/${profileId}/about`} />
+                  <TabItem label="Friends" path={`/${profileId}/friends`} />
+                  <TabItem label="Photos" path={`/${profileId}/photos`} />
                 </TabList>
               </div>
             </div>

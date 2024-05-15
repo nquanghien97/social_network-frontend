@@ -17,6 +17,7 @@ import { signIn } from '@/services/auth.services';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 import withAuthetication from '../../hocs/withAuthentication';
 import NavLink from '../_components/common/NavLink';
+import isRefreshTokenExpired from '../../utils/isRefreshTokenExpired';
 
 interface FormValues {
   email: string;
@@ -40,7 +41,7 @@ function SignIn() {
 
   const router = useRouter();
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (isAuthenticated() && !isRefreshTokenExpired()) {
       router.push('/');
     }
   }, []);

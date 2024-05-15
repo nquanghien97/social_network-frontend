@@ -4,13 +4,13 @@ import { isAuthenticated } from '../utils/isAuthenticated';
 import { findUser } from '../services/findUser';
 
 interface Auth {
-  getUser: (userId: number) => Promise<void>;
+  getUser: (userId: string) => Promise<void>;
   loading: boolean;
   user: UserEntity,
 }
 
 const initialValue: UserEntity = {
-  id: -1,
+  id: '',
   email: '',
   fullName: '',
   location: '',
@@ -25,7 +25,7 @@ const initialValue: UserEntity = {
 export const useUser = create<Auth>()((set) => ({
   loading: false,
   user: initialValue,
-  getUser: async (userId: number) => {
+  getUser: async (userId: string) => {
     set(() => ({ loading: true }));
     try {
       if (isAuthenticated()) {

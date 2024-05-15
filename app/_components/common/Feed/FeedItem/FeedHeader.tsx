@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import MoreHorizIcon from '../../../../_assets/icons/MoreHorizIcon';
 import { timeSince } from '../../../../../utils/date';
@@ -14,7 +13,7 @@ interface FeedHeaderProps {
   updatedAt?: Date;
   imageUrl?: string;
   postId: string;
-  authorId: number;
+  authorId: string;
 }
 
 function FeedHeader(props: FeedHeaderProps) {
@@ -26,27 +25,26 @@ function FeedHeader(props: FeedHeaderProps) {
     postId,
     authorId,
   } = props;
-  const router = useRouter();
   const [openFeedOptions, setOpenFeedOptions] = useState(false);
   const PostOptionsRef = useOutsideClick(() => setOpenFeedOptions(false));
   return (
     <div className="flex gap-x-4 mb-4 items-center">
-      <div className="w-12 h-12" onClick={() => router.push(`/${authorId}`)} aria-hidden>
+      <NavLink className="w-12 h-12" href={`/${authorId}`} aria-hidden>
         <Image src={imageUrl || '/DefaultAvatar.svg'} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
-      </div>
+      </NavLink>
       <div>
         <div className="flex max-sm:flex-col">
           <NavLink href={`/${authorId}`} className="cursor-pointer">{fullName}</NavLink>
-          <div
+          <NavLink
             className="flex items-center sm:justify-center text-xs font-normal opacity-80 sm:before:content-['•'] sm:before:color-[red] sm:before:px-2"
-            onClick={() => router.push(`/posts/${postId}`)}
+            href={`/posts/${postId}`}
             aria-hidden
           >
             <span className="hover:underline cursor-pointer">
               {timeSince(new Date(updatedAt!)) || ''}
             </span>
             <EarthIcon color="white" width={16} height={16} className="ml-1" />
-          </div>
+          </NavLink>
         </div>
         <p className="text-xs font-normal opacity-80">{job}</p>
       </div>

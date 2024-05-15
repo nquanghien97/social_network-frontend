@@ -1,25 +1,13 @@
-// export interface CommentEntity {
-//   id: string;
-//   content: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   author: {
-//     id: number;
-//     fullName: string;
-//     imageUrl: string;
-//   }
-//   children: CommentEntity[];
-// }
 export interface CommentEntity {
   id: string;
   content: string;
-  userId: number;
+  userId: string;
   postId: string;
   parentId: string;
   createdAt: Date;
   updatedAt: Date;
   author: {
-    id: number;
+    id: string;
     fullName: string;
     imageUrl: string;
   }

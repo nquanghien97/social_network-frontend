@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import logo from '../../_assets/logo.png';
@@ -14,8 +13,6 @@ import BookMarks from '../../_assets/icons/BookMarks';
 import MessageIcon from '../../_assets/icons/MessageIcon';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { logOut } from '../../../services/auth.services';
-import { searchUsers } from '@/services/user.services';
-import UserEntity from '@/entities/User.entities';
 import BaseInput from '../common/BaseInput';
 import { useNewFeed } from '@/zustand/newfeed.store';
 import { useAuth } from '@/zustand/auth.store';
@@ -26,15 +23,18 @@ import ProfileIcon from '../../_assets/icons/ProfileIcon';
 import ImagesIcon from '../../_assets/icons/ImagesIcon';
 import NewsIcon from '../../_assets/icons/NewsIcon';
 import NavLink from '../common/NavLink';
+import useDebounce from '../../../hooks/useDebounce';
+import ResultSearch from '../common/SearchResult';
+import { isAuthenticated } from '../../../utils/isAuthenticated';
+import { getUser } from '@/services/user.services';
 
 function AppHeader() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [resultSearch, setResultSearch] = useState<UserEntity[]>([]);
+  const debounceSearchText = useDebounce(searchText, 500);
   const { user } = useAuth();
   const { getNewFeed } = useNewFeed();
-  const router = useRouter();
 
   const toggleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -58,18 +58,19 @@ function AppHeader() {
     toast.info('Tính năng chưa được phát triển');
   };
 
+  const { setProfile } = useAuth();
+  useEffect(() => {
+    (async () => {
+      if (isAuthenticated()) {
+        const res = await getUser();
+        setProfile(res);
+      }
+    })();
+  }, []);
+
   const signOut = () => {
     logOut();
   };
-
-  useEffect(() => {
-    (async () => {
-      if (searchText) {
-        const res = await searchUsers(searchText);
-        setResultSearch(res.users);
-      }
-    })();
-  }, [searchText]);
 
   const modalProfile = () => (
     <div ref={profileModalRef} className="absolute right-0 p-4 bg-[#0f0f10] rounded-md border border-[#ffffff12] min-w-[280px]">
@@ -121,8 +122,8 @@ function AppHeader() {
       <div />
       <div className="fixed inset-0 h-14 bg-[#0f0f10] z-[20] shadow-[0_2px_4px_-1px_rgba(255,255,255,0.3)]">
         <div className="xl:container mx-auto flex justify-between items-center h-full px-3">
-          <NavLink href="/" aria-hidden="true" onClick={onClickLogo} className="cursor-pointer">
-            <Image src={logo} alt="logo" width={60} height={60} unoptimized />
+          <NavLink href="/" onClick={onClickLogo} className="cursor-pointer w-[60px] h-[40px]">
+            <Image src={logo} alt="logo" width={60} height={60} unoptimized priority />
           </NavLink>
           <div className="lg:hidden relative flex gap-x-2 ml-auto">
             <div aria-hidden="true" className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] text-[#0f6fec] w-10 h-10 bg-[#202227]" onClick={toggleClickMenu}>
@@ -134,11 +135,14 @@ function AppHeader() {
             >
               <BookMarks fill="#0f6fec" />
             </NavLink>
-            <div className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]">
+            <NavLink
+              className="flex items-center justify-center cursor-pointer rounded-lg hover:bg-[white] w-10 h-10 bg-[#202227]"
+              href="/message"
+            >
               <MessageIcon
                 fill="#0f6fec"
               />
-            </div>
+            </NavLink>
           </div>
           <div className={menuClass}>
             <div className="w-full">
@@ -157,27 +161,7 @@ function AppHeader() {
                     : null}
                 />
                 {searchText ? (
-                  <ul className="bg-[#0f0f10] absolute z-10 w-full flex flex-col min-w-[15rem] border border-[#ffffff12] rounded-md py-4">
-                    {resultSearch.length > 0 ? resultSearch.map((item) => (
-                      <li
-                        key={item.id}
-                        aria-hidden
-                        onClick={() => router.push(`/${item.id}`)}
-                        className="flex items-center gap-2 cursor-pointer hover:bg-[#ffffff1a] hover:text-[#0f6fec] px-4 py-2 w-full duration-300"
-                      >
-                        <Image
-                          width={40}
-                          height={40}
-                          src={item.imageUrl || '/DefaultAvatar.svg'}
-                          alt={item.fullName || ''}
-                          className="rounded"
-                        />
-                        <p>{item.fullName}</p>
-                      </li>
-                    )) : (
-                      <p className="px-4 py-2">Không có người dùng phù hợp</p>
-                    )}
-                  </ul>
+                  <ResultSearch searchText={debounceSearchText} />
                 ) : null}
               </div>
             </div>
@@ -192,9 +176,11 @@ function AppHeader() {
                       Photos
                     </NavLink>
                   </li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
-                    <MessageIcon className="fill-current pr-1" />
-                    Messages
+                  <li>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/message">
+                      <MessageIcon className="fill-current pr-1" />
+                      Messages
+                    </NavLink>
                   </li>
                   <li>
                     <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href={`/${user.id}`}>
@@ -218,9 +204,11 @@ function AppHeader() {
                       Settings
                     </NavLink>
                   </li>
-                  <li className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" onClick={toastUnDeveloped} aria-hidden>
-                    <PrivacyIcon className="fill-current pr-1" />
-                    Privacy & terms
+                  <li>
+                    <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/privacy-terms">
+                      <PrivacyIcon className="fill-current pr-1" />
+                      Privacy & terms
+                    </NavLink>
                   </li>
                   <li onClick={signOut} aria-hidden>
                     <NavLink className="cursor-pointer hover:text-[#0f6fec] px-4 py-2 w-full flex items-center" href="/sign-in">
@@ -240,6 +228,7 @@ function AppHeader() {
               alt="Avatar"
               className="w-full h-full rounded-lg"
               unoptimized
+              priority
             />
             { isOpenModalProfile && modalProfile()}
           </div>

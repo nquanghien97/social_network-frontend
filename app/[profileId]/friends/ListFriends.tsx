@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import BaseButton from '../../_components/common/BaseButton';
 import Modal from '../../_components/common/Modal';
+import NavLink from '../../_components/common/NavLink';
 
 interface Friend {
-  id: number;
+  id: string;
   fullName: string;
   email: string;
   imageUrl: string;
@@ -13,14 +13,13 @@ interface Friend {
 
 interface ListFriendsProps {
   listFriends: Friend[];
-  onRemoveFriend: (idFriend: number) => Promise<void>;
+  onRemoveFriend: (idFriend: string) => Promise<void>;
 }
 
 function ListFriends(props: ListFriendsProps) {
   const { listFriends, onRemoveFriend } = props;
-  const router = useRouter();
   const [openModalRemoveFriend, setOpenModalRemoveFriend] = useState(false);
-  const [idFriend, setIdFriend] = useState(-1);
+  const [idFriend, setIdFriend] = useState('');
 
   const modalConfirmRemoveFriend = () => (
     <Modal
@@ -48,14 +47,11 @@ function ListFriends(props: ListFriendsProps) {
       </div>
     </Modal>
   );
-  const onNavigateProfileClick = (friendId: number) => {
-    router.push(`/${friendId}`);
-  };
   return (
     <div className="p-5">
       {listFriends.map((friend: Friend) => (
         <div className="flex mb-8" key={friend.id}>
-          <div className="flex" onClick={() => onNavigateProfileClick(friend.id)} aria-hidden>
+          <NavLink className="flex" href={`/${friend.id}`}>
             <div className="mr-2 w-[48px] h-[48px] cursor-pointer">
               <Image
                 className="rounded-full w-full h-full"
@@ -74,7 +70,7 @@ function ListFriends(props: ListFriendsProps) {
                 {friend.email}
               </div>
             </div>
-          </div>
+          </NavLink>
           <div className="flex ml-auto gap-3">
             <BaseButton
               className="text-[red] hover:bg-[red] hover:text-[white]"

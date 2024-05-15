@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,6 +11,7 @@ import backgroundSignin from '../_assets/background-signin.svg';
 import BaseInput from '../_components/common/BaseInput';
 import BaseButton from '../_components/common/BaseButton';
 import { sendRequestPasswordResetServices } from '@/services/auth.services';
+import NavLink from '../_components/common/NavLink';
 
 interface FormValues {
   email: string;
@@ -29,7 +29,6 @@ function RequestPasswordReset() {
   const [loading, setLoading] = useState(false);
   const [sendEmailSuccess, setSendEmailSuccess] = useState(false);
 
-  const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
@@ -90,12 +89,13 @@ function RequestPasswordReset() {
             ) : (
               <div>
                 <p className="pb-8">Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.</p>
-                <BaseButton
-                  className="py-4"
-                  onClick={() => router.push('/sign-in')}
-                >
-                  Return to sign in
-                </BaseButton>
+                <NavLink href="/sign-in">
+                  <BaseButton
+                    className="py-4"
+                  >
+                    Return to sign in
+                  </BaseButton>
+                </NavLink>
               </div>
             )}
           </form>

@@ -1,5 +1,5 @@
 export interface PostDTO {
-  userId: number;
+  userId: string;
   title?: string;
   text?: string;
   imageUrl?: string;
