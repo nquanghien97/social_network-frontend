@@ -15,7 +15,7 @@ export default function Layout() {
   const { id } = useParams();
   const userId = getUserId();
   const [openMessage, setOpenMessage] = useState(false);
-  const { setReceiverId, receiverId } = useMessageStore();
+  const { setReceiver, receiver } = useMessageStore();
 
   useEffect(() => {
     getListFriends(userId);
@@ -24,11 +24,15 @@ export default function Layout() {
     if (id) {
       (async () => {
         const res = await listUserIdOfConversation(id as string);
-        setReceiverId(res.data[0].userId);
+        setReceiver(res.data[0].user);
       })();
     }
     return () => {
-      setReceiverId('');
+      setReceiver({
+        id: '',
+        fullName: '',
+        imageUrl: '',
+      });
     };
   }, [id]);
 
@@ -51,12 +55,12 @@ export default function Layout() {
           exit="-24rem"
         >
           <div className="p-5 min-w-[300px] border-r-0 border-0 lg:border-r-2 border-[#202227]">
-            <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} receiverId={receiverId} />
+            <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} receiverId={receiver.id} />
           </div>
         </AppSidebar>
       </div>
       <div className="p-5 min-w-[300px] border-0 border-r-2 border-[#202227] bg-[#0f0f10] rounded-md hidden lg:block">
-        <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} closeMessageIcon={false} receiverId={receiverId} />
+        <MessageSidebarItem setOpen={setOpenMessage} listFriends={listFriends} loadingFriends={loadingFriends} closeMessageIcon={false} receiverId={receiver.id} />
       </div>
     </>
   );

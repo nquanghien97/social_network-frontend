@@ -15,6 +15,12 @@ type Conversation = {
   isRead: boolean;
 };
 
+type Receiver = {
+  id: string;
+  fullName: string;
+  imageUrl: string;
+};
+
 type MessageStore = {
   messages: MessageEntity[]; // Map conversationId to messages
   conversations: Record<string, Conversation>; // Map conversationId to conversation details
@@ -22,14 +28,18 @@ type MessageStore = {
   getMessage: (message: MessageEntity[]) => void;
   setMessage: (message: MessageEntity[]) => void;
   setConversationRead: (conversationId: string, isRead: boolean) => void;
-  receiverId: string;
-  setReceiverId: (receiverId: string) => void;
+  receiver: Receiver;
+  setReceiver: (receiver: Receiver) => void;
 };
 
 export const useMessageStore = create<MessageStore>((set) => ({
   messages: [],
   conversations: {},
-  receiverId: '',
+  receiver: {
+    id: '',
+    fullName: '',
+    imageUrl: '',
+  },
   getMessage: (message) => set((state) => ({
     messages: [
       ...state.messages,
@@ -54,7 +64,7 @@ export const useMessageStore = create<MessageStore>((set) => ({
       },
     },
   })),
-  setReceiverId: (receiverId) => {
-    set({ receiverId });
+  setReceiver: (receiver) => {
+    set({ receiver });
   },
 }));

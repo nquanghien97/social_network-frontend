@@ -25,7 +25,7 @@ function MessageItem() {
     watch,
   } = useForm<FormValues>();
 
-  const { receiverId } = useMessageStore();
+  const { receiver } = useMessageStore();
   const { getMessage, messages } = useMessageStore();
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +44,7 @@ function MessageItem() {
   const { sendMessage } = useSendMessage(
     params.id as string,
     watch('message'),
-    receiverId,
+    receiver.id,
   );
   const onSubmitSendMessage = async () => {
     try {
@@ -59,8 +59,9 @@ function MessageItem() {
       <div className="h-full">
         <div className="flex flex-col h-full">
           <div className="flex justify-between border-0 border-b-2 border-[#202227] pb-5 px-4">
-            <div>
-              <p>abc</p>
+            <div className="flex items-center gap-2">
+              <Image className="rounded-full w-10 h-10" src={receiver.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
+              <p>{receiver.fullName}</p>
             </div>
             <div>
               <p>icon</p>
