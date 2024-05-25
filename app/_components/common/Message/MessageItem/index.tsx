@@ -63,9 +63,9 @@ function MessageItem() {
               <Image className="rounded-full w-10 h-10" src={receiver.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
               <p>{receiver.fullName}</p>
             </div>
-            <div>
+            {/* <div>
               <p>icon</p>
-            </div>
+            </div> */}
           </div>
           <div
             className="overflow-y-auto h-full basis-0 grow scrollbar-message px-4"
@@ -102,7 +102,7 @@ function MessageItem() {
         </div>
       </div>
       <form
-        className="ml-2 relative [&>div]:mb-0 flex-1"
+        className="mx-2 relative [&>div]:mb-0 flex-1"
         onSubmit={handleSubmit(onSubmitSendMessage)}
       >
         <BaseInput

@@ -34,8 +34,6 @@ function Photos() {
     );
   }
 
-  console.log(listPhotos);
-
   return (
     <div className="flex flex-col w-full bg-[#0f0f10] rounded-md p-6">
       <p className="py-4 text-3xl font-bold">Photos</p>

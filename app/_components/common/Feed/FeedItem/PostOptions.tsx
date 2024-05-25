@@ -11,6 +11,7 @@ import { deletePost } from '@/services/post.services';
 import { useAuth } from '@/zustand/auth.store';
 import { usePost } from '@/zustand/posts.store';
 import { useNewFeed } from '@/zustand/newfeed.store';
+import UpdatePost from '../../UpdatePost';
 
 interface PostOptionsProps {
   PostOptionsRef: RefObject<HTMLDivElement>
@@ -29,6 +30,7 @@ function PostOptions(props: PostOptionsProps) {
   const { getAllPosts } = usePost();
 
   const [openModalDeletePost, setOpenModalDeletePost] = useState(false);
+  const [openPostEdit, setOpenPostEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const onDeletePost = async () => {
     setLoading(true);
@@ -68,15 +70,26 @@ function PostOptions(props: PostOptionsProps) {
       >
         <ul className="w-full">
           {user.id === authorId && (
-            <li
-              className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
-              onClick={() => {
-                setOpenModalDeletePost(true);
-              }}
-              aria-hidden
-            >
-              Delete Post
-            </li>
+            <>
+              <li
+                className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
+                onClick={() => {
+                  setOpenPostEdit(true);
+                }}
+                aria-hidden
+              >
+                Edit Post
+              </li>
+              <li
+                className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
+                onClick={() => {
+                  setOpenModalDeletePost(true);
+                }}
+                aria-hidden
+              >
+                Delete Post
+              </li>
+            </>
           )}
           <li
             className="py-2 hover:text-[#0f6fec] cursor-pointer duration-300 w-full"
@@ -87,6 +100,9 @@ function PostOptions(props: PostOptionsProps) {
           </li>
         </ul>
       </div>
+      <Modal open={openPostEdit} onClose={() => setOpenPostEdit(false)}>
+        <UpdatePost postId={postId} openPostEdit={openPostEdit} setOpenPostEdit={setOpenPostEdit} PostOptionsRef={PostOptionsRef} />
+      </Modal>
       <Modal
         open={openModalDeletePost}
         onClose={() => setOpenModalDeletePost(false)}
