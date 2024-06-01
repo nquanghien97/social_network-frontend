@@ -1,9 +1,9 @@
 'use client';
 
-import WorkIcon from '../../_assets/icons/WorkIcon';
-import LocationIcon from '../../_assets/icons/LocationIcon';
-import CalendarIcon from '../../_assets/icons/CalendarIcon';
-import MessageIcon from '../../_assets/icons/MessageIcon';
+import WorkIcon from '@/assets/icons/WorkIcon';
+import LocationIcon from '@/assets/icons/LocationIcon';
+import CalendarIcon from '@/assets/icons/CalendarIcon';
+import MessageIcon from '@/assets/icons/MessageIcon';
 import { useAuth } from '@/zustand/auth.store';
 
 function About() {

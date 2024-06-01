@@ -7,14 +7,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import backgroundSignup from '../_assets/background-signup.jpg';
-import BaseInput from '../_components/common/BaseInput';
-import HidePassword from '../_assets/icons/HidePassword';
-import ShowPassword from '../_assets/icons/ShowPassword';
-import BaseButton from '../_components/common/BaseButton';
-import { signUp } from '../../services/auth.services';
-import { isAuthenticated } from '../../utils/isAuthenticated';
-import NavLink from '../_components/common/NavLink';
+import backgroundSignup from '@/assets/background-signup.jpg';
+import BaseInput from '@/components/common/BaseInput';
+import BaseButton from '@/components/common/BaseButton';
+import NavLink from '@/components/common/NavLink';
+import HidePassword from '@/assets/icons/HidePassword';
+import ShowPassword from '@/assets/icons/ShowPassword';
+import { signUp } from '@/services/auth.services';
+import { isAuthenticated } from '@/utils/isAuthenticated';
 
 interface FormValues {
   fullName: string;

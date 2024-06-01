@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getImagePosts } from '@/services/post.services';
-import NavLink from '../../_components/common/NavLink';
+import NavLink from '@/components/common/NavLink';
 
 interface ListPhotos {
   imageUrl: string;

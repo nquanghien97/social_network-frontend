@@ -21,6 +21,17 @@
       "react",
       "import"
   ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@", "./src"] // Thay thế './src' bằng đường dẫn tới thư mục gốc của bạn
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+      },
+      "typescript": {}
+    }
+  },
   "rules": {
     "no-console": 0,
     "@next/next/no-img-element": 0,

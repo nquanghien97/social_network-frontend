@@ -4,9 +4,9 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getAllFriends, getFriendsOfUser, removeFriend } from '@/services/friend.services';
-import ListFriends from './ListFriends';
-import LoadingIcon from '../../_assets/icons/LoadingIcon';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
 import { getUserId } from '@/services/user.services';
+import ListFriends from './ListFriends';
 
 function Friend() {
   const [listFriends, setListFriends] = useState([]);

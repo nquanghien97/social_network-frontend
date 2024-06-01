@@ -5,10 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-import BaseInput from '../../_components/common/BaseInput';
-import BaseButton from '../../_components/common/BaseButton';
+import BaseInput from '@/components/common/BaseInput';
+import BaseButton from '@/components/common/BaseButton';
+import NavLink from '@/components/common/NavLink';
 import { updatePassword } from '@/services/user.services';
-import NavLink from '../../_components/common/NavLink';
 
 const schema = yup
   .object({

@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAuth } from '@/zustand/auth.store';
-import MessageItem from '../../_components/common/Message/MessageItem';
 import { useSocketStore } from '@/zustand/socket.store';
 import { useMessageStore } from '@/zustand/message.store';
+import MessageItem from '@/components/common/Message/MessageItem';
 
 function MessagePage() {
   const { user } = useAuth();

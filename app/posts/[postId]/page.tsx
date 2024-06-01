@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { getPost } from '@/services/post.services';
-import FeedItem from '../../_components/common/Feed/FeedItem';
+import FeedItem from '@/components/common/Feed/FeedItem';
 import { PostEntity } from '@/entities/Post.entities';
-import LoadingIcon from '../../_assets/icons/LoadingIcon';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
 
 function Post() {
   const param = usePathname();

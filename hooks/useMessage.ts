@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { MessageEntity } from '@/entities/Message.entities';
-import api from '../config/api';
+import api from '@/config/api';
 import { useSocketStore } from '@/zustand/socket.store';
 import { useMessageStore } from '@/zustand/message.store';
 

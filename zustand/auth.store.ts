@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import UserEntity from '@/entities/User.entities';
-import { isAuthenticated } from '../utils/isAuthenticated';
-import { findUser } from '../services/findUser';
+import { isAuthenticated } from '@/utils/isAuthenticated';
+import { findUser } from '@/services/findUser';
 
 interface Auth {
   getUser: (userId: string) => Promise<void>;

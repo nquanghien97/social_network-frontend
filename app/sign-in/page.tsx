@@ -8,16 +8,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import backgroundSignin from '../_assets/background-signin.svg';
-import BaseInput from '../_components/common/BaseInput';
-import HidePassword from '../_assets/icons/HidePassword';
-import ShowPassword from '../_assets/icons/ShowPassword';
-import BaseButton from '../_components/common/BaseButton';
+import backgroundSignin from '@/assets/background-signin.svg';
+import HidePassword from '@/assets/icons/HidePassword';
+import ShowPassword from '@/assets/icons/ShowPassword';
+import BaseInput from '@/components/common/BaseInput';
+import BaseButton from '@/components/common/BaseButton';
+import NavLink from '@/components/common/NavLink';
 import { signIn } from '@/services/auth.services';
-import { isAuthenticated } from '../../utils/isAuthenticated';
-import withAuthetication from '../../hocs/withAuthentication';
-import NavLink from '../_components/common/NavLink';
-import isRefreshTokenExpired from '../../utils/isRefreshTokenExpired';
+import { isAuthenticated } from '@/utils/isAuthenticated';
+import isRefreshTokenExpired from '@/utils/isRefreshTokenExpired';
+import withAuthetication from '@/hocs/withAuthentication';
 
 interface FormValues {
   email: string;

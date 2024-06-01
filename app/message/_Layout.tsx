@@ -3,12 +3,12 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getUserId } from '@/services/user.services';
-import { AppSidebar } from '../_components/AppSidebar';
-import MessageSidebarItem from '../_components/common/Message/MessageSidebarItem';
-import { useFriends } from '@/zustand/friends.store';
-import MessageIcon from '../_assets/icons/MessageIcon';
 import { listUserIdOfConversation } from '@/services/message.services';
+import { AppSidebar } from '@/components/AppSidebar';
+import MessageSidebarItem from '@/components/common/Message/MessageSidebarItem';
+import { useFriends } from '@/zustand/friends.store';
 import { useMessageStore } from '@/zustand/message.store';
+import MessageIcon from '@/assets/icons/MessageIcon';
 
 export default function Layout() {
   const { getListFriends, listFriends, loadingFriends } = useFriends();

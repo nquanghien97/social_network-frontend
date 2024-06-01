@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import backgroundSignin from '../../../_assets/background-signin.svg';
-import BaseInput from '../../../_components/common/BaseInput';
-import BaseButton from '../../../_components/common/BaseButton';
+import backgroundSignin from '@/assets/background-signin.svg';
+import BaseInput from '@/components/common/BaseInput';
+import BaseButton from '@/components/common/BaseButton';
 import { passwordResetServices } from '@/services/auth.services';
-import CheckIcon from '../../../_assets/icons/CheckIcon';
-import NavLink from '../../../_components/common/NavLink';
+import CheckIcon from '@/assets/icons/CheckIcon';
+import NavLink from '@/components/common/NavLink';
 
 interface FormValues {
   password: string;

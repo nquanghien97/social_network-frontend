@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { isAuthenticated } from '../utils/isAuthenticated';
+import { isAuthenticated } from '@/utils/isAuthenticated';
 import { PostEntity } from '@/entities/Post.entities';
 import { getAllPosts } from '@/services/post.services';
 

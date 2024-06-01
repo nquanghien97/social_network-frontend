@@ -4,13 +4,13 @@ import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { AppHeader } from '../_components/AppHeader';
+import { AppHeader } from '@/components/AppHeader';
+import NavLink from '@/components/common/NavLink';
 import { useAuth } from '@/zustand/auth.store';
-import SecurityIcon from '../_assets/icons/SecurityIcon';
-import ProfileIcon from '../_assets/icons/ProfileIcon';
-import AddAPhotoIcon from '../_assets/icons/AddAPhotoIcon';
+import SecurityIcon from '@/assets/icons/SecurityIcon';
+import ProfileIcon from '@/assets/icons/ProfileIcon';
+import AddAPhotoIcon from '@/assets/icons/AddAPhotoIcon';
 import { updateAvatarUser } from '@/services/user.services';
-import NavLink from '../_components/common/NavLink';
 
 const pathname = [
   {

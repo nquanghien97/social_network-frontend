@@ -2,10 +2,10 @@ import React, { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import BaseButton from '../_components/common/BaseButton';
-import LoadingIcon from '../_assets/icons/LoadingIcon';
 import { addFriend } from '@/services/friend.services';
-import CheckIcon from '../_assets/icons/CheckIcon';
+import BaseButton from '@/components/common/BaseButton';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
+import CheckIcon from '@/assets/icons/CheckIcon';
 
 interface SuggestionsFriendItemProps {
   imageUrl: string;

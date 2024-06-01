@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import BaseButton from '../_components/common/BaseButton';
-import BaseInput from '../_components/common/BaseInput';
-import BaseTextarea from '../_components/common/BaseTextarea';
+import BaseButton from '@/components/common/BaseButton';
+import BaseInput from '@/components/common/BaseInput';
+import BaseTextarea from '@/components/common/BaseTextarea';
 import { useAuth } from '@/zustand/auth.store';
 import { updateUser } from '@/services/user.services';
 

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import BaseButton from '../../_components/common/BaseButton';
-import Modal from '../../_components/common/Modal';
-import NavLink from '../../_components/common/NavLink';
+import BaseButton from '@/components/common/BaseButton';
+import Modal from '@/components/common/Modal';
+import NavLink from '@/components/common/NavLink';
 
 interface Friend {
   id: string;

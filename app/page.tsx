@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AppSidebar from './_components/AppSidebar/AppSidebar';
-import HomePage from './_components/HomePage';
-import AppHeader from './_components/AppHeader/AppHeader';
-import MessageIcon from './_assets/icons/MessageIcon';
-import withAuthetication from '../hocs/withAuthentication';
-import MessageSidebarItem from './_components/common/Message/MessageSidebarItem';
+import AppSidebar from '@/components/AppSidebar/AppSidebar';
+import HomePage from '@/components/HomePage';
+import AppHeader from '@/components/AppHeader/AppHeader';
+import MessageSidebarItem from '@/components/common/Message/MessageSidebarItem';
+import MessageIcon from '@/assets/icons/MessageIcon';
+import withAuthetication from '@/hocs/withAuthentication';
 import { getUser, getUserId } from '@/services/user.services';
 import { useFriends } from '@/zustand/friends.store';
 import { useAuth } from '@/zustand/auth.store';
-import { isAuthenticated } from '../utils/isAuthenticated';
+import { isAuthenticated } from '@/utils/isAuthenticated';
 
 function Home() {
   const userId = getUserId();

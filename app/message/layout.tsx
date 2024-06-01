@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { AppHeader } from '../_components/AppHeader';
+import { AppHeader } from '@/components/AppHeader';
 import Layout from './_Layout';
 
 export const metadata: Metadata = {

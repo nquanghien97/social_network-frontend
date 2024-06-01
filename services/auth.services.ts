@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createUserFromUserResponse } from '@/entities/User.entities';
-import { removeFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
-import api from '../config/api';
+import { removeFromLocalStorage, setToLocalStorage } from '@/utils/localStorage';
+import api from '@/config/api';
 import { useAuth } from '@/zustand/auth.store';
 
 export const signIn = async (data: { email: string, password: string }) => {

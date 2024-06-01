@@ -7,11 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import backgroundSignin from '../_assets/background-signin.svg';
-import BaseInput from '../_components/common/BaseInput';
-import BaseButton from '../_components/common/BaseButton';
+import backgroundSignin from '@/assets/background-signin.svg';
+import BaseInput from '@/components/common/BaseInput';
+import BaseButton from '@/components/common/BaseButton';
 import { sendRequestPasswordResetServices } from '@/services/auth.services';
-import NavLink from '../_components/common/NavLink';
+import NavLink from '@/components/common/NavLink';
 
 interface FormValues {
   email: string;

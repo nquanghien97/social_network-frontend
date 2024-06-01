@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import SuggestionsFriendItem from './SuggestionsFriendItem';
 import { SuggestionsUserEntity } from '@/entities/User.entities';
 import { getSuggestionsUser } from '@/services/user.services';
-import LoadMore from '../_components/common/LoadMore';
-import LoadingIcon from '../_assets/icons/LoadingIcon';
+import LoadMore from '@/components/common/LoadMore';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
+import SuggestionsFriendItem from './SuggestionsFriendItem';
 
 function SuggestionsFriend() {
   const [listSuggestionsUser, setListSuggestionsUser] = useState<SuggestionsUserEntity[]>([]);

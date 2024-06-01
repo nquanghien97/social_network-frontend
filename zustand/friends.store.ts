@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { isAuthenticated } from '../utils/isAuthenticated';
+import { isAuthenticated } from '@/utils/isAuthenticated';
 import UserEntity from '@/entities/User.entities';
 import { getAllFriends } from '@/services/friend.services';
 

@@ -2,9 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Feed from '../_components/common/Feed';
 import { getUserId } from '@/services/user.services';
-import PostFeed from '../_components/common/PostFeed';
+import Feed from '@/components/common/Feed';
+import PostFeed from '@/components/common/PostFeed';
 import { usePost } from '@/zustand/posts.store';
 
 function Profile() {

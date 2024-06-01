@@ -2,9 +2,9 @@ import { AppProps } from 'next/app';
 import { useRouter } from 'next/navigation';
 import { ComponentType, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { isAuthenticated } from '../utils/isAuthenticated';
-import getComponentName from '../utils/getComponentName';
-import isRefreshTokenExpired from '../utils/isRefreshTokenExpired';
+import { isAuthenticated } from '@/utils/isAuthenticated';
+import getComponentName from '@/utils/getComponentName';
+import isRefreshTokenExpired from '@/utils/isRefreshTokenExpired';
 
 export default function withAuthetication(Page: ComponentType) {
   function WithAuthentication(props: AppProps['pageProps']) {

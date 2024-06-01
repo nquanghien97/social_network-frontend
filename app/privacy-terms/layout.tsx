@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { AppHeader } from '../_components/AppHeader';
+import { AppHeader } from '@/components/AppHeader';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',

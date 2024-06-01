@@ -1,6 +1,6 @@
-import { getFromLocalStorage } from '../utils/localStorage';
-import api from '../config/api';
-import { parseJwt } from '../utils/parseJwt';
+import { getFromLocalStorage } from '@/utils/localStorage';
+import api from '@/config/api';
+import { parseJwt } from '@/utils/parseJwt';
 import { UpdateUserDTO } from '@/dto/User.dto';
 import { useAuth } from '@/zustand/auth.store';
 
