@@ -11,10 +11,9 @@ export default function LoadingIcon(props: LoadingIconProps) {
     medium: clsx('h-10', 'w-10'),
     large: clsx('h-12', 'w-12'),
   };
-  const svgClass = clsx('animate-spin mx-2', sizes[size]);
+  const svgClass = clsx('mx-2 animate-spin', sizes[size]);
   const circleClass = clsx('opacity-25');
   const pathClass = clsx('opacity-75');
-
   return (
     <svg
       className={svgClass}

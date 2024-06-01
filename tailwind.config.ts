@@ -6,6 +6,15 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'animate-spin',
+    'h-5',
+    'w-5',
+    'h-10',
+    'w-10',
+    'h-12',
+    'w-12',
+  ],
   theme: {
     extend: {
       backgroundImage: {
