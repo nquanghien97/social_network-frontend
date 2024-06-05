@@ -4,16 +4,17 @@ import { PostEntity } from '@/entities/Post.entities';
 import { getFriendsId } from '@/services/friend.services';
 import { getNewFeed } from '@/services/post.services';
 
-interface Auth {
+interface NewFeedType {
   getNewFeed: ({ limit, offset }: { limit: number, offset: number }) => Promise<void>;
   loading: boolean;
   feeds: PostEntity[],
   setFeeds: (post: PostEntity[]) => void,
   allFeeds: PostEntity[],
-  setAllFeeds: (post: PostEntity[]) => void
+  setAllFeeds: (post: PostEntity[]) => void,
+  updatePost: (post: PostEntity) => void
 }
 
-export const useNewFeed = create<Auth>()((set) => ({
+export const useNewFeed = create<NewFeedType>()((set) => ({
   loading: false,
   feeds: [],
   allFeeds: [],
@@ -36,5 +37,10 @@ export const useNewFeed = create<Auth>()((set) => ({
   },
   setAllFeeds: (allFeeds: PostEntity[]) => {
     set({ allFeeds });
+  },
+  updatePost: (updatedPost: PostEntity) => {
+    set((state) => ({
+      allFeeds: state.allFeeds.map((post) => (post.id === updatedPost.id ? updatedPost : post)),
+    }));
   },
 }));

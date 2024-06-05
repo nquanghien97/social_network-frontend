@@ -4,9 +4,10 @@ import {
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { getPost } from '@/services/post.services';
+import { getPost, updatePost } from '@/services/post.services';
 import { PostEntity } from '@/entities/Post.entities';
 import CloseIcon from '@/assets/icons/CloseIcon';
+import { useNewFeed } from '@/zustand/newfeed.store';
 import InsertPhoto from '@/assets/icons/InsertPhoto';
 import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
@@ -61,6 +62,9 @@ function UpdatePost(props: UpdatePostProps) {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
+  const { updatePost: updatePostStore, allFeeds } = useNewFeed();
+  console.log(allFeeds);
+
   useEffect(() => {
     (async () => {
       try {
@@ -76,18 +80,19 @@ function UpdatePost(props: UpdatePostProps) {
     setFile(e.target.files[0]);
   };
 
-  console.log(currentPosts);
-
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     try {
       const formData = new FormData();
       formData.append('image', file as File);
-      formData.append('title', data.title!);
-      formData.append('text', data.text!);
+      formData.append('title', data.title || currentPosts?.title || '');
+      formData.append('text', data.text || currentPosts?.text || '');
       // await createPost(formData);
       // await getAllPosts(getUserId());
       // await getNewFeed({ offset: 1, limit: 2 });
+      const res = await updatePost(formData, postId);
+      updatePostStore(res.data.post);
+
       setOpenPostEdit(false);
       toast.success('Cập nhật bài viết thành công!');
     } catch (err: unknown) {

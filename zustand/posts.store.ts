@@ -29,4 +29,9 @@ export const usePost = create<Auth>()((set) => ({
   setPost: (posts: PostEntity[]) => {
     set({ posts });
   },
+  updatePost: (updatedPost: PostEntity) => {
+    set((state) => ({
+      posts: state.posts.map((post) => (post.id === updatedPost.id ? updatedPost : post)),
+    }));
+  },
 }));
