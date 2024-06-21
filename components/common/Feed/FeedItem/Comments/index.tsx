@@ -85,15 +85,13 @@ function Comments(props: CommentsProps) {
         ))}
       </ul>
       <div className="flex w-full items-center">
-        <div className="h-12 w-12">
-          <Image
-            src={user.imageUrl || '/DefaultAvatar.svg'}
-            alt="avatar"
-            width={48}
-            height={48}
-            className="rounded-full w-full h-full"
-          />
-        </div>
+        <Image
+          src={user.imageUrl || '/DefaultAvatar.svg'}
+          alt="avatar"
+          width={48}
+          height={48}
+          className="rounded-full w-12 h-12"
+        />
         {!hasFirstComment ? (
           <NavLink
             className="w-full flex items-center bg-[#26262b] my-2 py-2 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300 ml-2"

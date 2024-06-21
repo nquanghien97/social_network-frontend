@@ -50,6 +50,10 @@ function AppHeader() {
     setIsOpenModalProfile(false);
   });
 
+  const modalSearchResults = useOutsideClick(() => {
+    setSearchText('');
+  });
+
   const onClickLogo = async () => {
     await getNewFeed({ offset: 1, limit: 2 });
   };
@@ -161,7 +165,7 @@ function AppHeader() {
                     : null}
                 />
                 {searchText ? (
-                  <ResultSearch searchText={debounceSearchText} />
+                  <ResultSearch ref={modalSearchResults} searchText={debounceSearchText} />
                 ) : null}
               </div>
             </div>
