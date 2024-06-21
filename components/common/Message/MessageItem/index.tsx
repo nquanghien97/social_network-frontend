@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useEffect, useRef,
   useState,
 } from 'react';
@@ -38,14 +37,14 @@ function MessageItem() {
     try {
       const res = await getMessages({ limit: 15, offset: page, conversationId: params.id as string });
       getMessage(res.data.message.messages);
-      if(res.data.message.messages.length === 0) {
+      if (res.data.message.messages.length === 0) {
         setHasMore(false);
       }
-      setPage(p => p + 1);
-    } catch(err) {
+      setPage((p) => p + 1);
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -84,50 +83,50 @@ function MessageItem() {
           </div>
           <div
             className="overflow-y-auto h-full basis-0 grow"
-            >
+          >
             <div
               id="scrollableDiv"
               className="h-full overflow-y-auto flex flex-col-reverse scrollbar-message px-4"
               // ref={messagesContainerRef}
             >
-              {/*Put the scroll bar always on the bottom*/}
+              {/* Put the scroll bar always on the bottom */}
               <InfiniteScroll
                 dataLength={messages.length}
                 next={fetchData}
-                className="flex flex-col-reverse w-full" //To put endMessage and loader to the top.
+                className="flex flex-col-reverse w-full"
                 inverse
                 hasMore={hasMore}
                 loader={<div className="flex justify-center py-2"><LoadingIcon /></div>}
                 scrollableTarget="scrollableDiv"
               >
-            {messages.map((message) => (
-              (userId === message.authorId) ? (
-                <div
-                  key={message.id}
-                  className="flex justify-end my-2 items-center gap-2"
-                >
-                  <div className="py-2 px-3 rounded-2xl bg-[#0f6fec]">
-                    <span>
-                      {`${message.text}`}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  key={message.id}
-                  className="flex my-2 items-center gap-2"
-                >
-                  <Image className="rounded-full w-10 h-10" src={message.author?.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
-                  <div className="py-2 px-3 rounded-2xl bg-[#303030]">
-                    <span>
-                      {`${message.text}`}
-                    </span>
-                  </div>
+                {messages.map((message) => (
+                  (userId === message.authorId) ? (
+                    <div
+                      key={message.id}
+                      className="flex justify-end my-2 items-center gap-2"
+                    >
+                      <div className="py-2 px-3 rounded-2xl bg-[#0f6fec]">
+                        <span>
+                          {`${message.text}`}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      key={message.id}
+                      className="flex my-2 items-center gap-2"
+                    >
+                      <Image className="rounded-full w-10 h-10" src={message.author?.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
+                      <div className="py-2 px-3 rounded-2xl bg-[#303030]">
+                        <span>
+                          {`${message.text}`}
+                        </span>
+                      </div>
 
-                </div>
-              )
-            ))}
-            </InfiniteScroll>
+                    </div>
+                  )
+                ))}
+              </InfiniteScroll>
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ function MessagePage() {
   }, [user]);
 
   useEffect(() => {
-    if(!socket) return;
+    if (!socket) return;
     socket.on('online-users', (userIds) => {
       setOnlineUserIds(userIds);
     });
@@ -71,10 +71,10 @@ function MessagePage() {
       }
     });
 
+    // eslint-disable-next-line consistent-return
     return () => {
       socket.off('user-connected');
       socket.off('user-disconnected');
-      console.log('disconnected')
       setEmptyMessage();
     };
   }, [socket]);
