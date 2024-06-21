@@ -13,7 +13,7 @@ function MessagePage() {
   const pathname = usePathname();
   const { id: currentConversationId } = useParams();
   const { setSocket, setOnlineUserIds, socket } = useSocketStore();
-  const { addMessage, setConversationRead, setMessage } = useMessageStore();
+  const { addMessage, setConversationRead, setEmptyMessage } = useMessageStore();
 
   const pathnameRef = useRef<string>(pathname);
 
@@ -35,19 +35,16 @@ function MessagePage() {
   }, [user]);
 
   useEffect(() => {
-    socket?.on('online-users', (userIds) => {
+    if(!socket) return;
+    socket.on('online-users', (userIds) => {
       setOnlineUserIds(userIds);
     });
 
-    // socket?.on('user-connected', (userId) => {
-    //   setOnlineUserIds((prevUserIds: string[]) => [...prevUserIds, ...userId]);
-    // });
-
-    socket?.on('user-disconnected', (userId) => {
+    socket.on('user-disconnected', (userId) => {
       setOnlineUserIds((prevUserIds: string[]) => prevUserIds.filter((id) => id !== userId));
     });
 
-    socket?.on('receive-message', async (receivedMessage) => {
+    socket.on('receive-message', async (receivedMessage) => {
       const {
         id,
         receiverId,
@@ -75,9 +72,10 @@ function MessagePage() {
     });
 
     return () => {
-      socket?.off('user-connected');
-      socket?.off('user-disconnected');
-      setMessage([]);
+      socket.off('user-connected');
+      socket.off('user-disconnected');
+      console.log('disconnected')
+      setEmptyMessage();
     };
   }, [socket]);
   return (

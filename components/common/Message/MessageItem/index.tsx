@@ -1,5 +1,7 @@
 import {
+  useCallback,
   useEffect, useRef,
+  useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
@@ -10,6 +12,8 @@ import { getMessages } from '@/services/message.services';
 import { getUserId } from '@/services/user.services';
 import { useSendMessage } from '@/hooks/useMessage';
 import { useMessageStore } from '@/zustand/message.store';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
 
 interface FormValues {
   message: string;
@@ -24,11 +28,25 @@ function MessageItem() {
     reset,
     watch,
   } = useForm<FormValues>();
-
-  const { receiver } = useMessageStore();
-  const { getMessage, messages } = useMessageStore();
-
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const { getMessage, messages, receiver } = useMessageStore();
+
+  const fetchData = async () => {
+    try {
+      const res = await getMessages({ limit: 15, offset: page, conversationId: params.id as string });
+      getMessage(res.data.message.messages);
+      if(res.data.message.messages.length === 0) {
+        setHasMore(false);
+      }
+      setPage(p => p + 1);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -37,8 +55,7 @@ function MessageItem() {
 
   useEffect(() => {
     (async () => {
-      const res = await getMessages({ limit: 15, offset: 1, conversationId: params.id as string });
-      getMessage(res.data.message.messages);
+      await fetchData();
     })();
   }, []);
   const { sendMessage } = useSendMessage(
@@ -54,6 +71,7 @@ function MessageItem() {
       console.log(err.messagge);
     }
   };
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="h-full">
@@ -63,14 +81,25 @@ function MessageItem() {
               <Image className="rounded-full w-10 h-10" src={receiver.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
               <p>{receiver.fullName}</p>
             </div>
-            {/* <div>
-              <p>icon</p>
-            </div> */}
           </div>
           <div
-            className="overflow-y-auto h-full basis-0 grow scrollbar-message px-4"
-            ref={messagesContainerRef}
-          >
+            className="overflow-y-auto h-full basis-0 grow"
+            >
+            <div
+              id="scrollableDiv"
+              className="h-full overflow-y-auto flex flex-col-reverse scrollbar-message px-4"
+              // ref={messagesContainerRef}
+            >
+              {/*Put the scroll bar always on the bottom*/}
+              <InfiniteScroll
+                dataLength={messages.length}
+                next={fetchData}
+                className="flex flex-col-reverse w-full" //To put endMessage and loader to the top.
+                inverse
+                hasMore={hasMore}
+                loader={<div className="flex justify-center py-2"><LoadingIcon /></div>}
+                scrollableTarget="scrollableDiv"
+              >
             {messages.map((message) => (
               (userId === message.authorId) ? (
                 <div
@@ -98,6 +127,8 @@ function MessageItem() {
                 </div>
               )
             ))}
+            </InfiniteScroll>
+            </div>
           </div>
         </div>
       </div>
