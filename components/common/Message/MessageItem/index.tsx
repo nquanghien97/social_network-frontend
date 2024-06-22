@@ -1,5 +1,6 @@
 import {
-  useEffect, useRef,
+  useCallback,
+  useEffect,
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
@@ -27,41 +28,36 @@ function MessageItem() {
     reset,
     watch,
   } = useForm<FormValues>();
-  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  const { receiver } = useMessageStore();
+  const { getMessage, messages, setMessage } = useMessageStore();
+  const [canLoadMore, setCanLoadMore] = useState(false);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
 
-  const { getMessage, messages, receiver } = useMessageStore();
+  const loadMore = useCallback(() => {
+    setPage((p) => p + 1);
+  }, []);
 
-  const fetchData = async () => {
-    try {
-      const res = await getMessages({ limit: 15, offset: page, conversationId: params.id as string });
-      getMessage(res.data.message.messages);
-      if (res.data.message.messages.length === 0) {
-        setHasMore(false);
-      }
-      setPage((p) => p + 1);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const fetchMessages = useCallback(async (p: number) => {
+    const res = await getMessages({ limit: 15, offset: p, conversationId: params.id as string });
+    return res.data.message.messages;
+  }, []);
 
-  useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
+  // TODO: fetch messages when mount page
   useEffect(() => {
     (async () => {
-      await fetchData();
+      const messageResponse = await fetchMessages(page);
+      setMessage(messageResponse);
+      setCanLoadMore(messageResponse.length > 0);
     })();
   }, []);
+
   const { sendMessage } = useSendMessage(
     params.id as string,
     watch('message'),
     receiver.id,
   );
+
   const onSubmitSendMessage = async () => {
     try {
       await sendMessage();
@@ -70,7 +66,20 @@ function MessageItem() {
       console.log(err.messagge);
     }
   };
-
+  const fetchNextMessages = async () => {
+    if (canLoadMore) {
+      loadMore();
+    }
+    const messageResponse = await fetchMessages(page);
+    if (messageResponse.length === 0) {
+      setCanLoadMore(false);
+    }
+    getMessage(messageResponse);
+  };
+  useEffect(() => {
+    fetchNextMessages();
+  }, [loadMore]);
+  console.log(messages);
   return (
     <div className="w-full h-full flex flex-col">
       <div className="h-full">
@@ -82,52 +91,46 @@ function MessageItem() {
             </div>
           </div>
           <div
-            className="overflow-y-auto h-full basis-0 grow"
+            className="overflow-y-auto h-[300px] flex flex-col-reverse basis-0 grow scrollbar-message px-4"
+            id="scrollableDiv"
           >
-            <div
-              id="scrollableDiv"
-              className="h-full overflow-y-auto flex flex-col-reverse scrollbar-message px-4"
-              // ref={messagesContainerRef}
+            <InfiniteScroll
+              dataLength={messages.length}
+              next={fetchNextMessages}
+              hasMore
+              loader={canLoadMore ? <div className="flex justify-center py-5"><LoadingIcon /></div> : null}
+              inverse
+              style={{ display: 'flex', flexDirection: 'column-reverse' }}
+              scrollableTarget="scrollableDiv"
             >
-              {/* Put the scroll bar always on the bottom */}
-              <InfiniteScroll
-                dataLength={messages.length}
-                next={fetchData}
-                className="flex flex-col-reverse w-full"
-                inverse
-                hasMore={hasMore}
-                loader={<div className="flex justify-center py-2"><LoadingIcon /></div>}
-                scrollableTarget="scrollableDiv"
-              >
-                {messages.map((message) => (
-                  (userId === message.authorId) ? (
-                    <div
-                      key={message.id}
-                      className="flex justify-end my-2 items-center gap-2"
-                    >
-                      <div className="py-2 px-3 rounded-2xl bg-[#0f6fec]">
-                        <span>
-                          {`${message.text}`}
-                        </span>
-                      </div>
+              {messages.map((message) => (
+                (userId === message.authorId) ? (
+                  <div
+                    key={message.id}
+                    className="flex justify-end my-2 items-center gap-2"
+                  >
+                    <div className="py-2 px-3 rounded-2xl bg-[#0f6fec]">
+                      <span>
+                        {`${message.text}`}
+                      </span>
                     </div>
-                  ) : (
-                    <div
-                      key={message.id}
-                      className="flex my-2 items-center gap-2"
-                    >
-                      <Image className="rounded-full w-10 h-10" src={message.author?.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
-                      <div className="py-2 px-3 rounded-2xl bg-[#303030]">
-                        <span>
-                          {`${message.text}`}
-                        </span>
-                      </div>
+                  </div>
+                ) : (
+                  <div
+                    key={message.id}
+                    className="flex my-2 items-center gap-2"
+                  >
+                    <Image className="rounded-full w-10 h-10" src={message.author?.imageUrl || '/DefaultAvatar.svg'} alt="avatar" width={40} height={40} priority />
+                    <div className="py-2 px-3 rounded-2xl bg-[#303030]">
+                      <span>
+                        {`${message.text}`}
+                      </span>
+                    </div>
 
-                    </div>
-                  )
-                ))}
-              </InfiniteScroll>
-            </div>
+                  </div>
+                )
+              ))}
+            </InfiniteScroll>
           </div>
         </div>
       </div>

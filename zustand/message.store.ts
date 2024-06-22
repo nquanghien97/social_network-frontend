@@ -47,12 +47,14 @@ export const useMessageStore = create<MessageStore>((set) => ({
       ...message,
     ],
   })),
-  addMessage: (message) => set((state) => ({
-    messages: [
-      message,
-      ...state.messages,
-    ],
-  })),
+  addMessage: (message) => {
+    set((state) => ({
+      messages: [
+        message,
+        ...state.messages,
+      ],
+    }));
+  },
   setMessage: (message: MessageEntity[]) => set(() => ({
     messages: message,
   })),

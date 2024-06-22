@@ -12,6 +12,7 @@ import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { timeSince } from '@/utils/date';
 import BaseInput from '@/components/common/BaseInput';
 import NavLink from '@/components/common/NavLink';
+import UserAvatar from '@/components/common/UserAvatar';
 import CommentOptions from './CommentOptions';
 
 interface CommentProps {
@@ -63,13 +64,7 @@ function Comment(props: CommentProps) {
     <li key={comment.id} className="pl-6 w-full py-1">
       <div className="flex gap-2">
         <NavLink className="w-12 h-12" href={`/${comment.author.id}`}>
-          <Image
-            src={comment.author.imageUrl || '/DefaultAvatar.svg'}
-            alt="avatar"
-            width={48}
-            height={48}
-            className="rounded-full cursor-pointer w-full h-full"
-          />
+          <UserAvatar imageUrl={comment.author.imageUrl} />
         </NavLink>
         <div className="flex flex-col flex-1 gap-2">
           <div className="bg-[#202227] flex justify-between w-full rounded-md px-4 py-2">

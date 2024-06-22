@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import MoreHorizIcon from '@/assets/icons/MoreHorizIcon';
 import { timeSince } from '@/utils/date';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import EarthIcon from '@/assets/icons/EarthIcon';
 import NavLink from '@/components/common/NavLink';
 import PostOptions from './PostOptions';
+import UserAvatar from '../../UserAvatar';
 
 interface FeedHeaderProps {
   fullName?: string;
   job?: string;
   updatedAt?: Date;
-  imageUrl?: string;
+  imageUrl: string;
   postId: string;
   authorId: string;
 }
@@ -30,7 +30,7 @@ function FeedHeader(props: FeedHeaderProps) {
   return (
     <div className="flex gap-x-4 mb-4 items-center">
       <NavLink className="w-12 h-12" href={`/${authorId}`} aria-hidden>
-        <Image src={imageUrl || '/DefaultAvatar.svg'} width={48} height={48} alt="" unoptimized className="w-full h-full rounded-full cursor-pointer" />
+        <UserAvatar imageUrl={imageUrl} />
       </NavLink>
       <div>
         <div className="flex max-sm:flex-col">

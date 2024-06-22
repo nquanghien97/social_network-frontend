@@ -73,8 +73,8 @@ function MessagePage() {
 
     // eslint-disable-next-line consistent-return
     return () => {
-      socket.off('user-connected');
-      socket.off('user-disconnected');
+      socket?.off('user-connected');
+      socket?.off('user-disconnected');
       setEmptyMessage();
     };
   }, [socket]);

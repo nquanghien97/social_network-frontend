@@ -13,6 +13,7 @@ import Modal from '../Modal';
 import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
 import BaseButton from '../BaseButton';
+import UserAvatar from '../UserAvatar';
 
 interface FormValues {
   title: string;
@@ -59,7 +60,9 @@ function PostFeed() {
   return (
     <>
       <div className="flex bg-[#0f0f10] border border-[#0f0f10] rounded-md w-full p-5 z-[10]">
-        <Image src={user.imageUrl || '/DefaultAvatar.svg'} unoptimized priority width={48} height={48} alt="avatar" className="h-12 w-12 rounded-full cursor-pointer mr-2" />
+        <div className="h-12 w-12 mr-2 flex items-center">
+          <UserAvatar imageUrl={user.imageUrl} />
+        </div>
         <div
           aria-hidden="true"
           className="w-full flex items-center bg-[#26262b] py-3 px-4 rounded-2xl cursor-pointer hover:bg-[#3f3f47] duration-300"
