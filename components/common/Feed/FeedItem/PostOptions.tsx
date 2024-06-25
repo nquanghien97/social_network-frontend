@@ -37,7 +37,7 @@ function PostOptions(props: PostOptionsProps) {
     try {
       await deletePost({ postId });
       toast.success('Xóa bài viết thành công');
-      await getAllPosts(user.id);
+      await getAllPosts({ limit: 3, offset: 1 });
       const newFeedsRemaining = allFeeds.filter((item) => item.id !== postId);
       setAllFeeds(newFeedsRemaining);
     } catch (err) {

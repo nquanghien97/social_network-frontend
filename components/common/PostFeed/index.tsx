@@ -8,7 +8,6 @@ import { useNewFeed } from '@/zustand/newfeed.store';
 import { createPost } from '@/services/post.services';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import InsertPhoto from '@/assets/icons/InsertPhoto';
-import { getUserId } from '@/services/user.services';
 import Modal from '../Modal';
 import BaseInput from '../BaseInput';
 import BaseTextarea from '../BaseTextarea';
@@ -45,7 +44,7 @@ function PostFeed() {
       formData.append('title', data.title!);
       formData.append('text', data.text!);
       await createPost(formData);
-      await getAllPosts(getUserId());
+      await getAllPosts({ limit: 3, offset: 1 });
       await getNewFeed({ offset: 1, limit: 2 });
       setIsOpenModal(false);
       toast.success('Tạo bài viết thành công!');
