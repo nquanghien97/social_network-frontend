@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getUserId } from '@/services/user.services';
 import Feed from '@/components/common/Feed';
@@ -11,12 +11,14 @@ function Profile() {
   const param = useParams();
   const userId = param.profileId as string;
   const currentUserId = getUserId() === userId;
+  const limit = 4;
+  const [page] = useState(1);
 
   const { posts, loading, getAllPosts } = usePost();
 
   useEffect(() => {
     (async () => {
-      await getAllPosts(userId);
+      await getAllPosts({ limit, offset: page });
     })();
   }, []);
 

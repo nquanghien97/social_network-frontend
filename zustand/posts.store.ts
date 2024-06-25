@@ -4,7 +4,7 @@ import { PostEntity } from '@/entities/Post.entities';
 import { getAllPosts } from '@/services/post.services';
 
 interface Auth {
-  getAllPosts: (userId: string) => Promise<void>;
+  getAllPosts: ({ limit, offset } : { limit: number, offset: number }) => Promise<void>;
   loading: boolean;
   posts: PostEntity[],
   setPost: (post: PostEntity[]) => void
@@ -13,11 +13,11 @@ interface Auth {
 export const usePost = create<Auth>()((set) => ({
   loading: false,
   posts: [],
-  getAllPosts: async (userId: string) => {
+  getAllPosts: async ({ limit, offset } : { limit: number, offset: number }) => {
     set(() => ({ loading: true }));
     try {
       if (isAuthenticated()) {
-        const response = await getAllPosts(userId);
+        const response = await getAllPosts({ limit, offset });
         set(() => ({ posts: response.data.post as PostEntity[] }));
       }
     } catch (err) {
