@@ -59,7 +59,7 @@ function CenterSidebar() {
         <Story />
         <PostFeed />
         {allFeeds.length > 0 ? (
-          <Feed posts={allFeeds} loading={loading} measureRef={measureRef} />
+          <Feed fetchNextPosts={async () => {}} posts={allFeeds} loading={loading} measureRef={measureRef} />
         ) : (
           <h2 className="text-2xl">Chưa có bài viết nào được hiển thị</h2>
         )}
