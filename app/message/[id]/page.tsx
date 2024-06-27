@@ -13,7 +13,7 @@ function MessagePage() {
   const pathname = usePathname();
   const { id: currentConversationId } = useParams();
   const { setSocket, setOnlineUserIds, socket } = useSocketStore();
-  const { addMessage, setConversationRead, setEmptyMessage } = useMessageStore();
+  const { addMessage, setConversationRead } = useMessageStore();
 
   const pathnameRef = useRef<string>(pathname);
 
@@ -73,9 +73,9 @@ function MessagePage() {
 
     // eslint-disable-next-line consistent-return
     return () => {
-      socket?.off('user-connected');
-      socket?.off('user-disconnected');
-      setEmptyMessage();
+      socket.off('user-connected');
+      socket.off('user-disconnected');
+      // setEmptyMessage();
     };
   }, [socket]);
   return (

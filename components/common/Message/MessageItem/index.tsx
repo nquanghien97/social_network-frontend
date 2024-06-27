@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -34,14 +33,11 @@ function MessageItem() {
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [page, setPage] = useState(1);
 
-  const loadMore = useCallback(() => {
-    setPage((p) => p + 1);
-  }, []);
-
-  const fetchMessages = useCallback(async (p: number) => {
+  const fetchMessages = async (p: number) => {
     const res = await getMessages({ limit: 15, offset: p, conversationId: params.id as string });
     return res.data.message.messages;
-  }, []);
+  };
+  console.log(messages);
 
   // TODO: fetch messages when mount page
   useEffect(() => {
@@ -68,18 +64,16 @@ function MessageItem() {
   };
   const fetchNextMessages = async () => {
     if (canLoadMore) {
-      loadMore();
+      const nextPage = page + 1;
+      const messageResponse = await fetchMessages(nextPage);
+      if (messageResponse.length === 0) {
+        setCanLoadMore(false);
+      } else {
+        setPage(nextPage);
+        getMessage(messageResponse);
+      }
     }
-    const messageResponse = await fetchMessages(page);
-    if (messageResponse.length === 0) {
-      setCanLoadMore(false);
-    }
-    getMessage(messageResponse);
   };
-  useEffect(() => {
-    fetchNextMessages();
-  }, [loadMore]);
-  console.log(messages);
   return (
     <div className="w-full h-full flex flex-col">
       <div className="h-full">
@@ -97,8 +91,8 @@ function MessageItem() {
             <InfiniteScroll
               dataLength={messages.length}
               next={fetchNextMessages}
-              hasMore
-              loader={canLoadMore ? <div className="flex justify-center py-5"><LoadingIcon /></div> : null}
+              hasMore={canLoadMore}
+              loader={<div className="flex justify-center py-5"><LoadingIcon /></div>}
               inverse
               style={{ display: 'flex', flexDirection: 'column-reverse' }}
               scrollableTarget="scrollableDiv"
